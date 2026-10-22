@@ -165,6 +165,40 @@ h3 {font-size:15px;margin:0}
 @media(min-width:761px) {
  .sidebar.open {transform:none}
 }
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-weight: 800;
+  line-height: 1;
+}
+.facebook-logo { color: #1877F2; }
+.instagram-logo {
+  background: linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5);
+  color: white;
+  border-radius: 12px;
+  width: 34px;
+  height: 34px;
+}
+.tiktok-logo { color: #25F4EE; text-shadow: 2px 1px #FE2C55; }
+.youtube-logo { color: #FF0033; }
+.x-logo { color: #000000; }
+.telegram-logo { color: #229ED9; }
+.whatsapp-logo { color: #25D366; }
+.linkedin-logo { color: #0A66C2; }
+.pinterest-logo { color: #E60023; }
+.snapchat-logo {
+  color: #000;
+  background: #FFFC00;
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+}
+body:not(.light) .x-logo { color: #fff; }
+
 </style>
 </head>
 <body>
@@ -302,18 +336,20 @@ h3 {font-size:15px;margin:0}
 <script>
 "use strict";
 
+
 const PLATFORMS = [
- {id:"Facebook",name:"Facebook",symbol:"f",cls:"fb"},
- {id:"Instagram",name:"Instagram",symbol:"◎",cls:"ig"},
- {id:"TikTok",name:"TikTok",symbol:"♪",cls:"tt"},
- {id:"YouTube",name:"YouTube",symbol:"▶",cls:"yt"},
- {id:"X",name:"X",symbol:"𝕏",cls:"xx"},
- {id:"Telegram",name:"Telegram",symbol:"➤",cls:"tg"},
- {id:"WhatsApp",name:"WhatsApp",symbol:"◉",cls:"wa"},
- {id:"LinkedIn",name:"LinkedIn",symbol:"in",cls:"li"},
- {id:"Pinterest",name:"Pinterest",symbol:"P",cls:"pin"},
- {id:"Snapchat",name:"Snapchat",symbol:"👻",cls:"snap"}
+ {id:"Facebook",name:"Facebook",symbol:"f",cls:"fb",logo:"facebook"},
+ {id:"Instagram",name:"Instagram",symbol:"◎",cls:"ig",logo:"instagram"},
+ {id:"TikTok",name:"TikTok",symbol:"♪",cls:"tt",logo:"tiktok"},
+ {id:"YouTube",name:"YouTube",symbol:"▶",cls:"yt",logo:"youtube"},
+ {id:"X",name:"X",symbol:"𝕏",cls:"xx",logo:"x"},
+ {id:"Telegram",name:"Telegram",symbol:"➤",cls:"tg",logo:"telegram"},
+ {id:"WhatsApp",name:"WhatsApp",symbol:"◉",cls:"wa",logo:"whatsapp"},
+ {id:"LinkedIn",name:"LinkedIn",symbol:"in",cls:"li",logo:"linkedin"},
+ {id:"Pinterest",name:"Pinterest",symbol:"P",cls:"pin",logo:"pinterest"},
+ {id:"Snapchat",name:"Snapchat",symbol:"👻",cls:"snap",logo:"snapchat"}
 ];
+
 
 const PLANS = {
  free:{name:"مجانية",price:0,limit:2,features:["حسابان لكل منصة","إدارة الحسابات","بحث وتصفية","تصدير نسخة البيانات"]},
@@ -420,11 +456,25 @@ function renderPlatformGrid() {
     });
   });
 }
+
 function accountCard(a) {
   const p = platformInfo(a.platform);
+  const logos = {
+    Facebook: '<span class="brand-logo facebook-logo">f</span>',
+    Instagram: '<span class="brand-logo instagram-logo">◎</span>',
+    TikTok: '<span class="brand-logo tiktok-logo">♪</span>',
+    YouTube: '<span class="brand-logo youtube-logo">▶</span>',
+    X: '<span class="brand-logo x-logo">𝕏</span>',
+    Telegram: '<span class="brand-logo telegram-logo">➤</span>',
+    WhatsApp: '<span class="brand-logo whatsapp-logo">◉</span>',
+    LinkedIn: '<span class="brand-logo linkedin-logo">in</span>',
+    Pinterest: '<span class="brand-logo pinterest-logo">P</span>',
+    Snapchat: '<span class="brand-logo snapchat-logo">👻</span>'
+  };
+  const logo = logos[a.platform] || `<span class="brand-logo">${escapeHTML(p.symbol)}</span>`;
   return `<article class="account-card">
     <div class="account-head">
-      <div class="account-avatar ${p.cls}">${p.symbol}</div>
+      <div class="account-avatar ${p.cls}">${logo}</div>
       <div class="account-info">
         <strong>${escapeHTML(a.name)}</strong>
         <p>${escapeHTML(p.name)}${a.username ? " · " + escapeHTML(a.username) : ""}</p>
@@ -438,6 +488,7 @@ function accountCard(a) {
     </div>
   </article>`;
 }
+
 function attachAccountActions(container) {
   container.querySelectorAll("[data-edit]").forEach(button =>
     button.addEventListener("click", () => openEdit(button.dataset.edit))
