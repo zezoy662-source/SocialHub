@@ -329,22 +329,20 @@ body:not(.light) .x-logo { color: #fff; }
       style="width:100%;margin:8px 0 16px;padding:12px"
     >
 
-    <label for="postPlatform">منصة النشر</label>
-    <select
-      id="postPlatform"
-      style="width:100%;margin:8px 0 16px;padding:12px"
-    >
-    <option value="Facebook">Facebook</option>
-<option value="Instagram">Instagram</option>
-<option value="TikTok">TikTok</option>
-<option value="YouTube">YouTube</option>
-<option value="X">X</option>
-<option value="Telegram">Telegram</option>
-<option value="WhatsApp">WhatsApp</option>
-<option value="LinkedIn">LinkedIn</option>
-<option value="Pinterest">Pinterest</option>
-<option value="Snapchat">Snapchat</option>
-    </select>
+ 
+<label>المنصات المستهدفة</label>
+<div id="postPlatforms" style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 16px">
+  <label><input type="checkbox" name="postPlatform" value="Facebook" checked> Facebook</label>
+  <label><input type="checkbox" name="postPlatform" value="Instagram"> Instagram</label>
+  <label><input type="checkbox" name="postPlatform" value="TikTok"> TikTok</label>
+  <label><input type="checkbox" name="postPlatform" value="YouTube"> YouTube</label>
+  <label><input type="checkbox" name="postPlatform" value="X"> X</label>
+  <label><input type="checkbox" name="postPlatform" value="Telegram"> Telegram</label>
+  <label><input type="checkbox" name="postPlatform" value="WhatsApp"> WhatsApp</label>
+  <label><input type="checkbox" name="postPlatform" value="LinkedIn"> LinkedIn</label>
+  <label><input type="checkbox" name="postPlatform" value="Pinterest"> Pinterest</label>
+  <label><input type="checkbox" name="postPlatform" value="Snapchat"> Snapchat</label>
+</div>
 
     <label for="postContent">محتوى المنشور</label>
     <textarea
