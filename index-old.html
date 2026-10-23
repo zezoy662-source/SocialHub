@@ -1,0 +1,1044 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SocialHub | إدارة حسابات التواصل</title>
+<style>
+:root {
+  --bg:#101522; --panel:#191f30; --panel2:#222a3d;
+  --text:#f4f6ff; --muted:#a3acc1; --border:#303950;
+  --accent:#7965f5; --accent2:#a08fff; --success:#36c994;
+  --danger:#ff647c; --shadow:0 10px 30px #0002;
+}
+body.light {
+  --bg:#f4f6fb; --panel:#ffffff; --panel2:#eef1f8;
+  --text:#20273a; --muted:#68738a; --border:#e0e5ef;
+  --accent:#6954ed; --accent2:#8c7bff;
+  --success:#11996b; --danger:#dc405a; --shadow:0 8px 24px #26314d0c;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Tahoma,Arial,sans-serif;transition:background .2s,color .2s;
+}
+button,input,select,textarea {font:inherit}
+button {cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:2px solid var(--accent2);outline-offset:2px
+}
+.app {min-height:100vh}
+.sidebar {
+  position:fixed;right:0;top:0;bottom:0;width:245px;
+  padding:23px 16px;background:var(--panel);
+  border-left:1px solid var(--border);display:flex;flex-direction:column;
+  z-index:10;overflow-y:auto;
+}
+.brand {display:flex;align-items:center;gap:11px;padding:3px 8px 25px}
+.brand-icon {
+  width:43px;height:43px;border-radius:14px;background:var(--accent);
+  display:grid;place-items:center;color:white;font-size:24px;font-weight:bold;
+}
+.brand-name {font-size:21px;font-weight:bold;letter-spacing:.2px}
+.brand-sub {font-size:11px;color:var(--muted);margin-top:4px}
+.nav-label {font-size:11px;color:var(--muted);padding:12px 12px 9px}
+.nav-item {
+  border:0;background:transparent;color:var(--muted);width:100%;
+  padding:12px;border-radius:11px;display:flex;align-items:center;
+  gap:12px;text-align:right;margin:3px 0;font-size:14px;
+}
+.nav-item:hover,.nav-item.active {background:var(--panel2);color:var(--text)}
+.nav-item.active {box-shadow:inset -3px 0 var(--accent);font-weight:bold}
+.nav-icon {width:23px;text-align:center;font-size:18px}
+.sidebar-bottom {margin-top:auto;padding-top:20px}
+.plan-mini {background:var(--panel2);border:1px solid var(--border);padding:14px;border-radius:13px}
+.plan-mini strong {font-size:13px}
+.plan-mini p {font-size:12px;color:var(--muted);line-height:1.8}
+.main {margin-right:245px;min-height:100vh}
+.topbar {
+  min-height:78px;display:flex;align-items:center;justify-content:space-between;
+  gap:15px;padding:17px 28px;border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.topbar-title {font-size:18px;font-weight:bold}
+.topbar-sub {color:var(--muted);font-size:12px;margin-top:5px}
+.top-actions {display:flex;align-items:center;gap:9px}
+.icon-btn,.secondary-btn,.primary-btn,.danger-btn {
+  border:1px solid var(--border);border-radius:10px;padding:10px 13px;
+  background:var(--panel);color:var(--text);
+}
+.icon-btn {width:42px;height:42px;padding:0;font-size:18px}
+.primary-btn {background:var(--accent);border-color:var(--accent);color:white;font-weight:bold}
+.primary-btn:hover {filter:brightness(1.08)}
+.secondary-btn:hover,.icon-btn:hover {background:var(--panel2)}
+.danger-btn {color:var(--danger)}
+.content {padding:28px;max-width:1500px;margin:auto}
+.welcome {display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+h1 {font-size:25px;margin:0 0 10px}
+h2 {font-size:18px;margin:0}
+h3 {font-size:15px;margin:0}
+.muted {color:var(--muted)}
+.small {font-size:12px}
+.section {margin-top:30px}
+.section-head {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.stats {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.stat,.card,.platform-card,.plan-card {
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:15px;box-shadow:var(--shadow);
+}
+.stat {padding:19px}
+.stat-top {display:flex;justify-content:space-between;align-items:center}
+.stat-icon {width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--panel2);font-size:21px}
+.stat-value {font-size:27px;font-weight:bold;margin-top:19px}
+.stat-label {font-size:13px;color:var(--muted);margin-top:8px}
+.platform-grid {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+.platform-card {padding:17px 12px;text-align:center;cursor:pointer;transition:transform .15s,border-color .15s}
+.platform-card:hover {transform:translateY(-3px);border-color:var(--accent)}
+.platform-card.selected {border-color:var(--accent);background:var(--panel2)}
+
+.platform-logo {
+  width: 49px;
+  height: 49px;
+  margin: 0 auto 12px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+.platform-logo .brand-svg-logo {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+  opacity: 1;
+  filter: none;
+}
+
+.platform-name {font-size:13px;font-weight:bold;color:var(--text)}
+.platform-count {font-size:11px;color:var(--muted);margin-top:7px}
+.fb {background:#1877f2}.ig {background:linear-gradient(135deg,#7545dc,#e84391,#ffad52)}
+.tt {background:#111;color:white;border:1px solid #444}.yt {background:#f21c27}
+.xx {background:#080808;border:1px solid #444}.tg {background:#229ed9}
+.wa {background:#1eae68}.li {background:#0a66c2}.pin {background:#bd081c}.snap {background:#e8db20;color:#171717}
+.toolbar {display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar input,.toolbar select,.field input,.field select,.field textarea {
+  width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;
+  background:var(--bg);color:var(--text);
+}
+.toolbar .search {flex:1;min-width:180px}
+.toolbar select {width:auto;min-width:140px}
+.accounts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.account-card {padding:17px;border:1px solid var(--border);background:var(--panel);border-radius:14px}
+.account-head {display:flex;align-items:center;gap:12px}
+.account-avatar {width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:white;font-size:20px;font-weight:bold;flex-shrink:0}
+.account-info {flex:1;min-width:0}
+.account-info strong {display:block;overflow-wrap:anywhere}
+.account-info p {margin:6px 0 0;color:var(--muted);font-size:12px}
+.status {display:inline-block;font-size:11px;padding:5px 8px;border-radius:20px;background:var(--panel2);color:var(--muted)}
+.account-actions {display:flex;gap:8px;margin-top:16px}
+.account-actions button {flex:1;padding:9px 7px;font-size:12px}
+.empty {text-align:center;padding:35px 15px;border:1px dashed var(--border);border-radius:14px;color:var(--muted);line-height:2}
+.plans {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.plan-card {padding:20px;position:relative}
+.plan-card.featured {border-color:var(--accent)}
+.plan-card h3 {font-size:17px}
+.plan-price {font-size:27px;font-weight:bold;margin:20px 0 6px}
+.plan-price span {font-size:12px;color:var(--muted);font-weight:normal}
+.plan-card ul {padding-right:18px;color:var(--muted);font-size:12px;line-height:2.3;min-height:100px}
+.plan-card button {width:100%}
+.note {background:var(--panel2);padding:14px;border-radius:12px;color:var(--muted);font-size:12px;line-height:1.9;margin-top:18px}
+.overlay {position:fixed;inset:0;background:#0009;z-index:30;display:none;align-items:center;justify-content:center;padding:15px}
+.overlay.open {display:flex}
+.modal {width:min(520px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:23px}
+.modal-head {display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.field {margin-bottom:15px}
+.field label {display:block;font-size:13px;margin-bottom:8px}
+.field textarea {resize:vertical;min-height:75px}
+.form-actions {display:flex;gap:10px;margin-top:20px}
+.form-actions button {flex:1}
+.toast {position:fixed;bottom:20px;left:20px;z-index:50;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;box-shadow:var(--shadow);display:none;max-width:calc(100% - 40px);font-size:13px}
+.toast.show {display:block}
+.page {display:none}.page.active {display:block}
+.mobile-menu {display:none}
+@media(max-width:1100px) {
+ .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .platform-grid {grid-template-columns:repeat(5,minmax(0,1fr))}
+ .plans {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px) {
+ .sidebar {transform:translateX(100%);transition:transform .2s;width:265px;box-shadow:var(--shadow)}
+ .sidebar.open {transform:translateX(0)}
+ .main {margin-right:0}
+ .mobile-menu {display:inline-grid;place-items:center}
+ .topbar {padding:13px 15px}
+ .content {padding:20px 14px}
+ .welcome {align-items:flex-start;flex-direction:column}
+ .platform-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .accounts {grid-template-columns:1fr}
+ .plans {grid-template-columns:1fr}
+ .topbar-sub {display:none}
+ .top-actions .export-top {display:none}
+}
+@media(min-width:761px) {
+ .sidebar.open {transform:none}
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.brand-svg-logo {
+  display: block;
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.account-avatar .brand-svg-logo {
+  width: 25px;
+  height: 25px;
+}
+
+  .facebook-logo { color: #1877F2; }
+.instagram-logo {
+  background: linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5);
+  color: white;
+  border-radius: 12px;
+  width: 34px;
+  height: 34px;
+}
+.tiktok-logo { color: #25F4EE; text-shadow: 2px 1px #FE2C55; }
+.youtube-logo { color: #FF0033; }
+.x-logo { color: #000000; }
+.telegram-logo { color: #229ED9; }
+.whatsapp-logo { color: #25D366; }
+.linkedin-logo { color: #0A66C2; }
+.pinterest-logo { color: #E60023; }
+.snapchat-logo {
+  color: #000;
+  background: #FFFC00;
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+}
+body:not(.light) .x-logo { color: #fff; }
+
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-icon">S</div>
+    <div><div class="brand-name">SocialHub</div><div class="brand-sub">مساحة واحدة لكل حساباتك</div></div>
+  </div>
+  <div class="nav-label">القائمة الرئيسية</div>
+  <button class="nav-item active" data-page="home"><span class="nav-icon">⌂</span>الرئيسية</button>
+  <button class="nav-item" data-page="accounts"><span class="nav-icon">◎</span>حساباتي</button>
+  <button class="nav-item" data-page="posts"><span class="nav-icon">▤</span>المنشورات</button>
+  <button class="nav-item" data-page="schedule"><span class="nav-icon">▦</span>الجدولة</button>
+  <button class="nav-item" data-page="analytics"><span class="nav-icon">▥</span>التحليلات</button>
+  <div class="nav-label">إدارة المنصة</div>
+  <button class="nav-item" data-page="plans"><span class="nav-icon">◇</span>الاشتراكات والباقات</button>
+  <button class="nav-item" data-page="settings"><span class="nav-icon">⚙</span>الإعدادات</button>
+  <div class="sidebar-bottom">
+    <div class="plan-mini">
+      <strong>الباقة الحالية: <span id="sidebarPlan">مجانية</span></strong>
+      <p id="sidebarLimit">يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.</p>
+      <button class="secondary-btn" style="width:100%" data-goto="plans">عرض الباقات</button>
+    </div>
+    <p class="muted small" style="text-align:center;margin-top:17px">SocialHub © 2026</p>
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="icon-btn mobile-menu" id="menuToggle" aria-label="فتح القائمة">☰</button>
+    <div><div class="topbar-title" id="topTitle">لوحة التحكم</div><div class="topbar-sub">تابع حضورك على منصات التواصل</div></div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="themeToggle" title="تغيير المظهر" aria-label="تغيير المظهر">☀</button>
+    <button class="secondary-btn export-top" id="exportBtn">⇩ تصدير البيانات</button>
+    <button class="primary-btn" id="addTop">＋ إضافة حساب</button>
+  </div>
+</header>
+
+<div class="content">
+<section class="page active" id="page-home">
+  <div class="welcome">
+    <div><h1>أهلًا بك في SocialHub 👋</h1><div class="muted">نظّم حساباتك الاجتماعية من مكان واحد.</div></div>
+    <button class="primary-btn" data-goto="accounts">إدارة حساباتي ←</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-top"><span class="muted small">إجمالي الحسابات</span><span class="stat-icon">◎</span></div><div class="stat-value" id="statAccounts">0</div><div class="stat-label">الحسابات المضافة</div></div>
+    <div class="stat"><div class="stat-top"><span class="muted small">المنصات المستخدمة</span><span class="stat-icon">🌐</span></div><div class="stat-value" id="statPlatforms">0</div><div class="stat-label">منصات لديها حسابات</div></div>
+    <div class="stat"><div class="stat-top"><span class="muted small">منشورات تجريبية</span><span class="stat-icon">▤</span></div><div class="stat-value">0</div><div class="stat-label">لا يوجد نشر متصل حاليًا</div></div>
+    <div class="stat"><div class="stat-top"><span class="muted small">الباقة الحالية</span><span class="stat-icon">◇</span></div><div class="stat-value" style="font-size:21px" id="statPlan">مجانية</div><div class="stat-label" id="statPlanLimit">حد الحسابات حسب المنصة</div></div>
+  </div>
+  <div class="section">
+    <div class="section-head"><div><h2>منصات التواصل الاجتماعي</h2><div class="muted small" style="margin-top:7px">اختر منصة لعرض حساباتها أو إضافة حساب جديد.</div></div><button class="secondary-btn" data-goto="accounts">كل الحسابات</button></div>
+    <div class="platform-grid" id="platformGrid"></div>
+  </div>
+  <div class="section">
+    <div class="section-head"><h2>أحدث الحسابات</h2><button class="secondary-btn" data-goto="accounts">عرض الكل</button></div>
+    <div class="accounts" id="recentAccounts"></div>
+  </div>
+  <div class="note">هذه نسخة تجريبية. البيانات محفوظة في هذا المتصفح فقط، ولا يوجد اتصال فعلي بالمنصات أو نشر تلقائي أو دفع إلكتروني.</div>
+</section>
+
+<section class="page" id="page-accounts">
+  <div class="welcome"><div><h1>حساباتي</h1><div class="muted">أضف حساباتك ورتّبها وابحث بينها.</div></div><button class="primary-btn" id="addAccount">＋ إضافة حساب</button></div>
+  <div class="toolbar">
+    <input class="search" id="searchInput" placeholder="ابحث باسم الحساب أو المستخدم..." aria-label="البحث في الحسابات">
+    <select id="platformFilter" aria-label="تصفية حسب المنصة"><option value="">كل المنصات</option></select>
+    <select id="sortSelect" aria-label="ترتيب الحسابات"><option value="new">الأحدث أولًا</option><option value="name">الاسم أبجديًا</option><option value="platform">حسب المنصة</option></select>
+  </div>
+  <div class="accounts" id="accountList"></div>
+  <div class="note">إضافة حساب هنا لا تربطه فعليًا بالمنصة. لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.</div>
+</section>
+
+
+<section class="page" id="page-posts">
+  <div class="welcome">
+    <div>
+      <h1>المنشورات</h1>
+      <div class="muted">اكتب محتواك واحفظه كمسودة للرجوع إليه لاحقًا.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:22px">
+    <h2 id="postFormHeading">إنشاء مسودة جديدة</h2>
+
+    <label for="postTitle">عنوان المنشور</label>
+    <input
+      id="postTitle"
+      type="text"
+      placeholder="مثال: عرض جديد للمتابعين"
+      maxlength="150"
+      style="width:100%;margin:8px 0 16px;padding:12px"
+    >
+
+ 
+<label>المنصات المستهدفة</label>
+<div id="postPlatforms" style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 16px">
+  <label><input type="checkbox" name="postPlatform" value="Facebook" checked> Facebook</label>
+  <label><input type="checkbox" name="postPlatform" value="Instagram"> Instagram</label>
+  <label><input type="checkbox" name="postPlatform" value="TikTok"> TikTok</label>
+  <label><input type="checkbox" name="postPlatform" value="YouTube"> YouTube</label>
+  <label><input type="checkbox" name="postPlatform" value="X"> X</label>
+  <label><input type="checkbox" name="postPlatform" value="Telegram"> Telegram</label>
+  <label><input type="checkbox" name="postPlatform" value="WhatsApp"> WhatsApp</label>
+  <label><input type="checkbox" name="postPlatform" value="LinkedIn"> LinkedIn</label>
+  <label><input type="checkbox" name="postPlatform" value="Pinterest"> Pinterest</label>
+  <label><input type="checkbox" name="postPlatform" value="Snapchat"> Snapchat</label>
+</div>
+
+    <label for="postContent">محتوى المنشور</label>
+    <textarea
+      id="postContent"
+      rows="7"
+      placeholder="اكتب نص المنشور هنا..."
+      style="width:100%;margin:8px 0;padding:12px;resize:vertical"
+    ></textarea>
+
+    <div class="muted" id="postCharCount" style="margin:6px 0 16px">
+      عدد الأحرف: 0
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="primary-btn" id="savePostBtn" type="button">
+        حفظ المسودة
+      </button>
+      <button class="primary-btn" id="cancelPostEditBtn" type="button" style="display:none">
+        إلغاء التعديل
+      </button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:22px;margin-top:20px">
+    <h2>المسودات المحفوظة</h2>
+    <div id="postsList" style="margin-top:16px">
+      <p class="muted">سيتم عرض المسودات هنا.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    تُحفظ المسودات على هذا المتصفح والجهاز فقط. لا يتم نشر المحتوى تلقائيًا على منصات التواصل الاجتماعي.
+  </div>
+</section>
+
+
+<section class="page" id="page-schedule">
+  <div class="welcome"><div><h1>الجدولة</h1><div class="muted">مساحة لتطوير تقويم النشر مستقبلًا.</div></div></div>
+  <div class="card" style="padding:25px;text-align:center;line-height:2.2"><div style="font-size:35px">▦</div><h2>جدولة المنشورات</h2><p class="muted">لم يتم تفعيل الجدولة أو الربط بواجهات المنصات بعد.</p></div>
+</section>
+
+<section class="page" id="page-analytics">
+  <div class="welcome"><div><h1>التحليلات</h1><div class="muted">متابعة الأداء ستكون متاحة بعد إضافة التكاملات المناسبة.</div></div></div>
+  <div class="card" style="padding:25px;text-align:center;line-height:2.2"><div style="font-size:35px">▥</div><h2>تحليلات الحسابات</h2><p class="muted">لا توجد بيانات أداء حقيقية متصلة حاليًا.</p></div>
+</section>
+
+<section class="page" id="page-plans">
+  <div class="welcome"><div><h1>الباقات والاشتراكات</h1><div class="muted">استعرض حدود الباقات التجريبية.</div></div></div>
+  <div class="plans" id="plansGrid"></div>
+  <div class="note">الأسعار والحدود المعروضة تجريبية. اختيار باقة يغيّر الحد المحلي في هذا المتصفح فقط، ولا ينشئ اشتراكًا مدفوعًا ولا يعالج أي دفعات.</div>
+</section>
+
+<section class="page" id="page-settings">
+  <div class="welcome"><div><h1>الإعدادات</h1><div class="muted">إعدادات المظهر والبيانات المحلية.</div></div></div>
+  <div class="card" style="padding:20px;margin-bottom:15px">
+    <h3>المظهر</h3><p class="muted small">اختر الوضع الذي يناسبك.</p>
+    <button class="secondary-btn" id="settingsTheme">تبديل الوضع الداكن / الفاتح</button>
+  </div>
+  <div class="card" style="padding:20px">
+    <h3>بيانات الحسابات</h3><p class="muted small">صدّر نسخة JSON احتياطية من الحسابات المسجلة محليًا.</p>
+    <button class="secondary-btn" id="settingsExport">⇩ تصدير البيانات</button>
+    <hr style="border:0;border-top:1px solid var(--border);margin:20px 0">
+    <h3>حذف البيانات المحلية</h3><p class="muted small">يحذف الحسابات المحفوظة في هذا المتصفح فقط. لا يمكن التراجع عن هذا الإجراء.</p>
+    <button class="danger-btn" id="clearData">حذف جميع الحسابات</button>
+  </div>
+</section>
+</div>
+</main>
+</div>
+
+<div class="overlay" id="accountOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<div class="modal">
+  <div class="modal-head"><h2 id="modalTitle">إضافة حساب جديد</h2><button class="icon-btn" id="closeModal" aria-label="إغلاق">×</button></div>
+  <form id="accountForm">
+    <input type="hidden" id="accountId">
+    <div class="field"><label for="platform">منصة التواصل</label><select id="platform" required></select></div>
+    <div class="field"><label for="accountName">اسم الحساب</label><input id="accountName" maxlength="80" required placeholder="مثال: حساب المتجر"></div>
+    <div class="field"><label for="username">اسم المستخدم أو رابط الحساب (اختياري)</label><input id="username" maxlength="250" placeholder="@username أو رابط عام"></div>
+    <div class="field"><label for="accountNotes">ملاحظات (اختياري)</label><textarea id="accountNotes" maxlength="500" placeholder="اكتب ملاحظات غير سرية"></textarea></div>
+    <div class="form-actions"><button type="button" class="secondary-btn" id="cancelModal">إلغاء</button><button type="submit" class="primary-btn">حفظ الحساب</button></div>
+  </form>
+</div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+
+const PLATFORMS = [
+ {id:"Facebook",name:"Facebook",symbol:"f",cls:"fb",logo:"facebook"},
+ {id:"Instagram",name:"Instagram",symbol:"◎",cls:"ig",logo:"instagram"},
+ {id:"TikTok",name:"TikTok",symbol:"♪",cls:"tt",logo:"tiktok"},
+ {id:"YouTube",name:"YouTube",symbol:"▶",cls:"yt",logo:"youtube"},
+ {id:"X",name:"X",symbol:"𝕏",cls:"xx",logo:"x"},
+ {id:"Telegram",name:"Telegram",symbol:"➤",cls:"tg",logo:"telegram"},
+ {id:"WhatsApp",name:"WhatsApp",symbol:"◉",cls:"wa",logo:"whatsapp"},
+ {id:"LinkedIn",name:"LinkedIn",symbol:"in",cls:"li",logo:"linkedin"},
+ {id:"Pinterest",name:"Pinterest",symbol:"P",cls:"pin",logo:"pinterest"},
+ {id:"Snapchat",name:"Snapchat",symbol:"👻",cls:"snap",logo:"snapchat"}
+];
+
+
+const PLANS = {
+ free:{name:"مجانية",price:0,limit:2,features:["حسابان لكل منصة","إدارة الحسابات","بحث وتصفية","تصدير نسخة البيانات"]},
+ basic:{name:"أساسية",price:200,limit:10,features:["10 حسابات لكل منصة","جميع وظائف المجانية","واجهة منظمة","ميزات إضافية مستقبلية"]},
+ pro:{name:"احترافية",price:299,limit:30,features:["30 حسابًا لكل منصة","جميع وظائف الأساسية","مزايا احترافية مستقبلية","تطويرات مستقبلية"]},
+ business:{name:"أعمال",price:650,limit:100,features:["100 حساب لكل منصة","جميع وظائف الاحترافية","حدود أعلى للحسابات","مزايا أعمال مستقبلية"]}
+};
+
+const STORAGE_KEY = "socialhub_accounts_v1";
+const PLAN_KEY = "socialhub_plan_v1";
+const THEME_KEY = "socialhub_theme_v1";
+const POSTS_KEY = "socialhub_posts_v1";
+let accounts = loadAccounts();
+let currentPlan = localStorage.getItem(PLAN_KEY) || "free";
+if (!PLANS[currentPlan]) currentPlan = "free";
+let selectedPlatform = "";
+
+function loadAccounts() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(data) ? data.filter(a =>
+      a && typeof a.id === "string" &&
+      typeof a.platform === "string" &&
+      typeof a.name === "string"
+    ) : [];
+  } catch { return []; }
+}
+function saveAccounts() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(accounts));
+    return true;
+  } catch {
+    notify("تعذر حفظ البيانات. قد تكون مساحة التخزين ممتلئة.");
+    return false;
+  }
+}
+
+let posts = loadPosts();
+
+function loadPosts() {
+  try {
+    const data = JSON.parse(localStorage.getItem(POSTS_KEY) || "[]");
+    return Array.isArray(data)
+      ? data.filter(p =>
+          p &&
+          typeof p.id === "string" &&
+          typeof p.title === "string" &&
+          typeof p.content === "string" &&
+          typeof p.platform === "string"
+        )
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function savePosts() {
+  try {
+    localStorage.setItem(POSTS_KEY, JSON.stringify(posts));
+    return true;
+  } catch {
+    notify("تعذر حفظ المسودات. قد تكون مساحة التخزين ممتلئة.");
+    return false;
+  }
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+function platformInfo(id) {
+  return PLATFORMS.find(p => p.id === id) || PLATFORMS[0];
+}
+function notify(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(notify.timer);
+  notify.timer = setTimeout(() => toast.classList.remove("show"), 2800);
+}
+function countFor(platform) {
+  return accounts.filter(a => a.platform === platform).length;
+}
+function limitReached(platform, editingId="") {
+  return accounts.filter(a => a.platform === platform && a.id !== editingId).length >= PLANS[currentPlan].limit;
+}
+function applyTheme(theme) {
+  document.body.classList.toggle("light", theme === "light");
+  localStorage.setItem(THEME_KEY, theme);
+  document.getElementById("themeToggle").textContent = theme === "light" ? "☾" : "☀";
+}
+function toggleTheme() {
+  applyTheme(document.body.classList.contains("light") ? "dark" : "light");
+}
+function goTo(page) {
+  const valid = ["home","accounts","posts","schedule","analytics","plans","settings"];
+  if (!valid.includes(page)) page = "home";
+  document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
+  document.getElementById("page-" + page).classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(el =>
+    el.classList.toggle("active", el.dataset.page === page)
+  );
+  const titles = {
+    home:"لوحة التحكم",accounts:"حساباتي",posts:"المنشورات",
+    schedule:"الجدولة",analytics:"التحليلات",plans:"الباقات والاشتراكات",
+    settings:"الإعدادات"
+  };
+  document.getElementById("topTitle").textContent = titles[page];
+  document.getElementById("sidebar").classList.remove("open");
+  if (page === "accounts") renderAccounts();
+}
+function renderPlatformOptions() {
+  const options = PLATFORMS.map(p =>
+    `<option value="${p.id}">${p.name}</option>`
+  ).join("");
+  document.getElementById("platform").innerHTML = options;
+  document.getElementById("platformFilter").innerHTML =
+    '<option value="">كل المنصات</option>' + options;
+}
+
+let editingPostId = null;
+
+
+function resetPostForm() {
+  document.getElementById("postTitle").value = "";
+
+  document.querySelectorAll('input[name="postPlatform"]').forEach((checkbox, index) => {
+    checkbox.checked = index === 0;
+  });
+
+  document.getElementById("postContent").value = "";
+  document.getElementById("postFormHeading").textContent = "إنشاء مسودة جديدة";
+  document.getElementById("savePostBtn").textContent = "حفظ المسودة";
+  document.getElementById("cancelPostEditBtn").style.display = "none";
+  editingPostId = null;
+  updatePostCharCount();
+}
+
+
+function updatePostCharCount() {
+  const content = document.getElementById("postContent").value;
+  document.getElementById("postCharCount").textContent =
+    "عدد الأحرف: " + content.length;
+}
+
+
+function renderPosts() {
+  const list = document.getElementById("postsList");
+
+  if (!posts.length) {
+    list.innerHTML = '<p class="muted">لا توجد مسودات محفوظة حتى الآن.</p>';
+    return;
+  }
+
+  list.innerHTML = posts.map(post => {
+    const selectedPlatforms = Array.isArray(post.platforms)
+      ? post.platforms
+      : [post.platform];
+
+    const platformNames = selectedPlatforms
+      .filter(id => PLATFORMS.some(p => p.id === id))
+      .map(id => platformInfo(id).name)
+      .map(name => escapeHTML(name))
+      .join("، ");
+
+    return `
+      <div class="card" style="padding:16px;margin-bottom:12px">
+        <h3>${escapeHTML(post.title || "منشور بدون عنوان")}</h3>
+        <div class="muted" style="margin:6px 0">
+          المنصات المستهدفة: ${platformNames || "غير محددة"}
+        </div>
+        <p style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHTML(post.content)}</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="primary-btn" type="button" data-edit-post="${escapeHTML(post.id)}">تعديل</button>
+          <button class="primary-btn" type="button" data-delete-post="${escapeHTML(post.id)}">حذف</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function savePostDraft() {
+  const title = document.getElementById("postTitle").value.trim();
+  const platforms = Array.from(
+    document.querySelectorAll('input[name="postPlatform"]:checked')
+  ).map(checkbox => checkbox.value);
+  const content = document.getElementById("postContent").value.trim();
+
+  if (!content) {
+    notify("اكتب محتوى المنشور أولًا.");
+    return;
+  }
+
+  if (platforms.length === 0) {
+    notify("اختَر منصة واحدة على الأقل.");
+    return;
+  }
+
+  const validPlatforms = platforms.every(platform =>
+    PLATFORMS.some(p => p.id === platform)
+  );
+
+  if (!validPlatforms) {
+    notify("يوجد اختيار منصة غير صحيح.");
+    return;
+  }
+
+  const now = new Date().toISOString();
+
+  if (editingPostId) {
+    const index = posts.findIndex(p => p.id === editingPostId);
+    if (index === -1) {
+      notify("لم يتم العثور على المسودة المطلوبة.");
+      return;
+    }
+
+    posts[index] = {
+      ...posts[index],
+      title,
+      platform: platforms[0],
+      platforms,
+      content,
+      updatedAt: now
+    };
+  } else {
+    posts.unshift({
+      id: "post_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8),
+      title,
+      platform: platforms[0],
+      platforms,
+      content,
+      createdAt: now,
+      updatedAt: now
+    });
+  }
+
+  if (!savePosts()) return;
+
+  renderPosts();
+  resetPostForm();
+  notify("تم حفظ المسودة بنجاح.");
+}
+
+
+function editPostDraft(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+
+  editingPostId = id;
+
+  document.getElementById("postTitle").value = post.title || "";
+  document.getElementById("postContent").value = post.content || "";
+
+  const selectedPlatforms = Array.isArray(post.platforms)
+    ? post.platforms
+    : [post.platform || "Facebook"];
+
+  document.querySelectorAll('input[name="postPlatform"]').forEach(checkbox => {
+    checkbox.checked = selectedPlatforms.includes(checkbox.value);
+  });
+
+  document.getElementById("postFormHeading").textContent = "تعديل المسودة";
+  document.getElementById("savePostBtn").textContent = "حفظ التعديلات";
+  document.getElementById("cancelPostEditBtn").style.display = "inline-block";
+
+  updatePostCharCount();
+
+  document.getElementById("postTitle").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+
+function deletePostDraft(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+
+  if (!confirm("هل تريد حذف هذه المسودة نهائيًا؟")) return;
+
+  const previousPosts = posts;
+  posts = posts.filter(p => p.id !== id);
+
+  if (!savePosts()) {
+    posts = previousPosts;
+    return;
+  }
+
+  if (editingPostId === id) resetPostForm();
+  renderPosts();
+  notify("تم حذف المسودة.");
+}
+
+document.getElementById("savePostBtn").addEventListener("click", savePostDraft);
+document.getElementById("cancelPostEditBtn").addEventListener("click", resetPostForm);
+document.getElementById("postContent").addEventListener("input", updatePostCharCount);
+
+document.getElementById("postsList").addEventListener("click", event => {
+  const editButton = event.target.closest("[data-edit-post]");
+  const deleteButton = event.target.closest("[data-delete-post]");
+
+  if (editButton) editPostDraft(editButton.dataset.editPost);
+  if (deleteButton) deletePostDraft(deleteButton.dataset.deletePost);
+});
+
+renderPosts();
+updatePostCharCount();
+
+
+
+
+function platformLogo(platformId) {
+  const icons = {
+    Facebook:
+      '<text x="24" y="39" text-anchor="middle" font-size="40" font-weight="bold" fill="#fff">f</text>',
+    Instagram:
+      '<rect x="8" y="8" width="32" height="32" rx="10" fill="none" stroke="#fff" stroke-width="4"/><circle cx="24" cy="24" r="8" fill="none" stroke="#fff" stroke-width="4"/><circle cx="34" cy="14" r="2.5" fill="#fff"/>',
+    TikTok:
+      '<path d="M27 7v22a9 9 0 1 1-8-9v7a3 3 0 1 0 2 3V7h6c1 6 4 9 9 10v7c-4 0-7-2-9-4z" fill="#fff"/>',
+    YouTube:
+      '<rect x="4" y="11" width="40" height="26" rx="8" fill="#fff"/><path d="M21 17l11 7-11 7z" fill="#FF0033"/>',
+    X:
+      '<path d="M8 6h9l19 36h-9zM36 6h-7L8 42h7z" fill="#fff"/>',
+    Telegram:
+      '<path d="M5 22L42 7 34 41 23 31 17 37 18 27z" fill="#fff"/><path d="M18 27L34 15 23 31" fill="none" stroke="#229ED9" stroke-width="2"/>',
+    WhatsApp:
+      '<path d="M12 36l2-8a17 17 0 1 1 7 7z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><path d="M18 16q-3 5 4 12t11 3l-4-5-4 2q-4-2-5-6l2-3z" fill="#fff"/>',
+    LinkedIn:
+      '<rect x="6" y="6" width="36" height="36" rx="4" fill="#fff"/><text x="24" y="32" text-anchor="middle" font-size="23" font-weight="bold" fill="#0A66C2">in</text>',
+    Pinterest:
+      '<circle cx="24" cy="24" r="19" fill="#fff"/><text x="24" y="36" text-anchor="middle" font-size="32" font-weight="bold" fill="#E60023">P</text>',
+    Snapchat:
+      '<path d="M24 5c-8 0-11 6-11 14 0 3 0 6-3 8l-4 3c0 2 5 3 8 3 2 4 6 5 10 5s8-1 10-5c3 0 8-1 8-3l-4-3c-3-2-3-5-3-8 0-8-3-14-11-14z" fill="#000"/>'
+  };
+
+  const icon = icons[platformId];
+
+  if (!icon) {
+    return '<span class="brand-logo">●</span>';
+  }
+
+  return `<svg class="brand-svg-logo"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 48 48"
+    role="img"
+    aria-label="${platformId}"
+    focusable="false">${icon}</svg>`;
+}
+
+
+  function renderPlatformGrid() {
+  document.getElementById("platformGrid").innerHTML = PLATFORMS.map(p => `
+    <button class="platform-card ${selectedPlatform === p.id ? "selected" : ""}" data-platform="${p.id}">
+    
+<div class="platform-logo ${p.cls}">${platformLogo(p.id)}</div>
+
+      <div class="platform-name">${p.name}</div>
+      <div class="platform-count">${countFor(p.id)} حساب</div>
+    </button>`).join("");
+  document.querySelectorAll("[data-platform]").forEach(button => {
+    button.addEventListener("click", () => {
+      selectedPlatform = button.dataset.platform;
+      document.getElementById("platformFilter").value = selectedPlatform;
+      goTo("accounts");
+      renderPlatformGrid();
+      renderAccounts();
+    });
+  });
+}
+
+function accountCard(a) {
+  const p = platformInfo(a.platform);
+  const logos = {
+    Facebook: '<span class="brand-logo facebook-logo">f</span>',
+    Instagram: '<span class="brand-logo instagram-logo">◎</span>',
+    TikTok: '<span class="brand-logo tiktok-logo">♪</span>',
+    YouTube: '<span class="brand-logo youtube-logo">▶</span>',
+    X: '<span class="brand-logo x-logo">𝕏</span>',
+    Telegram: '<span class="brand-logo telegram-logo">➤</span>',
+    WhatsApp: '<span class="brand-logo whatsapp-logo">◉</span>',
+    LinkedIn: '<span class="brand-logo linkedin-logo">in</span>',
+    Pinterest: '<span class="brand-logo pinterest-logo">P</span>',
+    Snapchat: '<span class="brand-logo snapchat-logo">👻</span>'
+  };
+
+const logo = platformLogo(a.platform);
+
+  return `<article class="account-card">
+    <div class="account-head">
+      <div class="account-avatar ${p.cls}">${logo}</div>
+      <div class="account-info">
+        <strong>${escapeHTML(a.name)}</strong>
+        <p>${escapeHTML(p.name)}${a.username ? " · " + escapeHTML(a.username) : ""}</p>
+      </div>
+      <span class="status">محلي</span>
+    </div>
+    ${a.notes ? `<p class="muted small">${escapeHTML(a.notes)}</p>` : ""}
+    <div class="account-actions">
+      <button class="secondary-btn" data-edit="${escapeHTML(a.id)}">تعديل</button>
+      <button class="danger-btn" data-delete="${escapeHTML(a.id)}">حذف</button>
+    </div>
+  </article>`;
+}
+
+function attachAccountActions(container) {
+  container.querySelectorAll("[data-edit]").forEach(button =>
+    button.addEventListener("click", () => openEdit(button.dataset.edit))
+  );
+  container.querySelectorAll("[data-delete]").forEach(button =>
+    button.addEventListener("click", () => deleteAccount(button.dataset.delete))
+  );
+}
+function renderAccounts() {
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
+  const filter = document.getElementById("platformFilter").value;
+  const sort = document.getElementById("sortSelect").value;
+  let list = accounts.filter(a =>
+    (!filter || a.platform === filter) &&
+    (!search || [a.name,a.username,a.platform,a.notes].some(v => String(v || "").toLowerCase().includes(search)))
+  );
+  if (sort === "name") list.sort((a,b) => a.name.localeCompare(b.name,"ar"));
+  else if (sort === "platform") list.sort((a,b) => a.platform.localeCompare(b.platform));
+  else list.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+  const container = document.getElementById("accountList");
+  container.innerHTML = list.length ? list.map(accountCard).join("") :
+    `<div class="empty" style="grid-column:1/-1">لا توجد حسابات مطابقة.<br>أضف حسابًا جديدًا أو غيّر خيارات البحث.</div>`;
+  attachAccountActions(container);
+}
+function renderRecent() {
+  const list = [...accounts].sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0)).slice(0,4);
+  const container = document.getElementById("recentAccounts");
+  container.innerHTML = list.length ? list.map(accountCard).join("") :
+    `<div class="empty" style="grid-column:1/-1">لسه ما أضفتش أي حسابات.<br>ابدأ بإضافة أول حساب لك.</div>`;
+  attachAccountActions(container);
+}
+function renderPlans() {
+  document.getElementById("plansGrid").innerHTML = Object.entries(PLANS).map(([id,p]) => `
+    <article class="plan-card ${id === "pro" ? "featured" : ""}">
+      <h3>${p.name}</h3>
+      <div class="plan-price">${p.price === 0 ? "مجانًا" : p.price + " ج.م"}${p.price ? '<span> / شهر (سعر تجريبي)</span>' : ""}</div>
+      <div class="muted small">حتى ${p.limit} حسابًا لكل منصة</div>
+      <ul>${p.features.map(f => `<li>${escapeHTML(f)}</li>`).join("")}</ul>
+      <button class="${id === currentPlan ? "secondary-btn" : "primary-btn"}" data-plan="${id}" ${id === currentPlan ? "disabled" : ""}>
+        ${id === currentPlan ? "الباقة الحالية" : "اختيار تجريبي"}
+      </button>
+    </article>`).join("");
+  document.querySelectorAll("[data-plan]").forEach(button =>
+    button.addEventListener("click", () => {
+      const id = button.dataset.plan;
+      if (!PLANS[id]) return;
+      if (id !== currentPlan && !confirm("سيتم تغيير الحد المحلي في هذا المتصفح فقط. لا توجد عملية دفع. هل تريد المتابعة؟")) return;
+      currentPlan = id;
+      localStorage.setItem(PLAN_KEY,id);
+      renderAll();
+      notify("تم تحديث الباقة التجريبية.");
+    })
+  );
+}
+function renderAll() {
+  document.getElementById("statAccounts").textContent = accounts.length;
+  document.getElementById("statPlatforms").textContent = new Set(accounts.map(a => a.platform)).size;
+  document.getElementById("statPlan").textContent = PLANS[currentPlan].name;
+  document.getElementById("statPlanLimit").textContent = "حتى " + PLANS[currentPlan].limit + " حسابًا لكل منصة";
+  document.getElementById("sidebarPlan").textContent = PLANS[currentPlan].name;
+  document.getElementById("sidebarLimit").textContent = "حد الحسابات: " + PLANS[currentPlan].limit + " لكل منصة (تجريبي).";
+  renderPlatformGrid();
+  renderRecent();
+  renderAccounts();
+  renderPlans();
+}
+function openAdd(platform="") {
+  document.getElementById("accountForm").reset();
+  document.getElementById("accountId").value = "";
+  document.getElementById("modalTitle").textContent = "إضافة حساب جديد";
+  document.getElementById("platform").value = platform || PLATFORMS[0].id;
+  document.getElementById("accountOverlay").classList.add("open");
+  document.getElementById("accountName").focus();
+}
+function openEdit(id) {
+  const a = accounts.find(x => x.id === id);
+  if (!a) return;
+  document.getElementById("accountId").value = a.id;
+  document.getElementById("platform").value = a.platform;
+  document.getElementById("accountName").value = a.name;
+  document.getElementById("username").value = a.username || "";
+  document.getElementById("accountNotes").value = a.notes || "";
+  document.getElementById("modalTitle").textContent = "تعديل الحساب";
+  document.getElementById("accountOverlay").classList.add("open");
+  document.getElementById("accountName").focus();
+}
+function closeModal() {
+  document.getElementById("accountOverlay").classList.remove("open");
+}
+function deleteAccount(id) {
+  const a = accounts.find(x => x.id === id);
+  if (!a || !confirm(`هل تريد حذف الحساب "${a.name}" من هذا المتصفح؟`)) return;
+  const old = accounts;
+  accounts = accounts.filter(x => x.id !== id);
+  if (!saveAccounts()) { accounts = old; return; }
+  renderAll();
+  notify("تم حذف الحساب.");
+}
+function exportData() {
+  const data = {
+    app:"SocialHub",
+    exportedAt:new Date().toISOString(),
+    note:"بيانات تجريبية محلية. لا تتضمن كلمات مرور أو رموز وصول.",
+    currentPlan,
+    accounts
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "socialhub-backup.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  notify("تم تجهيز نسخة البيانات للتنزيل.");
+}
+
+document.querySelectorAll("[data-page]").forEach(button =>
+  button.addEventListener("click", () => goTo(button.dataset.page))
+);
+document.querySelectorAll("[data-goto]").forEach(button =>
+  button.addEventListener("click", () => goTo(button.dataset.goto))
+);
+document.getElementById("addTop").addEventListener("click", () => openAdd(selectedPlatform));
+document.getElementById("addAccount").addEventListener("click", () => openAdd(selectedPlatform));
+document.getElementById("closeModal").addEventListener("click", closeModal);
+document.getElementById("cancelModal").addEventListener("click", closeModal);
+document.getElementById("accountOverlay").addEventListener("click", e => {
+  if (e.target.id === "accountOverlay") closeModal();
+});
+document.getElementById("themeToggle").addEventListener("click",toggleTheme);
+document.getElementById("settingsTheme").addEventListener("click",toggleTheme);
+document.getElementById("exportBtn").addEventListener("click",exportData);
+document.getElementById("settingsExport").addEventListener("click",exportData);
+document.getElementById("searchInput").addEventListener("input",renderAccounts);
+document.getElementById("platformFilter").addEventListener("change",() => {
+  selectedPlatform = document.getElementById("platformFilter").value;
+  renderPlatformGrid();
+  renderAccounts();
+});
+document.getElementById("sortSelect").addEventListener("change",renderAccounts);
+document.getElementById("menuToggle").addEventListener("click",() =>
+  document.getElementById("sidebar").classList.toggle("open")
+);
+document.getElementById("clearData").addEventListener("click",() => {
+  if (!confirm("تحذير: سيتم حذف جميع الحسابات المحفوظة محليًا. هل أنت متأكد؟")) return;
+  const old = accounts;
+  accounts = [];
+  if (!saveAccounts()) { accounts = old; return; }
+  renderAll();
+  notify("تم حذف جميع الحسابات المحلية.");
+});
+document.getElementById("accountForm").addEventListener("submit",e => {
+  e.preventDefault();
+  const id = document.getElementById("accountId").value;
+  const platform = document.getElementById("platform").value;
+  const name = document.getElementById("accountName").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const notes = document.getElementById("accountNotes").value.trim();
+  if (!PLATFORMS.some(p => p.id === platform) || !name) {
+    notify("من فضلك أدخل اسم الحساب واختر منصة صحيحة.");
+    return;
+  }
+  if (limitReached(platform,id)) {
+    notify("وصلت للحد التجريبي لهذه المنصة في الباقة الحالية.");
+    return;
+  }
+  const old = accounts;
+  if (id) {
+    accounts = accounts.map(a => a.id === id ? {...a,platform,name,username,notes} : a);
+  } else {
+    accounts.unshift({
+      id:crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2),
+      platform,name,username,notes,createdAt:Date.now()
+    });
+  }
+  if (!saveAccounts()) { accounts = old; return; }
+  closeModal();
+  renderAll();
+  notify(id ? "تم تحديث الحساب." : "تمت إضافة الحساب.");
+});
+document.addEventListener("keydown",e => {
+  if (e.key === "Escape") closeModal();
+});
+
+renderPlatformOptions();
+applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+renderAll();
+</script>
+</body>
+</html>
