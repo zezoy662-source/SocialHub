@@ -591,6 +591,7 @@ function updatePostCharCount() {
     "عدد الأحرف: " + content.length;
 }
 
+
 function renderPosts() {
   const list = document.getElementById("postsList");
 
@@ -599,21 +600,32 @@ function renderPosts() {
     return;
   }
 
-  list.innerHTML = posts.map(post => `
-    <div class="card" style="padding:16px;margin-bottom:12px">
-      <h3>${escapeHTML(post.title || "منشور بدون عنوان")}</h3>
-      <div class="muted" style="margin:6px 0">
-        المنصة: ${escapeHTML(platformInfo(post.platform).name)}
-      </div>
-      <p style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHTML(post.content)}</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <button class="primary-btn" type="button" data-edit-post="${escapeHTML(post.id)}">تعديل</button>
-        <button class="primary-btn" type="button" data-delete-post="${escapeHTML(post.id)}">حذف</button>
-      </div>
-    </div>
-  `).join("");
-}
+  list.innerHTML = posts.map(post => {
+    const selectedPlatforms = Array.isArray(post.platforms)
+      ? post.platforms
+      : [post.platform];
 
+    const platformNames = selectedPlatforms
+      .filter(id => PLATFORMS.some(p => p.id === id))
+      .map(id => platformInfo(id).name)
+      .map(name => escapeHTML(name))
+      .join("، ");
+
+    return `
+      <div class="card" style="padding:16px;margin-bottom:12px">
+        <h3>${escapeHTML(post.title || "منشور بدون عنوان")}</h3>
+        <div class="muted" style="margin:6px 0">
+          المنصات المستهدفة: ${platformNames || "غير محددة"}
+        </div>
+        <p style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHTML(post.content)}</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="primary-btn" type="button" data-edit-post="${escapeHTML(post.id)}">تعديل</button>
+          <button class="primary-btn" type="button" data-delete-post="${escapeHTML(post.id)}">حذف</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
 
 function savePostDraft() {
   const title = document.getElementById("postTitle").value.trim();
@@ -677,17 +689,28 @@ function savePostDraft() {
   notify("تم حفظ المسودة بنجاح.");
 }
 
+
 function editPostDraft(id) {
   const post = posts.find(p => p.id === id);
   if (!post) return;
 
   editingPostId = id;
-  document.getElementById("postTitle").value = post.title;
-  document.getElementById("postPlatform").value = post.platform;
-  document.getElementById("postContent").value = post.content;
+
+  document.getElementById("postTitle").value = post.title || "";
+  document.getElementById("postContent").value = post.content || "";
+
+  const selectedPlatforms = Array.isArray(post.platforms)
+    ? post.platforms
+    : [post.platform || "Facebook"];
+
+  document.querySelectorAll('input[name="postPlatform"]').forEach(checkbox => {
+    checkbox.checked = selectedPlatforms.includes(checkbox.value);
+  });
+
   document.getElementById("postFormHeading").textContent = "تعديل المسودة";
   document.getElementById("savePostBtn").textContent = "حفظ التعديلات";
   document.getElementById("cancelPostEditBtn").style.display = "inline-block";
+
   updatePostCharCount();
 
   document.getElementById("postTitle").scrollIntoView({
@@ -695,6 +718,7 @@ function editPostDraft(id) {
     block: "center"
   });
 }
+
 
 function deletePostDraft(id) {
   const post = posts.find(p => p.id === id);
