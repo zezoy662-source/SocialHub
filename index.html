@@ -308,15 +308,78 @@ body:not(.light) .x-logo { color: #fff; }
   <div class="note">إضافة حساب هنا لا تربطه فعليًا بالمنصة. لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.</div>
 </section>
 
+
 <section class="page" id="page-posts">
-  <div class="welcome"><div><h1>المنشورات</h1><div class="muted">مكان مخصص لتجهيز محتواك مستقبلًا.</div></div></div>
-  <div class="card" style="padding:25px;text-align:center;line-height:2.2">
-    <div style="font-size:35px">▤</div><h2>إدارة المحتوى</h2>
-    <p class="muted">واجهة المنشورات قيد التجهيز. يمكنك كتابة أفكار المحتوى في أداة خارجية حاليًا.</p>
-    <button class="primary-btn" data-goto="accounts">عرض الحسابات</button>
+  <div class="welcome">
+    <div>
+      <h1>المنشورات</h1>
+      <div class="muted">اكتب محتواك واحفظه كمسودة للرجوع إليه لاحقًا.</div>
+    </div>
   </div>
-  <div class="note">لا يتم إنشاء منشورات أو نشرها فعليًا من هذه الصفحة في الوقت الحالي.</div>
+
+  <div class="card" style="padding:22px">
+    <h2 id="postFormHeading">إنشاء مسودة جديدة</h2>
+
+    <label for="postTitle">عنوان المنشور</label>
+    <input
+      id="postTitle"
+      type="text"
+      placeholder="مثال: عرض جديد للمتابعين"
+      maxlength="150"
+      style="width:100%;margin:8px 0 16px;padding:12px"
+    >
+
+    <label for="postPlatform">منصة النشر</label>
+    <select
+      id="postPlatform"
+      style="width:100%;margin:8px 0 16px;padding:12px"
+    >
+      <option value="facebook">Facebook</option>
+      <option value="instagram">Instagram</option>
+      <option value="tiktok">TikTok</option>
+      <option value="youtube">YouTube</option>
+      <option value="x">X</option>
+      <option value="telegram">Telegram</option>
+      <option value="whatsapp">WhatsApp</option>
+      <option value="linkedin">LinkedIn</option>
+      <option value="pinterest">Pinterest</option>
+      <option value="snapchat">Snapchat</option>
+    </select>
+
+    <label for="postContent">محتوى المنشور</label>
+    <textarea
+      id="postContent"
+      rows="7"
+      placeholder="اكتب نص المنشور هنا..."
+      style="width:100%;margin:8px 0;padding:12px;resize:vertical"
+    ></textarea>
+
+    <div class="muted" id="postCharCount" style="margin:6px 0 16px">
+      عدد الأحرف: 0
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="primary-btn" id="savePostBtn" type="button">
+        حفظ المسودة
+      </button>
+      <button class="primary-btn" id="cancelPostEditBtn" type="button" style="display:none">
+        إلغاء التعديل
+      </button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:22px;margin-top:20px">
+    <h2>المسودات المحفوظة</h2>
+    <div id="postsList" style="margin-top:16px">
+      <p class="muted">سيتم عرض المسودات هنا.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    تُحفظ المسودات على هذا المتصفح والجهاز فقط. لا يتم نشر المحتوى تلقائيًا على منصات التواصل الاجتماعي.
+  </div>
 </section>
+
 
 <section class="page" id="page-schedule">
   <div class="welcome"><div><h1>الجدولة</h1><div class="muted">مساحة لتطوير تقويم النشر مستقبلًا.</div></div></div>
@@ -395,6 +458,7 @@ const PLANS = {
 const STORAGE_KEY = "socialhub_accounts_v1";
 const PLAN_KEY = "socialhub_plan_v1";
 const THEME_KEY = "socialhub_theme_v1";
+const POSTS_KEY = "socialhub_posts_v1";
 let accounts = loadAccounts();
 let currentPlan = localStorage.getItem(PLAN_KEY) || "free";
 if (!PLANS[currentPlan]) currentPlan = "free";
@@ -419,6 +483,36 @@ function saveAccounts() {
     return false;
   }
 }
+
+let posts = loadPosts();
+
+function loadPosts() {
+  try {
+    const data = JSON.parse(localStorage.getItem(POSTS_KEY) || "[]");
+    return Array.isArray(data)
+      ? data.filter(p =>
+          p &&
+          typeof p.id === "string" &&
+          typeof p.title === "string" &&
+          typeof p.content === "string" &&
+          typeof p.platform === "string"
+        )
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function savePosts() {
+  try {
+    localStorage.setItem(POSTS_KEY, JSON.stringify(posts));
+    return true;
+  } catch {
+    notify("تعذر حفظ المسودات. قد تكون مساحة التخزين ممتلئة.");
+    return false;
+  }
+}
+
 function escapeHTML(value) {
   return String(value ?? "").replace(/[&<>"']/g, ch => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
@@ -473,6 +567,152 @@ function renderPlatformOptions() {
   document.getElementById("platformFilter").innerHTML =
     '<option value="">كل المنصات</option>' + options;
 }
+
+let editingPostId = null;
+
+function resetPostForm() {
+  document.getElementById("postTitle").value = "";
+  document.getElementById("postPlatform").value = "facebook";
+  document.getElementById("postContent").value = "";
+  document.getElementById("postFormHeading").textContent = "إنشاء مسودة جديدة";
+  document.getElementById("savePostBtn").textContent = "حفظ المسودة";
+  document.getElementById("cancelPostEditBtn").style.display = "none";
+  editingPostId = null;
+  updatePostCharCount();
+}
+
+function updatePostCharCount() {
+  const content = document.getElementById("postContent").value;
+  document.getElementById("postCharCount").textContent =
+    "عدد الأحرف: " + content.length;
+}
+
+function renderPosts() {
+  const list = document.getElementById("postsList");
+
+  if (!posts.length) {
+    list.innerHTML = '<p class="muted">لا توجد مسودات محفوظة حتى الآن.</p>';
+    return;
+  }
+
+  list.innerHTML = posts.map(post => `
+    <div class="card" style="padding:16px;margin-bottom:12px">
+      <h3>${escapeHTML(post.title || "منشور بدون عنوان")}</h3>
+      <div class="muted" style="margin:6px 0">
+        المنصة: ${escapeHTML(platformInfo(post.platform).name)}
+      </div>
+      <p style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHTML(post.content)}</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="primary-btn" type="button" data-edit-post="${escapeHTML(post.id)}">تعديل</button>
+        <button class="primary-btn" type="button" data-delete-post="${escapeHTML(post.id)}">حذف</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function savePostDraft() {
+  const title = document.getElementById("postTitle").value.trim();
+  const platform = document.getElementById("postPlatform").value;
+  const content = document.getElementById("postContent").value.trim();
+
+  if (!content) {
+    notify("اكتب محتوى المنشور أولًا.");
+    return;
+  }
+
+  const validPlatform = PLATFORMS.some(p => p.id === platform);
+  if (!validPlatform) {
+    notify("اختَر منصة صحيحة.");
+    return;
+  }
+
+  const now = new Date().toISOString();
+
+  if (editingPostId) {
+    const index = posts.findIndex(p => p.id === editingPostId);
+    if (index === -1) {
+      notify("لم يتم العثور على المسودة المطلوبة.");
+      return;
+    }
+
+    posts[index] = {
+      ...posts[index],
+      title,
+      platform,
+      content,
+      updatedAt: now
+    };
+  } else {
+    posts.unshift({
+      id: "post_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8),
+      title,
+      platform,
+      content,
+      createdAt: now,
+      updatedAt: now
+    });
+  }
+
+  if (!savePosts()) return;
+
+  renderPosts();
+  resetPostForm();
+  notify("تم حفظ المسودة بنجاح.");
+}
+
+function editPostDraft(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+
+  editingPostId = id;
+  document.getElementById("postTitle").value = post.title;
+  document.getElementById("postPlatform").value = post.platform;
+  document.getElementById("postContent").value = post.content;
+  document.getElementById("postFormHeading").textContent = "تعديل المسودة";
+  document.getElementById("savePostBtn").textContent = "حفظ التعديلات";
+  document.getElementById("cancelPostEditBtn").style.display = "inline-block";
+  updatePostCharCount();
+
+  document.getElementById("postTitle").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+function deletePostDraft(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+
+  if (!confirm("هل تريد حذف هذه المسودة نهائيًا؟")) return;
+
+  const previousPosts = posts;
+  posts = posts.filter(p => p.id !== id);
+
+  if (!savePosts()) {
+    posts = previousPosts;
+    return;
+  }
+
+  if (editingPostId === id) resetPostForm();
+  renderPosts();
+  notify("تم حذف المسودة.");
+}
+
+document.getElementById("savePostBtn").addEventListener("click", savePostDraft);
+document.getElementById("cancelPostEditBtn").addEventListener("click", resetPostForm);
+document.getElementById("postContent").addEventListener("input", updatePostCharCount);
+
+document.getElementById("postsList").addEventListener("click", event => {
+  const editButton = event.target.closest("[data-edit-post]");
+  const deleteButton = event.target.closest("[data-delete-post]");
+
+  if (editButton) editPostDraft(editButton.dataset.editPost);
+  if (deleteButton) deletePostDraft(deleteButton.dataset.deletePost);
+});
+
+renderPosts();
+updatePostCharCount();
+
 
 
 
