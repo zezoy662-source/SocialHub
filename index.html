@@ -175,7 +175,21 @@ h3 {font-size:15px;margin:0}
   font-weight: 800;
   line-height: 1;
 }
-.facebook-logo { color: #1877F2; }
+
+.brand-svg-logo {
+  display: block;
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.account-avatar .brand-svg-logo {
+  width: 25px;
+  height: 25px;
+}
+
+  .facebook-logo { color: #1877F2; }
 .instagram-logo {
   background: linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5);
   color: white;
@@ -439,10 +453,49 @@ function renderPlatformOptions() {
   document.getElementById("platformFilter").innerHTML =
     '<option value="">كل المنصات</option>' + options;
 }
-function renderPlatformGrid() {
+
+
+function platformLogo(platformId) {
+  const logos = {
+    Facebook: ["facebook", "1877F2"],
+    Instagram: ["instagram", "E4405F"],
+    TikTok: ["tiktok", "FFFFFF"],
+    YouTube: ["youtube", "FF0033"],
+    X: ["x", "FFFFFF"],
+    Telegram: ["telegram", "229ED9"],
+    WhatsApp: ["whatsapp", "25D366"],
+    LinkedIn: ["linkedin", "0A66C2"],
+    Pinterest: ["pinterest", "E60023"],
+    Snapchat: ["snapchat", "000000"]
+  };
+
+  const item = logos[platformId];
+
+  if (!item) {
+    return '<span class="brand-logo">●</span>';
+  }
+
+  const [slug, color] = item;
+
+  return `<img
+    class="brand-svg-logo"
+    src="https://cdn.simpleicons.org/${slug}/${color}"
+    alt="${platformId}"
+    loading="lazy"
+    onerror="this.style.display='none'"
+  >`;
+}
+
+
+  return logos[platformId] || '<span class="brand-logo">●</span>';
+}
+
+  function renderPlatformGrid() {
   document.getElementById("platformGrid").innerHTML = PLATFORMS.map(p => `
     <button class="platform-card ${selectedPlatform === p.id ? "selected" : ""}" data-platform="${p.id}">
-      <div class="platform-logo ${p.cls}">${p.symbol}</div>
+    
+<div class="platform-logo ${p.cls}">${platformLogo(p.id)}</div>
+
       <div class="platform-name">${p.name}</div>
       <div class="platform-count">${countFor(p.id)} حساب</div>
     </button>`).join("");
@@ -471,7 +524,9 @@ function accountCard(a) {
     Pinterest: '<span class="brand-logo pinterest-logo">P</span>',
     Snapchat: '<span class="brand-logo snapchat-logo">👻</span>'
   };
-  const logo = logos[a.platform] || `<span class="brand-logo">${escapeHTML(p.symbol)}</span>`;
+
+const logo = platformLogo(a.platform);
+
   return `<article class="account-card">
     <div class="account-head">
       <div class="account-avatar ${p.cls}">${logo}</div>
