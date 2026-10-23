@@ -96,8 +96,26 @@ h3 {font-size:15px;margin:0}
 .platform-card {padding:17px 12px;text-align:center;cursor:pointer;transition:transform .15s,border-color .15s}
 .platform-card:hover {transform:translateY(-3px);border-color:var(--accent)}
 .platform-card.selected {border-color:var(--accent);background:var(--panel2)}
-.platform-logo {width:49px;height:49px;margin:0 auto 12px;border-radius:15px;display:grid;place-items:center;color:white;font-weight:bold;font-size:23px}
-.platform-name {font-size:13px;font-weight:bold}
+
+.platform-logo {
+  width: 49px;
+  height: 49px;
+  margin: 0 auto 12px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+.platform-logo .brand-svg-logo {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+}
+
+.platform-name {font-size:13px;font-weight:bold;color:var(--text)}
 .platform-count {font-size:11px;color:var(--muted);margin-top:7px}
 .fb {background:#1877f2}.ig {background:linear-gradient(135deg,#7545dc,#e84391,#ffad52)}
 .tt {background:#111;color:white;border:1px solid #444}.yt {background:#f21c27}
