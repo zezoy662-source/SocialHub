@@ -568,9 +568,14 @@ function renderPlatformOptions() {
 
 let editingPostId = null;
 
+
 function resetPostForm() {
   document.getElementById("postTitle").value = "";
-  document.getElementById("postPlatform").value = "facebook";
+
+  document.querySelectorAll('input[name="postPlatform"]').forEach((checkbox, index) => {
+    checkbox.checked = index === 0;
+  });
+
   document.getElementById("postContent").value = "";
   document.getElementById("postFormHeading").textContent = "إنشاء مسودة جديدة";
   document.getElementById("savePostBtn").textContent = "حفظ المسودة";
@@ -578,6 +583,7 @@ function resetPostForm() {
   editingPostId = null;
   updatePostCharCount();
 }
+
 
 function updatePostCharCount() {
   const content = document.getElementById("postContent").value;
