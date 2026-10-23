@@ -486,10 +486,6 @@ function platformLogo(platformId) {
   >`;
 }
 
-
-  return logos[platformId] || '<span class="brand-logo">●</span>';
-}
-
   function renderPlatformGrid() {
   document.getElementById("platformGrid").innerHTML = PLATFORMS.map(p => `
     <button class="platform-card ${selectedPlatform === p.id ? "selected" : ""}" data-platform="${p.id}">
