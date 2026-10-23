@@ -614,9 +614,12 @@ function renderPosts() {
   `).join("");
 }
 
+
 function savePostDraft() {
   const title = document.getElementById("postTitle").value.trim();
-  const platform = document.getElementById("postPlatform").value;
+  const platforms = Array.from(
+    document.querySelectorAll('input[name="postPlatform"]:checked')
+  ).map(checkbox => checkbox.value);
   const content = document.getElementById("postContent").value.trim();
 
   if (!content) {
@@ -624,9 +627,17 @@ function savePostDraft() {
     return;
   }
 
-  const validPlatform = PLATFORMS.some(p => p.id === platform);
-  if (!validPlatform) {
-    notify("اختَر منصة صحيحة.");
+  if (platforms.length === 0) {
+    notify("اختَر منصة واحدة على الأقل.");
+    return;
+  }
+
+  const validPlatforms = platforms.every(platform =>
+    PLATFORMS.some(p => p.id === platform)
+  );
+
+  if (!validPlatforms) {
+    notify("يوجد اختيار منصة غير صحيح.");
     return;
   }
 
@@ -642,7 +653,8 @@ function savePostDraft() {
     posts[index] = {
       ...posts[index],
       title,
-      platform,
+      platform: platforms[0],
+      platforms,
       content,
       updatedAt: now
     };
@@ -650,7 +662,8 @@ function savePostDraft() {
     posts.unshift({
       id: "post_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8),
       title,
-      platform,
+      platform: platforms[0],
+      platforms,
       content,
       createdAt: now,
       updatedAt: now
