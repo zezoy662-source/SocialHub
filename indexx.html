@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SocialHub | إدارة حسابات التواصل</title>
+<style>
+:root{--bg:#101522;--panel:#191f30;--panel2:#222a3d;--text:#f4f6ff;--muted:#a3acc1;--border:#303950;--accent:#7965f5;--accent2:#a08fff;--success:#36c994;--danger:#ff647c;--shadow:0 10px 30px #0002}
+body.light{--bg:#f4f6fb;--panel:#fff;--panel2:#eef1f8;--text:#20273a;--muted:#68738a;--border:#e0e5ef;--accent:#6954ed;--accent2:#8c7bff;--success:#11996b;--danger:#dc405a;--shadow:0 8px 24px #26314d0c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#ffffff;font-family:Tahoma,Arial,sans-serif;transition:background .2s,color .2s}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.sidebar{position:fixed;right:0;top:0;bottom:0;width:245px;padding:23px 16px;background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:10;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:11px;padding:3px 8px 25px}.brand-icon{width:43px;height:43px;border-radius:14px;background:var(--accent);display:grid;place-items:center;color:white;font-size:24px;font-weight:bold}.brand-name{font-size:21px;font-weight:bold}.brand-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-label{font-size:11px;color:var(--muted);padding:12px 12px 9px}.nav-item{border:0;background:transparent;color:var(--muted);width:100%;padding:12px;border-radius:11px;display:flex;align-items:center;gap:12px;text-align:right;margin:3px 0;font-size:14px}.nav-item:hover,.nav-item.active{background:var(--panel2);color:var(--text)}.nav-item.active{box-shadow:inset -3px 0 var(--accent);font-weight:bold}.nav-icon{width:23px;text-align:center;font-size:18px}
+.sidebar-bottom{margin-top:auto;padding-top:20px}.plan-mini{background:var(--panel2);border:1px solid var(--border);padding:14px;border-radius:13px}.plan-mini p{font-size:12px;color:var(--muted);line-height:1.8}
+.main{margin-right:245px;min-height:100vh}.topbar{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px 28px;border-bottom:1px solid var(--border)}.topbar-title{font-size:18px;font-weight:bold}.topbar-sub{color:var(--muted);font-size:12px;margin-top:5px}.top-actions{display:flex;align-items:center;gap:9px}
+.icon-btn,.secondary-btn,.primary-btn,.danger-btn{border:1px solid var(--border);border-radius:10px;padding:10px 13px;background:var(--panel);color:var(--text)}.icon-btn{width:42px;height:42px;padding:0;font-size:18px}.primary-btn{background:var(--accent);border-color:var(--accent);color:white;font-weight:bold}.primary-btn:hover{filter:brightness(1.08)}.secondary-btn:hover,.icon-btn:hover{background:var(--panel2)}.danger-btn{color:var(--danger)}
+.content{padding:28px;max-width:1500px;margin:auto}.welcome{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}h1{font-size:25px;margin:0 0 10px}h2{font-size:18px;margin:0}h3{font-size:15px;margin:0}.muted{color:var(--muted)}.small{font-size:12px}.section{margin-top:30px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.stat,.card,.platform-card,.plan-card{background:var(--panel);border:1px solid var(--border);border-radius:15px;box-shadow:var(--shadow)}.stat{padding:19px}.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--panel2);font-size:21px}.stat-value{font-size:27px;font-weight:bold;margin-top:19px}.stat-label{font-size:13px;color:var(--muted);margin-top:8px}
+.platform-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}.platform-card{padding:17px 12px;text-align:center;cursor:pointer;transition:transform .15s,border-color .15s;color:var(--text)}.platform-card:hover{transform:translateY(-3px);border-color:var(--accent)}.platform-card.selected{border-color:var(--accent);background:var(--panel2)}.platform-logo{width:49px;height:49px;margin:0 auto 12px;border-radius:15px;display:grid;place-items:center;color:white;font-weight:bold;font-size:23px}.brand-svg-logo{display:block;width:27px;height:27px;object-fit:contain;flex-shrink:0}
+.fb{background:#1877f2}.ig{background:linear-gradient(135deg,#7545dc,#e84391,#ffad52)}.tt{background:#111;color:white;border:1px solid #444}.yt{background:#f21c27}.xx{background:#080808;border:1px solid #444}.tg{background:#229ed9}.wa{background:#1eae68}.li{background:#0a66c2}.pin{background:#bd081c}.snap{background:#e8db20;color:#171717}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.toolbar input,.toolbar select,.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text)}.toolbar .search{flex:1;min-width:180px}.toolbar select{width:auto;min-width:140px}
+.accounts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.account-card{padding:17px;border:1px solid var(--border);background:var(--panel);border-radius:14px}.account-head{display:flex;align-items:center;gap:12px}.account-avatar{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:white;font-size:20px;font-weight:bold;flex-shrink:0}.account-info{flex:1;min-width:0}.account-info strong{display:block;overflow-wrap:anywhere}.account-info p{margin:6px 0 0;color:var(--muted);font-size:12px;overflow-wrap:anywhere}.status{display:inline-block;font-size:11px;padding:5px 8px;border-radius:20px;background:var(--panel2);color:var(--muted)}.account-actions{display:flex;gap:8px;margin-top:16px}.account-actions button{flex:1;padding:9px 7px;font-size:12px}.empty{text-align:center;padding:35px 15px;border:1px dashed var(--border);border-radius:14px;color:var(--muted);line-height:2}
+.plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.plan-card{padding:20px;position:relative}.plan-card.featured{border-color:var(--accent)}.plan-card h3{font-size:17px}.plan-price{font-size:27px;font-weight:bold;margin:20px 0 6px}.plan-price span{font-size:12px;color:var(--muted);font-weight:normal}.plan-card ul{padding-right:18px;color:var(--muted);font-size:12px;line-height:2.3;min-height:100px}.plan-card button{width:100%}.note{background:var(--panel2);padding:14px;border-radius:12px;color:var(--muted);font-size:12px;line-height:1.9;margin-top:18px}
+.overlay{position:fixed;inset:0;background:#0009;z-index:30;display:none;align-items:center;justify-content:center;padding:15px}.overlay.open{display:flex}.modal{width:min(520px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:23px}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.field{margin-bottom:15px}.field label{display:block;font-size:13px;margin-bottom:8px}.field textarea{resize:vertical;min-height:75px}.form-actions{display:flex;gap:10px;margin-top:20px}.form-actions button{flex:1}.toast{position:fixed;bottom:20px;left:20px;z-index:50;background:#16803c;border:1px solid var(--border);border-radius:12px;padding:14px 18px;box-shadow:var(--shadow);display:none;width: min(460px, calc(100% - 30px));font-size:20px}.toast.show{display:block}.page{display:none}.page.active{display:block}.mobile-menu{display:none}.brand-logo{display:inline-flex;align-items:center;justify-content:center;width:100%;height:100%;font-weight:800;line-height:1}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.platform-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.sidebar{transform:translateX(100%);transition:transform .2s;width:265px;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.main{margin-right:0}.mobile-menu{display:inline-grid;place-items:center}.topbar{padding:13px 15px}.content{padding:20px 14px}.welcome{align-items:flex-start;flex-direction:column}.platform-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.accounts{grid-template-columns:1fr}.plans{grid-template-columns:1fr}.topbar-sub{display:none}.top-actions .export-top{display:none}}
+@media(min-width:761px){.sidebar.open{transform:none}}
+/* واجهة استقبال SocialHub */
+#landingPage {
+  display: block;
+}
+
+body:has(#landingPage) .sidebar,
+body:has(#landingPage) .main,
+body:has(#landingPage) .overlay {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<div id="landingPage" dir="rtl" style="min-height:100vh;background:#101522;color:#f4f6ff;font-family:Tahoma,Arial,sans-serif;">
+  <header style="max-width:1180px;margin:auto;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:46px;height:46px;border-radius:14px;background:#7965f5;display:grid;place-items:center;font-size:25px;font-weight:bold;">S</div>
+      <div>
+        <div style="font-size:24px;font-weight:bold;">SocialHub</div>
+        <div style="font-size:12px;color:#a3acc1;">مساحة واحدة لكل حساباتك</div>
+      </div>
+    </div>
+    <button type="button" id="landingLoginTop" style="padding:12px 22px;border:1px solid #7965f5;border-radius:10px;background:transparent;color:white;cursor:pointer;font:inherit;">تسجيل الدخول</button>
+  </header>
+
+  <section style="max-width:1180px;margin:auto;padding:65px 24px 75px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:45px;align-items:center;">
+    <div>
+      <div style="display:inline-block;padding:8px 13px;border:1px solid #39334f;border-radius:30px;color:#c2b7ff;background:#1c1c30;font-size:13px;">منصة واحدة لتنظيم حساباتك</div>
+      <h1 style="font-size:clamp(32px,5vw,54px);line-height:1.5;margin:22px 0 15px;">كل حساباتك الاجتماعية،<br><span style="color:#a08fff;">في مكان واحد.</span></h1>
+      <p style="font-size:17px;line-height:2;color:#a3acc1;max-width:540px;">نظّم حساباتك، جهّز منشوراتك، رتّب أفكارك، وتابع خطط المحتوى من مساحة واحدة سهلة الاستخدام.</p>
+      <button type="button" id="landingStart" style="margin-top:18px;padding:15px 25px;border:0;border-radius:12px;background:#7965f5;color:white;font-size:16px;font-weight:bold;cursor:pointer;">ابدأ الآن ←</button>
+      <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:25px;color:#c6cbe0;font-size:13px;">
+        <span>✓ إدارة الحسابات</span>
+        <span>✓ تنظيم المنشورات</span>
+        <span>✓ مكتبة المحتوى</span>
+      </div>
+    </div>
+
+    <div style="padding:25px;border:1px solid #303950;border-radius:24px;background:linear-gradient(145deg,#191f30,#22213b);box-shadow:0 25px 70px #0004;">
+      <div style="font-size:13px;color:#a3acc1;margin-bottom:18px;">مساحة عملك</div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;">
+        <div style="padding:19px;border-radius:15px;background:#101522;border:1px solid #303950;"><div style="font-size:25px;">◎</div><strong style="display:block;margin-top:12px;">حساباتك</strong><div style="font-size:12px;color:#a3acc1;margin-top:7px;">نظّم حسابات منصاتك</div></div>
+        <div style="padding:19px;border-radius:15px;background:#101522;border:1px solid #303950;"><div style="font-size:25px;">▤</div><strong style="display:block;margin-top:12px;">المنشورات</strong><div style="font-size:12px;color:#a3acc1;margin-top:7px;">جهّز أفكارك ونصوصك</div></div>
+        <div style="padding:19px;border-radius:15px;background:#101522;border:1px solid #303950;"><div style="font-size:25px;">▦</div><strong style="display:block;margin-top:12px;">الجدولة</strong><div style="font-size:12px;color:#a3acc1;margin-top:7px;">خطّط لمواعيد النشر</div></div>
+        <div style="padding:19px;border-radius:15px;background:#101522;border:1px solid #303950;"><div style="font-size:25px;">✧</div><strong style="display:block;margin-top:12px;">مكتبة المحتوى</strong><div style="font-size:12px;color:#a3acc1;margin-top:7px;">احتفظ بأفكارك الجاهزة</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid #303950;padding:28px 24px;text-align:center;color:#a3acc1;font-size:12px;">
+    SocialHub — نظّم حضورك الرقمي من مكان واحد
+  </section>
+</div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="brand-icon">S</div><div><div class="brand-name">SocialHub</div><div class="brand-sub">مساحة واحدة لكل حساباتك</div></div></div>
+  <div class="nav-label">القائمة الرئيسية</div>
+  <button class="nav-item active" data-page="home"><span class="nav-icon">⌂</span>الرئيسية</button>
+  <button class="nav-item" data-page="accounts"><span class="nav-icon">◎</span>حساباتي</button>
+  <button class="nav-item" data-page="posts"><span class="nav-icon">▤</span>المنشورات</button>
+  <button class="nav-item" data-page="schedule"><span class="nav-icon">▦</span>الجدولة</button>
+  <button class="nav-item" data-page="analytics"><span class="nav-icon">▥</span>التحليلات</button>
+  <div class="nav-label">إدارة المنصة</div>
+  <button class="nav-item" data-page="plans"><span class="nav-icon">◇</span>الاشتراكات والباقات</button>
+
+<button class="nav-item" data-page="contentLibrary">
+  <span>📚</span>
+  <span>مكتبة المحتوى</span>
+</button>
+
+  <button class="nav-item" data-page="settings"><span class="nav-icon">⚙</span>الإعدادات</button>
+  <div class="sidebar-bottom"><div class="plan-mini"><strong>الباقة الحالية: <span id="sidebarPlan">مجانية</span></strong><p id="sidebarLimit">يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.</p><button class="secondary-btn" style="width:100%" data-goto="plans">عرض الباقات</button></div><p class="muted small" style="text-align:center;margin-top:17px">SocialHub © 2026</p></div>
+</aside>
+<main class="main">
+<header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="icon-btn mobile-menu" id="menuToggle" aria-label="فتح القائمة">☰</button><div><div class="topbar-title" id="topTitle">لوحة التحكم</div><div class="topbar-sub">تابع حضورك على منصات التواصل</div></div></div><div class="top-actions"><button class="icon-btn" id="themeToggle" title="تغيير المظهر" aria-label="تغيير المظهر">☀</button><button class="secondary-btn export-top" id="exportBtn">⇩ تصدير البيانات</button><button class="primary-btn" id="addTop">＋ إضافة حساب</button></div></header>
+<div class="content">
+<section class="page active" id="page-home">
+  <div class="welcome"><div><h1>أهلًا بك في SocialHub 👋</h1><div class="muted">نظّم حساباتك الاجتماعية من مكان واحد.</div></div><button class="primary-btn" data-goto="accounts">إدارة حساباتي ←</button></div>
+  <div class="stats">
+    <div class="stat"><div class="stat-top"><span class="muted small">إجمالي الحسابات</span><span class="stat-icon">◎</span></div><div class="stat-value" id="statAccounts">0</div><div class="stat-label">الحسابات المضافة</div></div>
+    <div class="stat"><div class="stat-top"><span class="muted small">المنصات المستخدمة</span><span class="stat-icon">🌐</span></div><div class="stat-value" id="statPlatforms">0</div><div class="stat-label">منصات لديها حسابات</div></div>
+    <div class="stat"><div class="stat-top"><span class="muted small">منشورات تجريبية</span><span class="stat-icon">▤</span></div><div class="stat-value" id="statPosts">0</div><div class="stat-label">مسودات محفوظة محليًا</div></div>
+    <div class="stat"><div class="stat-top"><span class="muted small">الباقة الحالية</span><span class="stat-icon">◇</span></div><div class="stat-value" style="font-size:21px" id="statPlan">مجانية</div><div class="stat-label" id="statPlanLimit">حد الحسابات حسب المنصة</div></div>
+  </div>
+  <div class="section"><div class="section-head"><div><h2>منصات التواصل الاجتماعي</h2><div class="muted small" style="margin-top:7px">اختر منصة لعرض حساباتها أو إضافة حساب جديد.</div></div><button class="secondary-btn" data-goto="accounts">كل الحسابات</button></div><div class="platform-grid" id="platformGrid"></div></div>
+  <div class="section"><div class="section-head"><h2>أحدث الحسابات</h2><button class="secondary-btn" data-goto="accounts">عرض الكل</button></div><div class="accounts" id="recentAccounts"></div></div>
+  <div class="note">هذه نسخة تجريبية. البيانات محفوظة في هذا المتصفح فقط، ولا يوجد اتصال فعلي بالمنصات أو نشر تلقائي أو دفع إلكتروني.</div>
+</section>
+<section class="page" id="page-accounts"><div class="welcome"><div><h1>حساباتي</h1><div class="muted">أضف حساباتك ورتّبها وابحث بينها.</div></div><button class="primary-btn" id="addAccount">＋ إضافة حساب</button></div><div class="toolbar"><input class="search" id="searchInput" placeholder="ابحث باسم الحساب أو المستخدم..." aria-label="البحث في الحسابات"><select id="platformFilter" aria-label="تصفية حسب المنصة"><option value="">كل المنصات</option></select><select id="sortSelect" aria-label="ترتيب الحسابات"><option value="new">الأحدث أولًا</option><option value="name">الاسم أبجديًا</option><option value="platform">حسب المنصة</option></select></div><div class="accounts" id="accountList"></div><div class="note">إضافة حساب هنا لا تربطه فعليًا بالمنصة. لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.</div></section>
+<section class="page" id="page-posts"><div class="welcome"><div><h1>المنشورات</h1><div class="muted">اكتب محتواك واحفظه كمسودة للرجوع إليه لاحقًا.</div></div></div><div class="card" style="padding:22px"><h2 id="postFormHeading">إنشاء مسودة جديدة</h2><div class="field" style="margin-top:18px"><label for="postTitle">عنوان المنشور</label><input id="postTitle" maxlength="150" placeholder="مثال: عرض جديد للمتابعين"></div><label>المنصات المستهدفة</label><div id="postPlatforms" style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 16px"><label><input type="checkbox" name="postPlatform" value="Facebook" checked> Facebook</label><label><input type="checkbox" name="postPlatform" value="Instagram"> Instagram</label><label><input type="checkbox" name="postPlatform" value="TikTok"> TikTok</label><label><input type="checkbox" name="postPlatform" value="YouTube"> YouTube</label><label><input type="checkbox" name="postPlatform" value="X"> X</label><label><input type="checkbox" name="postPlatform" value="Telegram"> Telegram</label><label><input type="checkbox" name="postPlatform" value="WhatsApp"> WhatsApp</label><label><input type="checkbox" name="postPlatform" value="LinkedIn"> LinkedIn</label><label><input type="checkbox" name="postPlatform" value="Pinterest"> Pinterest</label><label><input type="checkbox" name="postPlatform" value="Snapchat"> Snapchat</label></div><div class="field"><label for="postContent">محتوى المنشور</label><textarea id="postContent" rows="7" placeholder="اكتب نص المنشور هنا..."></textarea></div><div class="muted" id="postCharCount" style="margin:6px 0 16px">عدد الأحرف: 0</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="primary-btn" id="savePostBtn" type="button">حفظ المسودة</button><button class="secondary-btn" id="cancelPostEditBtn" type="button" style="display:none">إلغاء التعديل</button></div></div><div class="card" style="padding:22px;margin-top:20px"><h2>المسودات المحفوظة</h2>
+<div class="toolbar" style="margin-top:16px">
+  <input
+    class="search"
+    id="postsSearch"
+    placeholder="ابحث بعنوان المنشور أو محتواه..."
+    aria-label="البحث في المسودات"
+  >
+  <select id="postsPlatformFilter" aria-label="تصفية المسودات حسب المنصة">
+    <option value="">كل المنصات</option>
+  </select>
+  <span class="muted small" id="postsResultsCount">0 مسودة</span>
+</div>
+<div id="postsList" style="margin-top:16px"></div></div><div class="note">تُحفظ المسودات على هذا المتصفح والجهاز فقط. لا يتم نشر المحتوى تلقائيًا على منصات التواصل الاجتماعي.</div></section>
+
+
+<section class="page" id="page-contentLibrary">
+  <div class="welcome">
+    <div>
+      <h1>مكتبة المحتوى</h1>
+      <div class="muted">نظّم أفكارك ونصوصك والهاشتاجات في مكان واحد.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:20px;margin-top:25px">
+    <h2 style="margin-top:0">＋ إضافة محتوى جديد</h2>
+
+    <div class="field">
+      <label for="libraryTitle">العنوان</label>
+      <input id="libraryTitle" type="text" placeholder="مثال: فكرة فيديو جديد">
+    </div>
+
+    <div class="field">
+      <label for="libraryType">نوع المحتوى</label>
+      <select id="libraryType">
+        <option value="idea">فكرة</option>
+        <option value="text">نص جاهز</option>
+        <option value="hashtags">هاشتاجات</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="libraryContent">المحتوى</label>
+      <textarea id="libraryContent" rows="5" placeholder="اكتب الفكرة أو النص أو الهاشتاجات هنا..."></textarea>
+    </div>
+
+    <button class="primary-btn" type="button" id="saveLibraryItem">
+      حفظ في المكتبة
+    </button>
+  </div>
+
+  <div class="card" style="padding:20px;margin-top:20px">
+    <h2 style="margin-top:0">المحتوى المحفوظ</h2>
+    <div id="libraryItems">
+      <p class="muted">ستظهر العناصر المحفوظة هنا.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    تُحفظ المكتبة على هذا المتصفح والجهاز فقط.
+  </div>
+</section>
+
+<section class="page" id="page-schedule">
+  <div class="welcome">
+    <div>
+      <h1>جدولة المنشورات</h1>
+      <div class="muted">نظّم مواعيد النشر وتابع المنشورات القادمة.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:20px;margin-top:25px">
+    <h2 style="margin-top:0">＋ إضافة موعد نشر</h2>
+
+    <div class="field">
+      <label for="schedulePost">اختر المسودة</label>
+      <select id="schedulePost" required>
+        <option value="">اختر منشورًا محفوظًا</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="schedulePlatform">منصة النشر</label>
+      <select id="schedulePlatform" required>
+        <option value="">اختر المنصة</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="scheduleDateTime">تاريخ ووقت النشر</label>
+      <input type="datetime-local" id="scheduleDateTime" required>
+    </div>
+
+    <div class="field">
+      <label for="scheduleNotes">ملاحظات (اختياري)</label>
+      <textarea id="scheduleNotes" maxlength="500"
+        placeholder="مثال: نشر الفيديو بعد مراجعة الوصف"></textarea>
+    </div>
+
+    <button type="button" class="primary-btn" id="saveScheduleBtn">
+      حفظ موعد النشر
+    </button>
+
+    <p class="muted small" style="line-height:1.8">
+      يتم حفظ المواعيد محليًا على هذا الجهاز. الجدولة الحالية لتنظيم
+      المواعيد والتذكير، ولا تنشر المنشورات تلقائيًا على المنصات.
+    </p>
+  </div>
+
+  <div class="card" style="padding:20px">
+    <h2 style="margin-top:0">المواعيد القادمة</h2>
+    <div id="scheduleList">
+      <p class="muted">سيتم عرض المواعيد المحفوظة هنا.</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="page" id="page-analytics">
+  <div class="welcome">
+    <div>
+      <h1>التحليلات</h1>
+      <div class="muted">إحصائيات SocialHub المحلية</div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card" style="padding:20px">
+      <div class="muted">إجمالي الحسابات</div>
+      <h2 id="analyticsAccounts">0</h2>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="muted">المنصات المستخدمة</div>
+      <h2 id="analyticsPlatforms">0</h2>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="muted">المسودات المحفوظة</div>
+      <h2 id="analyticsPosts">0</h2>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="muted">مواعيد النشر القادمة</div>
+      <h2 id="analyticsUpcoming">0</h2>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="muted">النشر المؤكد يدويًا</div>
+      <h2 id="analyticsDone">0</h2>
+    </div>
+
+<div class="card" style="padding:20px">
+  <div class="muted">المواعيد المتأخرة</div>
+  <h2 id="analyticsOverdue">0</h2>
+  <p id="analyticsOverdueNotice" class="muted small" style="margin-bottom:0">
+    لا توجد مواعيد متأخرة.
+  </p>
+</div>
+
+
+  </div>
+
+  <div class="card" style="padding:20px;margin-top:20px">
+    <h2>توزيع الحسابات حسب المنصة</h2>
+    <div id="analyticsPlatformBreakdown">
+      لم يتم تحميل الإحصائيات بعد.
+    </div>
+  </div>
+
+
+<div class="card" style="padding:20px;margin-top:20px">
+  <h2>ملخص النشاط — آخر 7 أيام</h2>
+
+  <div style="margin:18px 0">
+    <div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:8px">
+      <div class="muted">المسودات المنشأة</div>
+      <h3 id="weeklyPostsCreated" style="margin:0">0</h3>
+    </div>
+    <div style="height:10px;background:var(--border);border-radius:10px;overflow:hidden">
+      <div id="weeklyPostsBar" style="height:10px;min-width:0;background:#B99A55;border-radius:10px;display:block"></div>
+    </div>
+  </div>
+
+  <div style="margin:18px 0">
+    <div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:8px">
+      <div class="muted">مواعيد النشر المؤكدة يدويًا</div>
+      <h3 id="weeklyPublished" style="margin:0">0</h3>
+    </div>
+    <div style="height:10px;background:var(--border);border-radius:10px;overflow:hidden">
+      <div id="weeklyPublishedBar" style="height:10px;min-width:0;background:#B99A55;border-radius:10px;display:block"></div>
+    </div>
+  </div>
+
+  <p class="muted small">
+    يعتمد الملخص على تواريخ الإنشاء وتأكيد النشر المسجلة داخل التطبيق.
+  </p>
+</div>
+
+
+ 
+ <p class="muted small" style="margin-top:15px">
+    هذه إحصائيات محلية وليست بيانات مشاهدات أو تفاعل حقيقية.
+  </p>
+</section>
+
+<section class="page" id="page-plans"><div class="welcome"><div><h1>الباقات والاشتراكات</h1><div class="muted">استعرض حدود الباقات التجريبية.</div></div></div><div class="plans" id="plansGrid"></div><div class="note">الأسعار والحدود المعروضة تجريبية. اختيار باقة يغيّر الحد المحلي في هذا المتصفح فقط، ولا ينشئ اشتراكًا مدفوعًا ولا يعالج أي دفعات.</div></section>
+<section class="page" id="page-settings"><div class="welcome"><div><h1>الإعدادات</h1><div class="muted">إعدادات المظهر والبيانات المحلية.</div></div></div><div class="card" style="padding:20px;margin-bottom:15px"><h3>المظهر</h3><p class="muted small">اختر الوضع الذي يناسبك.</p><button class="secondary-btn" id="settingsTheme">تبديل الوضع الداكن / الفاتح</button></div><div class="card" style="padding:20px"><h3>بيانات الحسابات</h3><p class="muted small">صدّر نسخة JSON احتياطية من الحسابات والمسودات المسجلة محليًا.</p><button class="secondary-btn" id="settingsExport">⇩ تصدير البيانات</button><hr style="border:0;border-top:1px solid var(--border);margin:20px 0"><h3>حذف البيانات المحلية</h3><p class="muted small">يحذف الحسابات والمسودات المحفوظة في هذا المتصفح فقط. لا يمكن التراجع عن هذا الإجراء.</p><button class="danger-btn" id="clearData">حذف جميع الحسابات والمسودات</button></div></section>
+</div></main>
+<div class="overlay" id="accountOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="modal-head"><h2 id="modalTitle">إضافة حساب جديد</h2><button class="icon-btn" id="closeModal" aria-label="إغلاق">×</button></div><form id="accountForm"><input type="hidden" id="accountId"><div class="field"><label for="platform">منصة التواصل</label><select id="platform" required></select></div><div class="field"><label for="accountName">اسم الحساب</label><input id="accountName" maxlength="80" required placeholder="مثال: حساب المتجر"></div><div class="field"><label for="username">اسم المستخدم أو رابط الحساب (اختياري)</label><input id="username" maxlength="250" placeholder="@username أو رابط عام"></div><div class="field"><label for="accountNotes">ملاحظات (اختياري)</label><textarea id="accountNotes" maxlength="500" placeholder="اكتب ملاحظات غير سرية"></textarea></div><div class="form-actions"><button type="button" class="secondary-btn" id="cancelModal">إلغاء</button><button type="submit" class="primary-btn">حفظ الحساب</button></div></form></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+const PLATFORMS=[
+{id:"Facebook",name:"Facebook",symbol:"f",cls:"fb"},{id:"Instagram",name:"Instagram",symbol:"◎",cls:"ig"},{id:"TikTok",name:"TikTok",symbol:"♪",cls:"tt"},{id:"YouTube",name:"YouTube",symbol:"▶",cls:"yt"},{id:"X",name:"X",symbol:"𝕏",cls:"xx"},{id:"Telegram",name:"Telegram",symbol:"➤",cls:"tg"},{id:"WhatsApp",name:"WhatsApp",symbol:"◉",cls:"wa"},{id:"LinkedIn",name:"LinkedIn",symbol:"in",cls:"li"},{id:"Pinterest",name:"Pinterest",symbol:"P",cls:"pin"},{id:"Snapchat",name:"Snapchat",symbol:"👻",cls:"snap"}];
+const PLANS={free:{name:"مجانية",price:0,limit:2,features:["حسابان لكل منصة","إدارة الحسابات","بحث وتصفية","تصدير نسخة البيانات"]},basic:{name:"أساسية",price:200,limit:10,features:["10 حسابات لكل منصة","جميع وظائف المجانية","واجهة منظمة","ميزات إضافية مستقبلية"]},pro:{name:"احترافية",price:299,limit:30,features:["30 حسابًا لكل منصة","جميع وظائف الأساسية","مزايا احترافية مستقبلية","تطويرات مستقبلية"]},business:{name:"أعمال",price:650,limit:100,features:["100 حساب لكل منصة","جميع وظائف الاحترافية","حدود أعلى للحسابات","مزايا أعمال مستقبلية"]}};
+
+const STORAGE_KEY="socialhub_accounts_v1",PLAN_KEY="socialhub_plan_v1",THEME_KEY="socialhub_theme_v1",POSTS_KEY="socialhub_posts_v1",LIBRARY_KEY="socialhub_library_v1";
+
+let accounts=loadAccounts(),currentPlan=localStorage.getItem(PLAN_KEY)||"free",selectedPlatform="",posts=loadPosts(),editingPostId=null;
+if(!PLANS[currentPlan])currentPlan="free";
+function loadAccounts(){try{const d=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");return Array.isArray(d)?d.filter(a=>a&&typeof a.id==="string"&&typeof a.platform==="string"&&typeof a.name==="string"):[]}catch{return[]}}
+function saveAccounts(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(accounts));return true}catch{notify("تعذر حفظ البيانات. قد تكون مساحة التخزين ممتلئة.");return false}}
+function loadPosts(){try{const d=JSON.parse(localStorage.getItem(POSTS_KEY)||"[]");return Array.isArray(d)?d.filter(p=>p&&typeof p.id==="string"&&typeof p.title==="string"&&typeof p.content==="string"&&typeof p.platform==="string"):[]}catch{return[]}}
+
+function savePosts(){
+  try {
+    const now = new Date().toISOString();
+
+    posts = posts.map(p => {
+      if (!p.createdAt) {
+        return { ...p, createdAt: now };
+      }
+      return p;
+    });
+
+    localStorage.setItem(POSTS_KEY, JSON.stringify(posts));
+    return true;
+  } catch {
+    notify("تعذر حفظ المسودات. قد تكون مساحة التخزين ممتلئة.");
+    return false;
+  }
+}
+
+function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function platformInfo(id){return PLATFORMS.find(p=>p.id===id)||PLATFORMS[0]}
+function notify(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(notify.timer);notify.timer=setTimeout(()=>t.classList.remove("show"),2800)}
+function countFor(p){return accounts.filter(a=>a.platform===p).length}
+function limitReached(p,editingId=""){return accounts.filter(a=>a.platform===p&&a.id!==editingId).length>=PLANS[currentPlan].limit}
+function applyTheme(theme){document.body.classList.toggle("light",theme==="light");localStorage.setItem(THEME_KEY,theme);document.getElementById("themeToggle").textContent=theme==="light"?"☾":"☀"}
+function toggleTheme(){applyTheme(document.body.classList.contains("light")?"dark":"light")}
+
+function goTo(page) {
+  const valid = [
+    "home",
+    "accounts",
+    "posts",
+    "contentLibrary",
+    "schedule",
+    "analytics",
+    "plans",
+    "settings"
+  ];
+
+  if (!valid.includes(page)) page = "home";
+
+  document.querySelectorAll(".page").forEach(e =>
+    e.classList.remove("active")
+  );
+
+  const targetPage = document.getElementById("page-" + page);
+  if (!targetPage) return;
+
+  targetPage.classList.add("active");
+
+  document.querySelectorAll(".nav-item").forEach(e =>
+    e.classList.toggle("active", e.dataset.page === page)
+  );
+
+  const titles = {
+    home: "لوحة التحكم",
+    accounts: "حساباتي",
+    posts: "المنشورات",
+    contentLibrary: "مكتبة المحتوى",
+    schedule: "الجدولة",
+    analytics: "التحليلات",
+    plans: "الباقات والاشتراكات",
+    settings: "الإعدادات"
+  };
+
+  document.getElementById("topTitle").textContent =
+    titles[page] || "SocialHub";
+
+  document.getElementById("sidebar").classList.remove("open");
+
+  if (page === "accounts") renderAccounts();
+  if (page === "contentLibrary") renderLibraryItems();
+}
+
+function renderPlatformOptions(){const o=PLATFORMS.map(p=>`<option value="${p.id}">${p.name}</option>`).join("");document.getElementById("platform").innerHTML=o;document.getElementById("platformFilter").innerHTML='<option value="">كل المنصات</option>'+o}
+function platformLogo(id){const icons={
+Facebook:'<text x="24" y="39" text-anchor="middle" font-size="40" font-weight="bold" fill="#fff">f</text>',
+Instagram:'<rect x="8" y="8" width="32" height="32" rx="10" fill="none" stroke="#fff" stroke-width="4"/><circle cx="24" cy="24" r="8" fill="none" stroke="#fff" stroke-width="4"/><circle cx="34" cy="14" r="2.5" fill="#fff"/>',
+TikTok:'<path d="M27 7v22a9 9 0 1 1-8-9v7a3 3 0 1 0 2 3V7h6c1 6 4 9 9 10v7c-4 0-7-2-9-4z" fill="#fff"/>',
+YouTube:'<rect x="4" y="11" width="40" height="26" rx="8" fill="#fff"/><path d="M21 17l11 7-11 7z" fill="#FF0033"/>',
+X:'<path d="M8 6h9l19 36h-9zM36 6h-7L8 42h7z" fill="#fff"/>',
+Telegram:'<path d="M5 22L42 7 34 41 23 31 17 37 18 27z" fill="#fff"/><path d="M18 27L34 15 23 31" fill="none" stroke="#229ED9" stroke-width="2"/>',
+WhatsApp:'<path d="M12 36l2-8a17 17 0 1 1 7 7z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><path d="M18 16q-3 5 4 12t11 3l-4-5-4 2q-4-2-5-6l2-3z" fill="#fff"/>',
+LinkedIn:'<rect x="6" y="6" width="36" height="36" rx="4" fill="#fff"/><text x="24" y="32" text-anchor="middle" font-size="23" font-weight="bold" fill="#0A66C2">in</text>',
+Pinterest:'<circle cx="24" cy="24" r="19" fill="#fff"/><text x="24" y="36" text-anchor="middle" font-size="32" font-weight="bold" fill="#E60023">P</text>',
+Snapchat:'<path d="M24 5c-8 0-11 6-11 14 0 3 0 6-3 8l-4 3c0 2 5 3 8 3 2 4 6 5 10 5s8-1 10-5c3 0 8-1 8-3l-4-3c-3-2-3-5-3-8 0-8-3-14-11-14z" fill="#000"/>'};
+return `<svg class="brand-svg-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="${escapeHTML(id)}" focusable="false">${icons[id]||'<circle cx="24" cy="24" r="12" fill="currentColor"/>'}</svg>`}
+function renderPlatformGrid(){document.getElementById("platformGrid").innerHTML=PLATFORMS.map(p=>`<button class="platform-card ${selectedPlatform===p.id?"selected":""}" data-platform="${p.id}"><div class="platform-logo ${p.cls}">${platformLogo(p.id)}</div><div class="platform-name">${p.name}</div><div class="platform-count">${countFor(p.id)} حساب</div></button>`).join("");document.querySelectorAll("[data-platform]").forEach(b=>b.addEventListener("click",()=>{selectedPlatform=b.dataset.platform;document.getElementById("platformFilter").value=selectedPlatform;goTo("accounts");renderPlatformGrid();renderAccounts()}))}
+function accountCard(a){const p=platformInfo(a.platform);return `<article class="account-card"><div class="account-head"><div class="account-avatar ${p.cls}">${platformLogo(a.platform)}</div><div class="account-info"><strong>${escapeHTML(a.name)}</strong><p>${escapeHTML(p.name)}${a.username?" · "+escapeHTML(a.username):""}</p></div><span class="status">محلي</span></div>${a.notes?`<p class="muted small">${escapeHTML(a.notes)}</p>`:""}<div class="account-actions"><button class="secondary-btn" data-edit="${escapeHTML(a.id)}">تعديل</button><button class="danger-btn" data-delete="${escapeHTML(a.id)}">حذف</button></div></article>`}
+function attachAccountActions(c){c.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>openEdit(b.dataset.edit)));c.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>deleteAccount(b.dataset.delete)))}
+function renderAccounts(){const search=document.getElementById("searchInput").value.trim().toLowerCase(),filter=document.getElementById("platformFilter").value,sort=document.getElementById("sortSelect").value;let list=accounts.filter(a=>(!filter||a.platform===filter)&&(!search||[a.name,a.username,a.platform,a.notes].some(v=>String(v||"").toLowerCase().includes(search))));if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name,"ar"));else if(sort==="platform")list.sort((a,b)=>a.platform.localeCompare(b.platform));else list.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));const c=document.getElementById("accountList");c.innerHTML=list.length?list.map(accountCard).join(""):'<div class="empty" style="grid-column:1/-1">لا توجد حسابات مطابقة.<br>أضف حسابًا جديدًا أو غيّر خيارات البحث.</div>';attachAccountActions(c)}
+function renderRecent(){const list=[...accounts].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,4),c=document.getElementById("recentAccounts");c.innerHTML=list.length?list.map(accountCard).join(""):'<div class="empty" style="grid-column:1/-1">لسه ما أضفتش أي حسابات.<br>ابدأ بإضافة أول حساب لك.</div>';attachAccountActions(c)}
+function renderPlans(){document.getElementById("plansGrid").innerHTML=Object.entries(PLANS).map(([id,p])=>`<article class="plan-card ${id==="pro"?"featured":""}"><h3>${p.name}</h3><div class="plan-price">${p.price===0?"مجانًا":p.price+" ج.م"}${p.price?'<span> / شهر (سعر تجريبي)</span>':""}</div><div class="muted small">حتى ${p.limit} حسابًا لكل منصة</div><ul>${p.features.map(f=>`<li>${escapeHTML(f)}</li>`).join("")}</ul><button class="${id===currentPlan?"secondary-btn":"primary-btn"}" data-plan="${id}" ${id===currentPlan?"disabled":""}>${id===currentPlan?"الباقة الحالية":"اختيار تجريبي"}</button></article>`).join("");document.querySelectorAll("[data-plan]").forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.plan;if(!PLANS[id])return;if(id!==currentPlan&&!confirm("سيتم تغيير الحد المحلي في هذا المتصفح فقط. لا توجد عملية دفع. هل تريد المتابعة؟"))return;currentPlan=id;localStorage.setItem(PLAN_KEY,id);renderAll();notify("تم تحديث الباقة التجريبية.")}))}
+
+function renderAll(){
+  document.getElementById("statAccounts").textContent=accounts.length;
+  document.getElementById("statPlatforms").textContent=new Set(accounts.map(a=>a.platform)).size;
+  document.getElementById("statPosts").textContent=posts.length;
+  document.getElementById("statPlan").textContent=PLANS[currentPlan].name;
+  document.getElementById("statPlanLimit").textContent="حتى "+PLANS[currentPlan].limit+" حسابًا لكل منصة";
+  document.getElementById("sidebarPlan").textContent=PLANS[currentPlan].name;
+  document.getElementById("sidebarLimit").textContent="حد الحسابات: "+PLANS[currentPlan].limit+" لكل منصة (تجريبي).";
+
+  renderPlatformGrid();
+  renderRecent();
+  renderAccounts();
+  renderPlans();
+  renderPosts();
+
+  if (typeof renderAnalytics === "function") {
+    renderAnalytics();
+  }
+}
+
+function openAdd(platform=""){document.getElementById("accountForm").reset();document.getElementById("accountId").value="";document.getElementById("modalTitle").textContent="إضافة حساب جديد";document.getElementById("platform").value=platform||PLATFORMS[0].id;document.getElementById("accountOverlay").classList.add("open");document.getElementById("accountName").focus()}
+function openEdit(id){const a=accounts.find(x=>x.id===id);if(!a)return;document.getElementById("accountId").value=a.id;document.getElementById("platform").value=a.platform;document.getElementById("accountName").value=a.name;document.getElementById("username").value=a.username||"";document.getElementById("accountNotes").value=a.notes||"";document.getElementById("modalTitle").textContent="تعديل الحساب";document.getElementById("accountOverlay").classList.add("open");document.getElementById("accountName").focus()}
+function closeModal(){document.getElementById("accountOverlay").classList.remove("open")}
+function deleteAccount(id){const a=accounts.find(x=>x.id===id);if(!a||!confirm(`هل تريد حذف الحساب "${a.name}" من هذا المتصفح؟`))return;const old=accounts;accounts=accounts.filter(x=>x.id!==id);if(!saveAccounts()){accounts=old;return}renderAll();notify("تم حذف الحساب.")}
+function exportData(){const data={app:"SocialHub",exportedAt:new Date().toISOString(),note:"بيانات تجريبية محلية. لا تتضمن كلمات مرور أو رموز وصول.",currentPlan,accounts,posts};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="socialhub-backup.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);notify("تم تجهيز نسخة البيانات للتنزيل.")}
+function updatePostCharCount(){document.getElementById("postCharCount").textContent="عدد الأحرف: "+document.getElementById("postContent").value.length}
+function resetPostForm(){document.getElementById("postTitle").value="";document.querySelectorAll('input[name="postPlatform"]').forEach((c,i)=>c.checked=i===0);document.getElementById("postContent").value="";document.getElementById("postFormHeading").textContent="إنشاء مسودة جديدة";document.getElementById("savePostBtn").textContent="حفظ المسودة";document.getElementById("cancelPostEditBtn").style.display="none";editingPostId=null;updatePostCharCount()}
+
+function renderPosts() {
+  const list = document.getElementById("postsList");
+  const search = document.getElementById("postsSearch");
+  const filter = document.getElementById("postsPlatformFilter");
+  const count = document.getElementById("postsResultsCount");
+
+  if (!list || !search || !filter || !count) return;
+
+  // تجهيز قائمة المنصات مرة واحدة
+  if (filter.options.length <= 1) {
+    PLATFORMS.forEach(platform => {
+      const option = document.createElement("option");
+      option.value = platform.id;
+      option.textContent = platform.name;
+      filter.appendChild(option);
+    });
+  }
+
+  const query = search.value.trim().toLowerCase();
+  const selectedPlatform = filter.value;
+
+  const filteredPosts = posts.filter(p => {
+    const title = String(p.title || "").toLowerCase();
+    const content = String(p.content || "").toLowerCase();
+    const matchesSearch =
+      title.includes(query) || content.includes(query);
+
+    const platforms = Array.isArray(p.platforms)
+      ? p.platforms
+      : [p.platform].filter(Boolean);
+
+    const matchesPlatform =
+      !selectedPlatform || platforms.includes(selectedPlatform);
+
+    return matchesSearch && matchesPlatform;
+  });
+
+  count.textContent = `${filteredPosts.length} من ${posts.length} مسودة`;
+
+  if (!posts.length) {
+    list.innerHTML =
+      '<p class="muted">لا توجد مسودات محفوظة حتى الآن.</p>';
+    return;
+  }
+
+  if (!filteredPosts.length) {
+    list.innerHTML =
+      '<p class="muted">لا توجد مسودات تطابق البحث أو المنصة المختارة.</p>';
+    return;
+  }
+
+  list.innerHTML = filteredPosts.map(p => {
+    const platforms = Array.isArray(p.platforms)
+      ? p.platforms
+      : [p.platform].filter(Boolean);
+
+    const names = platforms
+      .filter(id => PLATFORMS.some(x => x.id === id))
+      .map(id => escapeHTML(platformInfo(id).name))
+      .join("، ");
+
+    return `
+      <div class="card" style="padding:16px;margin-bottom:12px">
+        <h3>${escapeHTML(p.title || "منشور بدون عنوان")}</h3>
+
+        <div class="muted" style="margin:6px 0">
+          المنصات المستهدفة: ${names || "غير محددة"}
+        </div>
+
+        <p style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHTML(p.content || "")}</p>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="primary-btn" type="button"
+            data-edit-post="${escapeHTML(p.id)}">تعديل</button>
+
+          <button class="danger-btn" type="button"
+            data-delete-post="${escapeHTML(p.id)}">حذف</button>
+<button class="secondary-btn" type="button"
+  data-copy-post="${escapeHTML(p.id)}">نسخ المنشور</button>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function savePostDraft(){const title=document.getElementById("postTitle").value.trim(),platforms=Array.from(document.querySelectorAll('input[name="postPlatform"]:checked')).map(c=>c.value),content=document.getElementById("postContent").value.trim();if(!content){notify("اكتب محتوى المنشور أولًا.");return}if(!platforms.length){notify("اختَر منصة واحدة على الأقل.");return}if(!platforms.every(id=>PLATFORMS.some(p=>p.id===id))){notify("يوجد اختيار منصة غير صحيح.");return}const now=new Date().toISOString();if(editingPostId){const i=posts.findIndex(p=>p.id===editingPostId);if(i<0){notify("لم يتم العثور على المسودة المطلوبة.");return}posts[i]={...posts[i],title,platform:platforms[0],platforms,content,updatedAt:now}}else posts.unshift({id:"post_"+Date.now()+"_"+Math.random().toString(36).slice(2,8),title,platform:platforms[0],platforms,content,createdAt:now,updatedAt:now});if(!savePosts())return;renderPosts();renderAll();resetPostForm();notify("تم حفظ المسودة بنجاح.")}
+function editPostDraft(id){const p=posts.find(x=>x.id===id);if(!p)return;editingPostId=id;document.getElementById("postTitle").value=p.title||"";document.getElementById("postContent").value=p.content||"";const selected=Array.isArray(p.platforms)?p.platforms:[p.platform||"Facebook"];document.querySelectorAll('input[name="postPlatform"]').forEach(c=>c.checked=selected.includes(c.value));document.getElementById("postFormHeading").textContent="تعديل المسودة";document.getElementById("savePostBtn").textContent="حفظ التعديلات";document.getElementById("cancelPostEditBtn").style.display="inline-block";updatePostCharCount();document.getElementById("postTitle").scrollIntoView({behavior:"smooth",block:"center"})}
+function deletePostDraft(id){if(!posts.some(p=>p.id===id)||!confirm("هل تريد حذف هذه المسودة نهائيًا؟"))return;const old=posts;posts=posts.filter(p=>p.id!==id);if(!savePosts()){posts=old;return}if(editingPostId===id)resetPostForm();renderAll();notify("تم حذف المسودة.")}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>goTo(b.dataset.page)));document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>goTo(b.dataset.goto)));
+document.getElementById("addTop").addEventListener("click",()=>openAdd(selectedPlatform));document.getElementById("addAccount").addEventListener("click",()=>openAdd(selectedPlatform));document.getElementById("closeModal").addEventListener("click",closeModal);document.getElementById("cancelModal").addEventListener("click",closeModal);document.getElementById("accountOverlay").addEventListener("click",e=>{if(e.target.id==="accountOverlay")closeModal()});document.getElementById("themeToggle").addEventListener("click",toggleTheme);document.getElementById("settingsTheme").addEventListener("click",toggleTheme);document.getElementById("exportBtn").addEventListener("click",exportData);document.getElementById("settingsExport").addEventListener("click",exportData);
+document.getElementById("searchInput").addEventListener("input",renderAccounts);document.getElementById("platformFilter").addEventListener("change",()=>{selectedPlatform=document.getElementById("platformFilter").value;renderPlatformGrid();renderAccounts()});document.getElementById("sortSelect").addEventListener("change",renderAccounts);document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+document.getElementById("clearData").addEventListener("click",()=>{if(!confirm("تحذير: سيتم حذف جميع الحسابات والمسودات المحفوظة محليًا. هل أنت متأكد؟"))return;const oldA=accounts,oldP=posts;accounts=[];posts=[];if(!saveAccounts()||!savePosts()){accounts=oldA;posts=oldP;saveAccounts();savePosts();return}renderAll();notify("تم حذف جميع البيانات المحلية.")});
+document.getElementById("accountForm").addEventListener("submit",e=>{
+e.preventDefault();
+const id=document.getElementById("accountId").value,platform=document.getElementById("platform").value,name=document.getElementById("accountName").value.trim(),username=document.getElementById("username").value.trim(),notes=document.getElementById("accountNotes").value.trim();
+if(!PLATFORMS.some(p=>p.id===platform)||!name){notify("من فضلك أدخل اسم الحساب واختر منصة صحيحة.");return}
+
+
+const normalizeValue = value => String(value || "")
+  .normalize("NFKC")
+  .trim()
+  .toLocaleLowerCase()
+  .replace(/^https?:\/\//, "")
+  .replace(/^www\./, "")
+  .replace(/\/+$/, "")
+  .replace(/\s+/g, "");
+
+const normalizedName = normalizeValue(name);
+const normalizedUsername = normalizeValue(username);
+
+const duplicate = accounts.some(a => {
+  if (String(a.id) === String(id) || a.platform !== platform) {
+    return false;
+  }
+
+  const existingName = normalizeValue(a.name);
+  const existingUsername = normalizeValue(a.username);
+
+  return (
+    (normalizedName !== "" && normalizedName === existingName) ||
+    (normalizedUsername !== "" &&
+      normalizedUsername === existingUsername)
+  );
+});
+
+
+if (duplicate) {
+  notify("هذا الاسم أو الرابط مسجل بالفعل على نفس المنصة.");
+  return;
+}
+
+if(limitReached(platform,id)){notify("وصلت للحد التجريبي لهذه المنصة في الباقة الحالية.");return}
+const old=accounts;
+if(id){accounts=accounts.map(a=>a.id===id?{...a,platform,name,username,notes}:a)}
+else accounts.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2),platform,name,username,notes,createdAt:Date.now()});
+if(!saveAccounts()){accounts=old;return}
+closeModal();renderAll();notify(id?"تم تحديث الحساب.":"تمت إضافة الحساب.")
+});
+
+document.getElementById("savePostBtn").addEventListener("click", savePostDraft);
+
+document.getElementById("cancelPostEditBtn").addEventListener("click", resetPostForm);
+
+document.getElementById("postContent").addEventListener("input", updatePostCharCount);
+
+document.getElementById("postsList").addEventListener("click", async e => {
+  const edit = e.target.closest("[data-edit-post]");
+  const del = e.target.closest("[data-delete-post]");
+  const copy = e.target.closest("[data-copy-post]");
+
+  if (edit) {
+    editPostDraft(edit.dataset.editPost);
+  }
+
+  if (del) {
+    deletePostDraft(del.dataset.deletePost);
+  }
+
+  if (copy) {
+    const post = posts.find(p => p.id === copy.dataset.copyPost);
+
+    if (!post) {
+      notify("لم يتم العثور على المنشور.");
+      return;
+    }
+
+    const text = `${post.title || ""}\n\n${post.content || ""}`.trim();
+
+    try {
+      await navigator.clipboard.writeText(text);
+      notify("تم نسخ المنشور إلى الحافظة.");
+    } catch {
+      notify("تعذر النسخ تلقائيًا. جرّب النسخ يدويًا.");
+    }
+  }
+});
+
+document.getElementById("postsSearch").addEventListener("input", renderPosts);
+
+document.getElementById("postsPlatformFilter").addEventListener("change", renderPosts);
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModal();
+});
+
+document.getElementById("postsSearch").addEventListener("input", renderPosts);
+
+document.getElementById("postsPlatformFilter").addEventListener("change", renderPosts);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+const SCHEDULE_KEY = "socialhub_schedule_v1";
+let schedules = [];
+
+try {
+  const savedSchedules = JSON.parse(
+    localStorage.getItem(SCHEDULE_KEY) || "[]"
+  );
+  schedules = Array.isArray(savedSchedules) ? savedSchedules : [];
+} catch {
+  schedules = [];
+}
+
+function saveSchedules() {
+  try {
+    localStorage.setItem(SCHEDULE_KEY, JSON.stringify(schedules));
+    return true;
+  } catch {
+    notify("تعذر حفظ مواعيد النشر.");
+    return false;
+  }
+}
+
+
+
+let libraryItems = loadLibraryItems();
+let editingLibraryId = null;
+
+
+function loadLibraryItems() {
+  try {
+    const data = JSON.parse(localStorage.getItem(LIBRARY_KEY) || "[]");
+    return Array.isArray(data)
+      ? data.filter(item =>
+          item &&
+          typeof item.id === "string" &&
+          typeof item.title === "string" &&
+          typeof item.content === "string" &&
+          typeof item.type === "string"
+        )
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLibraryItems() {
+  try {
+    localStorage.setItem(LIBRARY_KEY, JSON.stringify(libraryItems));
+    return true;
+  } catch {
+    notify("تعذر حفظ المكتبة. قد تكون مساحة التخزين ممتلئة.");
+    return false;
+  }
+}
+
+function renderLibraryItems() {
+  const list = document.getElementById("libraryItems");
+  if (!list) return;
+
+  if (!libraryItems.length) {
+    list.innerHTML = '<p class="muted">المكتبة فارغة. أضف أول فكرة أو نص أو مجموعة هاشتاجات.</p>';
+    return;
+  }
+
+  const typeNames = {
+    idea: "فكرة",
+    text: "نص جاهز",
+    hashtags: "هاشتاجات"
+  };
+
+  list.innerHTML = libraryItems.map(item => `
+    <div class="card" style="padding:16px;margin-bottom:12px">
+      <h3>${escapeHTML(item.title)}</h3>
+      <div class="muted small" style="margin-bottom:8px">
+        ${typeNames[item.type] || "محتوى"}
+      </div>
+      <p style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHTML(item.content)}</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+       
+<button class="secondary-btn" type="button"
+  data-copy-library="${escapeHTML(item.id)}">نسخ المحتوى</button>
+<button class="primary-btn" type="button"
+  data-edit-library="${escapeHTML(item.id)}">تعديل</button>
+<button class="danger-btn" type="button"
+  data-delete-library="${escapeHTML(item.id)}">حذف</button>
+
+      </div>
+    </div>
+  `).join("");
+}
+
+function editLibraryItem(id) {
+  const item = libraryItems.find(x => x.id === id);
+
+  if (!item) {
+    notify("لم يتم العثور على العنصر.");
+    return;
+  }
+
+  document.getElementById("libraryTitle").value = item.title;
+  document.getElementById("libraryType").value = item.type;
+  document.getElementById("libraryContent").value = item.content;
+
+  editingLibraryId = item.id;
+
+  const saveButton = document.getElementById("saveLibraryItem");
+  saveButton.textContent = "حفظ التعديلات";
+
+  document.getElementById("libraryTitle").focus();
+  notify("عدّل المحتوى ثم اضغط حفظ التعديلات.");
+}
+
+
+
+function addLibraryItem() {
+  const titleInput = document.getElementById("libraryTitle");
+  const typeInput = document.getElementById("libraryType");
+  const contentInput = document.getElementById("libraryContent");
+
+  const title = titleInput.value.trim();
+  const content = contentInput.value.trim();
+  const type = typeInput.value;
+
+  if (!title || !content) {
+    notify("اكتب العنوان والمحتوى أولًا.");
+    return;
+  }
+
+  if (editingLibraryId) {
+    const index = libraryItems.findIndex(
+      item => item.id === editingLibraryId
+    );
+
+    if (index === -1) {
+      notify("لم يتم العثور على العنصر المطلوب تعديله.");
+      return;
+    }
+
+    const oldItem = { ...libraryItems[index] };
+
+    libraryItems[index] = {
+      ...libraryItems[index],
+      title,
+      content,
+      type
+    };
+
+    if (!saveLibraryItems()) {
+      libraryItems[index] = oldItem;
+      return;
+    }
+
+    editingLibraryId = null;
+    document.getElementById("saveLibraryItem").textContent =
+      "حفظ في المكتبة";
+
+    titleInput.value = "";
+    contentInput.value = "";
+    typeInput.value = "idea";
+
+    renderLibraryItems();
+    notify("تم حفظ التعديلات بنجاح.");
+    return;
+  }
+
+  const item = {
+    id: Date.now().toString() + Math.random().toString(36).slice(2, 7),
+    title,
+    content,
+    type
+  };
+
+  libraryItems.unshift(item);
+
+  if (!saveLibraryItems()) {
+    libraryItems.shift();
+    return;
+  }
+
+  titleInput.value = "";
+  contentInput.value = "";
+  typeInput.value = "idea";
+
+  renderLibraryItems();
+  notify("تم حفظ المحتوى في المكتبة.");
+}
+
+
+document.getElementById("saveLibraryItem").addEventListener("click", addLibraryItem);
+
+
+document.getElementById("libraryItems").addEventListener("click", async e => {
+  const copy = e.target.closest("[data-copy-library]");
+  const edit = e.target.closest("[data-edit-library]");
+  const del = e.target.closest("[data-delete-library]");
+
+  if (copy) {
+    const item = libraryItems.find(x => x.id === copy.dataset.copyLibrary);
+    if (!item) return;
+
+    try {
+      await navigator.clipboard.writeText(item.content);
+      notify("تم نسخ المحتوى.");
+    } catch {
+      notify("تعذر النسخ تلقائيًا. جرّب النسخ يدويًا.");
+    }
+  }
+
+  if (edit) {
+    editLibraryItem(edit.dataset.editLibrary);
+  }
+
+  if (del) {
+    const item = libraryItems.find(x => x.id === del.dataset.deleteLibrary);
+    if (!item) return;
+
+    if (!confirm("هل تريد حذف هذا العنصر من المكتبة؟")) return;
+
+    const oldItems = libraryItems;
+    libraryItems = libraryItems.filter(x => x.id !== item.id);
+
+    if (!saveLibraryItems()) {
+      libraryItems = oldItems;
+      return;
+    }
+
+    if (editingLibraryId === item.id) {
+      editingLibraryId = null;
+      document.getElementById("saveLibraryItem").textContent =
+        "حفظ في المكتبة";
+    }
+
+    renderLibraryItems();
+    notify("تم حذف العنصر.");
+  }
+});
+
+
+renderLibraryItems();
+
+function renderScheduleOptions() {
+  const postSelect = document.getElementById("schedulePost");
+  const platformSelect = document.getElementById("schedulePlatform");
+
+  postSelect.innerHTML =
+    '<option value="">اختر منشورًا محفوظًا</option>' +
+    posts.map(p =>
+      `<option value="${escapeHTML(p.id)}">${escapeHTML(p.title || p.content.slice(0, 45) || "منشور بدون عنوان")}</option>`
+    ).join("");
+
+  platformSelect.innerHTML =
+    '<option value="">اختر المنصة</option>' +
+    PLATFORMS.map(p =>
+      `<option value="${escapeHTML(p.id)}">${escapeHTML(p.name)}</option>`
+    ).join("");
+}
+
+
+function renderScheduleList() {
+  const list = document.getElementById("scheduleList");
+  const now = Date.now();
+
+  if (!schedules.length) {
+    list.innerHTML = '<p class="muted">لا توجد مواعيد محفوظة حتى الآن.</p>';
+    return;
+  }
+
+  const sorted = [...schedules].sort(
+    (a, b) => new Date(a.dateTime) - new Date(b.dateTime)
+  );
+
+  list.innerHTML = sorted.map(item => {
+    const post = posts.find(p => p.id === item.postId);
+    const time = new Date(item.dateTime);
+    const due = time.getTime() <= now;
+    const status = item.done
+      ? "تم النشر يدويًا"
+      : due ? "حان الموعد" : "مجدول";
+
+    return `<article class="card" style="padding:15px;margin:12px 0">
+      <h3>${escapeHTML(post?.title || "منشور محفوظ سابقًا")}</h3>
+      <p>${escapeHTML(platformInfo(item.platform).name)}</p>
+      <p>${escapeHTML(time.toLocaleString("ar-EG"))}</p>
+      <p class="muted">${escapeHTML(status)}</p>
+      ${item.notes ? `<p>${escapeHTML(item.notes)}</p>` : ""}
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary-btn" type="button"
+          data-schedule-edit="${escapeHTML(item.id)}">تعديل الموعد</button>
+        ${!item.done ? `<button class="secondary-btn" type="button" data-schedule-done="${escapeHTML(item.id)}">تأكيد النشر اليدوي</button>` : ""}
+        <button class="danger-btn" type="button"
+          data-schedule-delete="${escapeHTML(item.id)}">حذف الموعد</button>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function checkScheduleReminders() {
+  const now = Date.now();
+  let changed = false;
+
+  schedules.forEach(item => {
+    if (!item.done && !item.reminded &&
+        new Date(item.dateTime).getTime() <= now) {
+      item.reminded = true;
+      changed = true;
+      notify("حان موعد النشر: " + platformInfo(item.platform).name);
+    }
+  });
+
+  if (changed) saveSchedules();
+  renderScheduleList();
+}
+
+let editingScheduleId = null;
+document.getElementById("saveScheduleBtn").addEventListener("click", () => {
+  const postId = document.getElementById("schedulePost").value;
+  const platform = document.getElementById("schedulePlatform").value;
+  const dateTime = document.getElementById("scheduleDateTime").value;
+  const notes = document.getElementById("scheduleNotes").value.trim();
+
+  if (!posts.some(p => p.id === postId)) {
+    notify("احفظ مسودة المنشور أولًا ثم اخترها.");
+    return;
+  }
+
+  if (!PLATFORMS.some(p => p.id === platform) || !dateTime) {
+    notify("اختر المنصة وتاريخ ووقت النشر.");
+    return;
+  }
+
+  if (new Date(dateTime).getTime() <= Date.now()) {
+    notify("اختر موعدًا في المستقبل.");
+    return;
+  }
+
+
+  let oldSchedule = null;
+
+  if (editingScheduleId) {
+    oldSchedule = schedules.find(x => x.id === editingScheduleId);
+
+    if (!oldSchedule) {
+      notify("لم يتم العثور على الموعد المراد تعديله.");
+      editingScheduleId = null;
+      return;
+    }
+
+    const oldValues = { ...oldSchedule };
+
+    Object.assign(oldSchedule, {
+      postId,
+      platform,
+      dateTime,
+      notes,
+      reminded: false
+    });
+
+    if (!saveSchedules()) {
+      Object.assign(oldSchedule, oldValues);
+      return;
+    }
+
+    editingScheduleId = null;
+document.getElementById("saveScheduleBtn").textContent = "حفظ موعد النشر";
+    notify("تم تعديل موعد النشر بنجاح.");
+  } else {
+    schedules.push({
+      id: "schedule_" + Date.now() + "_" +
+        Math.random().toString(36).slice(2, 8),
+      postId,
+      platform,
+      dateTime,
+      notes,
+      done: false,
+      reminded: false
+    });
+
+    if (!saveSchedules()) {
+      schedules.pop();
+      return;
+    }
+
+    notify("تم حفظ موعد النشر.");
+  }
+
+  document.getElementById("scheduleNotes").value = "";
+  document.getElementById("scheduleDateTime").value = "";
+  renderScheduleList();
+});
+
+
+document.getElementById("scheduleList").addEventListener("click", e => {
+  const editButton = e.target.closest("[data-schedule-edit]");
+  const doneButton = e.target.closest("[data-schedule-done]");
+  const deleteButton = e.target.closest("[data-schedule-delete]");
+
+  if (editButton) {
+    const item = schedules.find(
+      x => x.id === editButton.dataset.scheduleEdit
+    );
+
+    if (!item) {
+      notify("لم يتم العثور على الموعد.");
+      return;
+    }
+
+    editingScheduleId = item.id;
+    document.getElementById("schedulePost").value = item.postId;
+    document.getElementById("schedulePlatform").value = item.platform;
+    document.getElementById("scheduleDateTime").value = item.dateTime;
+    document.getElementById("scheduleNotes").value = item.notes || "";
+
+    document.getElementById("saveScheduleBtn").textContent = "حفظ التعديلات";
+    document.getElementById("schedulePost").scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    notify("عدّل البيانات ثم اضغط حفظ التعديلات.");
+    return;
+  }
+
+ 
+  if (doneButton) {
+    const item = schedules.find(
+      x => x.id === doneButton.dataset.scheduleDone
+    );
+
+    if (item) {
+      item.done = true;
+item.doneAt = new Date().toISOString();
+
+      if (saveSchedules()) {
+        renderScheduleList();
+        renderAnalytics();
+        notify("تم تسجيل النشر اليدوي.");
+      }
+    }
+
+    return;
+  }
+
+
+
+
+  if (deleteButton) {
+    const oldSchedules = schedules;
+    schedules = schedules.filter(
+      x => x.id !== deleteButton.dataset.scheduleDelete
+    );
+
+    if (saveSchedules()) {
+      renderScheduleList();
+      notify("تم حذف الموعد.");
+    } else {
+      schedules = oldSchedules;
+    }
+  }
+});
+
+
+document.getElementById("scheduleDateTime").min = (() => {
+  const d = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
+  return d.toISOString().slice(0, 16);
+})();
+
+const originalRenderAll = renderAll;
+renderAll = function() {
+  originalRenderAll();
+  renderScheduleOptions();
+  renderScheduleList();
+};
+
+renderPlatformOptions();
+applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+renderAll();
+updatePostCharCount();
+renderScheduleOptions();
+renderScheduleList();
+checkScheduleReminders();
+setInterval(checkScheduleReminders, 30000);
+renderAnalytics();
+setInterval(renderAnalytics, 30000);
+
+
+function renderAnalytics() {
+  const now = Date.now();
+  const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
+
+  document.getElementById("analyticsAccounts").textContent =
+    accounts.length;
+
+  document.getElementById("analyticsPlatforms").textContent =
+    new Set(accounts.map(a => a.platform)).size;
+
+  document.getElementById("analyticsPosts").textContent =
+    posts.length;
+
+ 
+  document.getElementById("analyticsUpcoming").textContent =
+    schedules.filter(item =>
+      !item.done &&
+      new Date(item.dateTime).getTime() > now
+    ).length;
+
+  document.getElementById("analyticsDone").textContent =
+    schedules.filter(item => item.done).length;
+
+  document.getElementById("analyticsOverdue").textContent =
+    schedules.filter(item =>
+      !item.done &&
+      Number.isFinite(new Date(item.dateTime).getTime()) &&
+      new Date(item.dateTime).getTime() <= now
+    ).length;
+
+  const overdueCount = schedules.filter(item =>
+    !item.done &&
+    Number.isFinite(new Date(item.dateTime).getTime()) &&
+    new Date(item.dateTime).getTime() <= now
+  ).length;
+
+  const overdueNotice = document.getElementById("analyticsOverdueNotice");
+
+  overdueNotice.textContent = overdueCount > 0
+    ? `تنبيه: لديك ${overdueCount} موعد متأخر يحتاج إلى المراجعة.`
+    : "لا توجد مواعيد متأخرة.";
+
+  overdueNotice.style.color = overdueCount > 0 ? "#d97706" : "";
+  const weeklyPosts = posts.filter(p => {
+    const created = p.createdAt
+      ? new Date(p.createdAt).getTime()
+      : NaN;
+
+    return Number.isFinite(created) &&
+      created >= sevenDaysAgo &&
+      created <= now;
+  }).length;
+
+
+  const weeklyPublished = schedules.filter(item => {
+    const confirmed = item.doneAt
+      ? new Date(item.doneAt).getTime()
+      : NaN;
+
+    return item.done &&
+      Number.isFinite(confirmed) &&
+      confirmed >= sevenDaysAgo &&
+      confirmed <= now;
+  }).length;
+
+  document.getElementById("weeklyPostsCreated").textContent =
+    weeklyPosts;
+
+  document.getElementById("weeklyPublished").textContent =
+    weeklyPublished;
+
+  console.log("النشاط الأسبوعي:", weeklyPosts, weeklyPublished);
+console.log("الأشرطة:", document.getElementById("weeklyPostsBar"), document.getElementById("weeklyPublishedBar"));
+const weeklyMax = Math.max(1, weeklyPosts, weeklyPublished);
+
+  document.getElementById("weeklyPostsBar").style.width =
+    (weeklyPosts / weeklyMax * 100) + "%";
+
+  document.getElementById("weeklyPublishedBar").style.width =
+    (weeklyPublished / weeklyMax * 100) + "%";
+
+
+  const counts = PLATFORMS
+    .map(p => ({
+      name: p.name,
+      count: accounts.filter(a => a.platform === p.id).length
+    }))
+    .filter(p => p.count > 0);
+
+  
+  const maxCount = Math.max(1, ...counts.map(p => p.count));
+
+  document.getElementById("analyticsPlatformBreakdown").innerHTML =
+    counts.length
+      ? counts.map(p => `
+          <div style="padding:12px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:7px">
+              <span>${escapeHTML(p.name)}</span>
+              <strong>${p.count} حساب</strong>
+            </div>
+            <div style="height:9px;background:var(--border);border-radius:10px;overflow:hidden">
+              <div style="height:100%;width:${(p.count / maxCount) * 100}%;background:var(--primary);border-radius:10px"></div>
+            </div>
+          </div>
+        `).join("")
+      : "لم تتم إضافة حسابات حتى الآن.";
+
+}
+
+
+setInterval(renderAnalytics, 30000);
+
+</script>
+</body>
+</html>
