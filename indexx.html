@@ -1244,6 +1244,41 @@ const weeklyMax = Math.max(1, weeklyPosts, weeklyPublished);
 
 setInterval(renderAnalytics, 30000);
 
+  
+function showSocialHubDashboard() {
+  const landing = document.getElementById("landingPage");
+  const sidebar = document.getElementById("sidebar");
+  const main = document.querySelector(".main");
+  const overlay = document.querySelector(".overlay");
+
+  if (!landing || !sidebar || !main) {
+    alert("تعذر فتح لوحة التحكم. أعد تحميل الصفحة.");
+    return;
+  }
+
+  landing.style.display = "none";
+  sidebar.style.display = "";
+  main.style.display = "";
+
+  if (overlay) {
+    overlay.style.display = "";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const startButton = document.getElementById("landingStart");
+  const loginButton = document.getElementById("landingLoginTop");
+
+  if (startButton) {
+    startButton.addEventListener("click", showSocialHubDashboard);
+  }
+
+  if (loginButton) {
+    loginButton.addEventListener("click", showSocialHubDashboard);
+  }
+});
+
+
 </script>
 </body>
 </html>
