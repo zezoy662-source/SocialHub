@@ -1441,7 +1441,7 @@ authForm.addEventListener("submit", async (event) => {
       "auth/weak-password": "استخدم كلمة مرور من 6 أحرف على الأقل.",
       "auth/too-many-requests": "محاولات كثيرة. انتظر قليلًا ثم حاول مجددًا."
     };
-    showAuthMessage(messages[error.code] || "تعذر إكمال العملية. راجع البيانات وحاول مجددًا.");
+  showAuthMessage(messages[error.code] || ("رمز الخطأ: " + error.code + " — " + error.message));
   } finally {
     authSubmit.disabled = false;
   }
