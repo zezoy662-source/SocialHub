@@ -1255,16 +1255,230 @@ function showSocialHubDashboard() {
   if (main) main.style.display = "block";
 }
 
+
 const landingStartButton = document.getElementById("landingStart");
 const landingLoginButton = document.getElementById("landingLoginTop");
+
 if (landingStartButton) {
-  landingStartButton.addEventListener("click", showSocialHubDashboard);
+  landingStartButton.addEventListener("click", () => {
+    if (window.openSocialHubAuth) {
+      window.openSocialHubAuth();
+    } else {
+      alert("انتظر تحميل صفحة تسجيل الدخول ثم حاول مرة أخرى.");
+    }
+  });
 }
+
 if (landingLoginButton) {
-  // مؤقتًا يفتح لوحة التحكم فقط؛ تسجيل الدخول الحقيقي عبر Firebase لم يُفعّل بعد.
-  landingLoginButton.addEventListener("click", showSocialHubDashboard);
+  landingLoginButton.addEventListener("click", () => {
+    if (window.openSocialHubAuth) {
+      window.openSocialHubAuth();
+    } else {
+      alert("انتظر تحميل صفحة تسجيل الدخول ثم حاول مرة أخرى.");
+    }
+  });
 }
 
 </script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDYtq06x7qBkl3rxGQPC8kKTxOd0EmFP0",
+  authDomain: "socialhub-55.firebaseapp.com",
+  projectId: "socialhub-55",
+  storageBucket: "socialhub-55.firebasestorage.app",
+  messagingSenderId: "220073481477",
+  appId: "1:220073481477:web:3f3d76e234ff6e553e136c",
+  measurementId: "G-42DSPZ227R"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+let authMode = "login";
+
+const authBox = document.createElement("div");
+authBox.id = "socialHubAuthBox";
+authBox.style.cssText = `
+  position:fixed; inset:0; z-index:99999; display:none;
+  align-items:center; justify-content:center; padding:20px;
+  background:rgba(10,20,40,.88); direction:rtl;
+  font-family:Arial,sans-serif;
+`;
+authBox.innerHTML = `
+  <div style="background:white;color:#172033;width:100%;max-width:390px;
+  padding:26px;border-radius:18px;box-sizing:border-box">
+    <h2 style="margin-top:0">مرحبًا بك في SocialHub</h2>
+    <p id="shAuthDescription">سجّل الدخول إلى حسابك</p>
+    <form id="shAuthForm">
+      <label for="shEmail">البريد الإلكتروني</label>
+      <input id="shEmail" type="email" required autocomplete="email"
+        style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:7px 0 15px">
+      <label for="shPassword">كلمة المرور</label>
+      <input id="shPassword" type="password" required minlength="6"
+        autocomplete="current-password"
+        style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:7px 0 15px">
+      <button id="shSubmit" type="submit"
+        style="width:100%;padding:12px;background:#172b4d;color:white;border:0;border-radius:8px;cursor:pointer">
+        تسجيل الدخول
+      </button>
+    </form>
+    <button id="shSwitch" type="button"
+      style="width:100%;padding:12px;margin-top:8px;background:#eee;border:0;border-radius:8px;cursor:pointer">
+      إنشاء حساب جديد
+    </button>
+    <button id="shGoogle" type="button"
+      style="width:100%;padding:12px;margin-top:8px;background:white;border:1px solid #ccc;border-radius:8px;cursor:pointer">
+      المتابعة باستخدام Google
+    </button>
+    <button id="shPhone" type="button"
+      style="width:100%;padding:12px;margin-top:8px;background:white;border:1px solid #ccc;border-radius:8px;cursor:pointer">
+      تسجيل الدخول برقم الهاتف
+    </button>
+    <p id="shAuthMessage" role="status" style="color:#b42318;line-height:1.6"></p>
+    <button id="shCancel" type="button"
+      style="width:100%;padding:10px;background:transparent;border:0;cursor:pointer">
+      رجوع
+    </button>
+    <div id="shRecaptcha"></div>
+  </div>
+`;
+document.body.appendChild(authBox);
+
+const authMessage = document.getElementById("shAuthMessage");
+const authForm = document.getElementById("shAuthForm");
+const authEmail = document.getElementById("shEmail");
+const authPassword = document.getElementById("shPassword");
+const authSubmit = document.getElementById("shSubmit");
+const authSwitch = document.getElementById("shSwitch");
+
+function showAuthMessage(message) {
+  authMessage.textContent = message;
+}
+
+function openAuth() {
+  authBox.style.display = "flex";
+  showAuthMessage("");
+}
+
+window.openSocialHubAuth = openAuth;
+
+function showLanding() {
+  document.body.classList.add("landing-active");
+  const landing = document.getElementById("landingPage");
+  const sidebar = document.getElementById("sidebar");
+  const main = document.querySelector(".main");
+  if (landing) landing.style.display = "block";
+  if (sidebar) sidebar.style.display = "none";
+  if (main) main.style.display = "none";
+}
+
+function showDashboard() {
+  authBox.style.display = "none";
+  document.body.classList.remove("landing-active");
+  const landing = document.getElementById("landingPage");
+  const sidebar = document.getElementById("sidebar");
+  const main = document.querySelector(".main");
+  if (landing) landing.style.display = "none";
+  if (sidebar) sidebar.style.display = "flex";
+  if (main) main.style.display = "block";
+  addLogoutButton();
+}
+
+function addLogoutButton() {
+  if (document.getElementById("shLogout")) return;
+  const target = document.querySelector(".topbar") || document.querySelector(".main");
+  if (!target) return;
+  const button = document.createElement("button");
+  button.id = "shLogout";
+  button.textContent = "تسجيل الخروج";
+  button.style.cssText = "padding:9px 13px;margin:8px;border-radius:8px;cursor:pointer";
+  button.onclick = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      showAuthMessage("تعذر تسجيل الخروج. حاول مرة أخرى.");
+    }
+  };
+  target.prepend(button);
+}
+
+authForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  showAuthMessage("");
+  authSubmit.disabled = true;
+
+  try {
+    if (authMode === "signup") {
+      await createUserWithEmailAndPassword(
+        auth,
+        authEmail.value.trim(),
+        authPassword.value
+      );
+    } else {
+      await signInWithEmailAndPassword(
+        auth,
+        authEmail.value.trim(),
+        authPassword.value
+      );
+    }
+  } catch (error) {
+    const messages = {
+      "auth/invalid-email": "البريد الإلكتروني غير صحيح.",
+      "auth/user-not-found": "لا يوجد حساب بهذا البريد.",
+      "auth/wrong-password": "كلمة المرور غير صحيحة.",
+      "auth/invalid-credential": "بيانات الدخول غير صحيحة.",
+      "auth/email-already-in-use": "هذا البريد مسجل بالفعل.",
+      "auth/weak-password": "استخدم كلمة مرور من 6 أحرف على الأقل.",
+      "auth/too-many-requests": "محاولات كثيرة. انتظر قليلًا ثم حاول مجددًا."
+    };
+    showAuthMessage(messages[error.code] || "تعذر إكمال العملية. راجع البيانات وحاول مجددًا.");
+  } finally {
+    authSubmit.disabled = false;
+  }
+});
+
+authSwitch.addEventListener("click", () => {
+  authMode = authMode === "login" ? "signup" : "login";
+  const signup = authMode === "signup";
+  document.getElementById("shAuthDescription").textContent =
+    signup ? "أنشئ حساب SocialHub جديدًا" : "سجّل الدخول إلى حسابك";
+  authSubmit.textContent = signup ? "إنشاء الحساب" : "تسجيل الدخول";
+  authSwitch.textContent = signup ? "لديك حساب بالفعل؟ تسجيل الدخول" : "إنشاء حساب جديد";
+  authPassword.autocomplete = signup ? "new-password" : "current-password";
+  showAuthMessage("");
+});
+
+document.getElementById("shCancel").addEventListener("click", () => {
+  authBox.style.display = "none";
+});
+
+document.getElementById("shGoogle").addEventListener("click", () => {
+  showAuthMessage("تسجيل Google سنفعّله في خطوة منفصلة بعد اختبار الدخول بالبريد.");
+});
+
+document.getElementById("shPhone").addEventListener("click", () => {
+  showAuthMessage("تسجيل الهاتف يحتاج رقمًا ورمز تحقق وتهيئة reCAPTCHA. سنضيفه في خطوة منفصلة.");
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    showDashboard();
+  } else {
+    showLanding();
+    authBox.style.display = "none";
+  }
+});
+</script>
+
 </body>
 </html>
