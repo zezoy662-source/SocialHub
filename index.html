@@ -1307,6 +1307,7 @@ import {
   SOCIALHUB_DEFAULT_LANGUAGE,
   SOCIALHUB_LANGUAGE_STORAGE_KEY
 } from "./translations.js";
+  import { translateSocialHubDOM } from "./translations-ui.js";
   // SocialHub language selector and translation system
 const languageSelector = document.getElementById("shLanguage");
 
@@ -1337,6 +1338,7 @@ function setSocialHubLanguage(languageCode) {
       element.textContent = translations[key];
     }
   });
+    translateSocialHubDOM(languageCode);
 
   languageSelector.value = language.code;
 
