@@ -1539,9 +1539,12 @@ sendCodeButton.addEventListener("click", async () => {
 
   try {
     if (!phoneRecaptcha) {
-      phoneRecaptcha = new RecaptchaVerifier(auth, "shRecaptcha", {
-        size: "normal"
-      });
+    phoneRecaptcha = new RecaptchaVerifier(auth, "shRecaptcha", {
+  size: "invisible",
+  callback: () => {
+    console.log("reCAPTCHA completed");
+  }
+});
       phoneRecaptchaWidget = await phoneRecaptcha.render();
     }
 
