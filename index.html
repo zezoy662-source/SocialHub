@@ -1292,8 +1292,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
-  RecaptchaVerifier,
-  signInWithPhoneNumber
+
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -1347,32 +1346,8 @@ authBox.innerHTML = `
       style="width:100%;padding:12px;margin-top:8px;background:white;border:1px solid #ccc;border-radius:8px;cursor:pointer">
       المتابعة باستخدام Google
     </button>
-    <button id="shPhone" type="button"
-      style="width:100%;padding:12px;margin-top:8px;background:white;border:1px solid #ccc;border-radius:8px;cursor:pointer">
-      تسجيل الدخول برقم الهاتف
-    </button>
+   
     
-<div id="shPhoneFields" style="display:none;margin-top:12px">
-  <label for="shPhoneNumber">رقم الهاتف مع مفتاح الدولة</label>
-  <input id="shPhoneNumber" type="tel" placeholder="+201XXXXXXXXX"
-    autocomplete="tel"
-    style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:7px 0 12px">
-
-  <button id="shSendCode" type="button"
-    style="width:100%;padding:12px;background:#172b4d;color:white;border:0;border-radius:8px;cursor:pointer">
-    إرسال رمز SMS
-  </button>
-
-  <label for="shPhoneCode" style="display:block;margin-top:12px">رمز التحقق</label>
-  <input id="shPhoneCode" type="text" inputmode="numeric"
-    autocomplete="one-time-code" placeholder="أدخل رمز SMS"
-    style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:7px 0 12px">
-
-  <button id="shVerifyCode" type="button"
-    style="width:100%;padding:12px;background:#16803c;color:white;border:0;border-radius:8px;cursor:pointer">
-    تأكيد الرمز وتسجيل الدخول
-  </button>
-</div>
 
     <p id="shAuthMessage" role="status" style="color:#b42318;line-height:1.6"></p>
     <button id="shCancel" type="button"
@@ -1391,14 +1366,7 @@ const authPassword = document.getElementById("shPassword");
 const authSubmit = document.getElementById("shSubmit");
 const authSwitch = document.getElementById("shSwitch");
   
-const phoneFields = document.getElementById("shPhoneFields");
-const phoneNumberInput = document.getElementById("shPhoneNumber");
-const phoneCodeInput = document.getElementById("shPhoneCode");
-const sendCodeButton = document.getElementById("shSendCode");
-const verifyCodeButton = document.getElementById("shVerifyCode");
 
-let phoneConfirmation = null;
-let phoneRecaptcha = null;
 
 
 function showAuthMessage(message) {
@@ -1519,87 +1487,8 @@ document.getElementById("shGoogle").addEventListener("click", async () => {
 });
 
 
-let phoneRecaptchaWidget = null;
 
-document.getElementById("shPhone").addEventListener("click", () => {
-  phoneFields.style.display = "block";
-  showAuthMessage("أدخل رقم هاتفك مع مفتاح الدولة، مثل +201XXXXXXXXX.");
-  phoneNumberInput.focus();
-});
 
-sendCodeButton.addEventListener("click", async () => {
-  const phoneNumber = phoneNumberInput.value.trim();
-
-  if (!/^\+[1-9]\d{7,14}$/.test(phoneNumber)) {
-    showAuthMessage("اكتب رقم الهاتف بالصيغة الدولية، مثل +201XXXXXXXXX.");
-    return;
-  }
-
-  sendCodeButton.disabled = true;
-
-  try {
-    if (!phoneRecaptcha) {
-    phoneRecaptcha = new RecaptchaVerifier(auth, "shRecaptcha", {
-  size: "invisible",
-  callback: () => {
-    console.log("reCAPTCHA completed");
-  }
-});
-      phoneRecaptchaWidget = await phoneRecaptcha.render();
-    }
-
-    showAuthMessage("جاري إرسال رمز التحقق...");
-
-    phoneConfirmation = await signInWithPhoneNumber(
-      auth,
-      phoneNumber,
-      phoneRecaptcha
-    );
-
-    showAuthMessage("تم إرسال رمز SMS. أدخل الرمز الذي وصلك.");
-    phoneCodeInput.focus();
-  } catch (error) {
-    console.error("Phone sign-in error:", error);
-    showAuthMessage("تعذر إرسال الرمز: " + error.message);
-
-    if (phoneRecaptcha) {
-      try {
-        phoneRecaptcha.clear();
-      } catch (_) {}
-
-      phoneRecaptcha = null;
-      phoneRecaptchaWidget = null;
-    }
-  } finally {
-    sendCodeButton.disabled = false;
-  }
-});
-
-verifyCodeButton.addEventListener("click", async () => {
-  const code = phoneCodeInput.value.trim();
-
-  if (!phoneConfirmation) {
-    showAuthMessage("اطلب رمز التحقق أولًا.");
-    return;
-  }
-
-  if (!/^\d{6}$/.test(code)) {
-    showAuthMessage("أدخل رمز التحقق المكوّن من 6 أرقام.");
-    return;
-  }
-
-  verifyCodeButton.disabled = true;
-
-  try {
-    await phoneConfirmation.confirm(code);
-    showAuthMessage("تم تسجيل الدخول بنجاح.");
-  } catch (error) {
-    console.error("Phone verification error:", error);
-    showAuthMessage("تعذر التحقق من الرمز: " + error.message);
-  } finally {
-    verifyCodeButton.disabled = false;
-  }
-});
 
 
 onAuthStateChanged(auth, (user) => {
