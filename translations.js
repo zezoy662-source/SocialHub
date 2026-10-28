@@ -23,8 +23,8 @@ export const SOCIALHUB_LANGUAGES = [
 
 export const SOCIALHUB_DEFAULT_LANGUAGE = "ar";
 
-export const SOCIALHUB_LANGUAGE_STORAGE_KEY =
-  "socialhub_language_v1";
+export const SOCIALHUB_LANGUAGE_STORAGE_KEY = "socialhub_language_v1";
+
 export const SOCIALHUB_TRANSLATIONS = {
   ar: {
     tagline: "مساحة واحدة لكل حساباتك",
@@ -33,35 +33,91 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "كل حساباتك الاجتماعية،",
     title2: "في مكان واحد.",
     description: "نظّم حساباتك، وجهّز منشوراتك، ورتّب أفكارك، وتابع خطط المحتوى من مساحة واحدة سهلة الاستخدام.",
-    start: "ابدأ الآن"
+    start: "ابدأ الآن",
+    featureAccounts: "إدارة الحسابات",
+    featurePosts: "تنظيم المنشورات",
+    featureLibrary: "مكتبة المحتوى",
+    workspaceTitle: "مساحة عملك",
+    cardAccountsTitle: "حساباتك",
+    cardAccountsDescription: "نظّم حسابات منصاتك",
+    cardPostsTitle: "المنشورات",
+    cardPostsDescription: "جهّز أفكارك ونصوصك",
+    cardScheduleTitle: "الجدولة",
+    cardScheduleDescription: "خطّط لمواعيد النشر",
+    cardLibraryTitle: "مكتبة المحتوى",
+    cardLibraryDescription: "احتفظ بأفكارك الجاهزة",
+    footer: "نظّم حضورك الرقمي من مكان واحد"
   },
+
   en: {
     tagline: "One space for all your accounts",
     login: "Log in",
     badge: "One platform to organize your accounts",
     title1: "All your social accounts,",
     title2: "in one place.",
-    description: "Organize your accounts, prepare posts, arrange ideas, and manage content plans in one easy-to-use space.",
-    start: "Get started"
+    description: "Organize accounts, prepare posts, arrange ideas, and manage content plans in one easy-to-use space.",
+    start: "Get started",
+    featureAccounts: "Account management",
+    featurePosts: "Post organization",
+    featureLibrary: "Content library",
+    workspaceTitle: "Your workspace",
+    cardAccountsTitle: "Your accounts",
+    cardAccountsDescription: "Organize your social accounts",
+    cardPostsTitle: "Posts",
+    cardPostsDescription: "Prepare ideas and text",
+    cardScheduleTitle: "Scheduling",
+    cardScheduleDescription: "Plan your publishing times",
+    cardLibraryTitle: "Content library",
+    cardLibraryDescription: "Keep your ready-to-use ideas",
+    footer: "Manage your digital presence in one place"
   },
+
   fr: {
     tagline: "Un espace pour tous vos comptes",
     login: "Connexion",
     badge: "Une plateforme pour organiser vos comptes",
     title1: "Tous vos comptes sociaux,",
     title2: "au même endroit.",
-    description: "Organisez vos comptes, préparez vos publications et gérez votre contenu depuis un espace simple.",
-    start: "Commencer"
+    description: "Organisez vos comptes, préparez vos publications et gérez votre contenu dans un espace simple.",
+    start: "Commencer",
+    featureAccounts: "Gestion des comptes",
+    featurePosts: "Organisation des publications",
+    featureLibrary: "Bibliothèque de contenu",
+    workspaceTitle: "Votre espace de travail",
+    cardAccountsTitle: "Vos comptes",
+    cardAccountsDescription: "Organisez vos comptes sociaux",
+    cardPostsTitle: "Publications",
+    cardPostsDescription: "Préparez vos idées et vos textes",
+    cardScheduleTitle: "Planification",
+    cardScheduleDescription: "Planifiez vos publications",
+    cardLibraryTitle: "Bibliothèque de contenu",
+    cardLibraryDescription: "Conservez vos idées prêtes à l'emploi",
+    footer: "Gérez votre présence numérique au même endroit"
   },
+
   es: {
     tagline: "Un espacio para todas tus cuentas",
     login: "Iniciar sesión",
     badge: "Una plataforma para organizar tus cuentas",
     title1: "Todas tus cuentas sociales,",
     title2: "en un solo lugar.",
-    description: "Organiza tus cuentas, prepara publicaciones y gestiona tu contenido desde un espacio sencillo.",
-    start: "Comenzar"
+    description: "Organiza tus cuentas, prepara publicaciones y gestiona tus contenidos desde un espacio sencillo.",
+    start: "Comenzar",
+    featureAccounts: "Gestión de cuentas",
+    featurePosts: "Organización de publicaciones",
+    featureLibrary: "Biblioteca de contenido",
+    workspaceTitle: "Tu espacio de trabajo",
+    cardAccountsTitle: "Tus cuentas",
+    cardAccountsDescription: "Organiza tus cuentas sociales",
+    cardPostsTitle: "Publicaciones",
+    cardPostsDescription: "Prepara ideas y textos",
+    cardScheduleTitle: "Programación",
+    cardScheduleDescription: "Planifica cuándo publicar",
+    cardLibraryTitle: "Biblioteca de contenido",
+    cardLibraryDescription: "Guarda tus ideas listas para usar",
+    footer: "Gestiona tu presencia digital desde un solo lugar"
   },
+
   de: {
     tagline: "Ein Ort für alle deine Konten",
     login: "Anmelden",
@@ -69,26 +125,68 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "Alle deine Social-Media-Konten,",
     title2: "an einem Ort.",
     description: "Organisiere Konten, bereite Beiträge vor und verwalte deine Inhalte an einem zentralen Ort.",
-    start: "Jetzt starten"
+    start: "Jetzt starten",
+    featureAccounts: "Kontoverwaltung",
+    featurePosts: "Beiträge organisieren",
+    featureLibrary: "Inhaltsbibliothek",
+    workspaceTitle: "Dein Arbeitsbereich",
+    cardAccountsTitle: "Deine Konten",
+    cardAccountsDescription: "Organisiere deine Social-Media-Konten",
+    cardPostsTitle: "Beiträge",
+    cardPostsDescription: "Bereite Ideen und Texte vor",
+    cardScheduleTitle: "Planung",
+    cardScheduleDescription: "Plane deine Veröffentlichungen",
+    cardLibraryTitle: "Inhaltsbibliothek",
+    cardLibraryDescription: "Bewahre fertige Ideen auf",
+    footer: "Verwalte deine digitale Präsenz an einem Ort"
   },
+
   pt: {
     tagline: "Um espaço para todas as suas contas",
     login: "Entrar",
     badge: "Uma plataforma para organizar suas contas",
     title1: "Todas as suas contas sociais,",
     title2: "em um só lugar.",
-    description: "Organize suas contas, prepare publicações e gerencie seu conteúdo em um só lugar.",
-    start: "Começar"
+    description: "Organize suas contas, prepare publicações e gerencie seu conteúdo em um espaço simples.",
+    start: "Começar",
+    featureAccounts: "Gestão de contas",
+    featurePosts: "Organização de publicações",
+    featureLibrary: "Biblioteca de conteúdo",
+    workspaceTitle: "Seu espaço de trabalho",
+    cardAccountsTitle: "Suas contas",
+    cardAccountsDescription: "Organize suas contas sociais",
+    cardPostsTitle: "Publicações",
+    cardPostsDescription: "Prepare ideias e textos",
+    cardScheduleTitle: "Agendamento",
+    cardScheduleDescription: "Planeje os horários das publicações",
+    cardLibraryTitle: "Biblioteca de conteúdo",
+    cardLibraryDescription: "Guarde suas ideias prontas",
+    footer: "Gerencie sua presença digital em um só lugar"
   },
+
   it: {
-    tagline: "Un unico spazio per tutti i tuoi account",
+    tagline: "Uno spazio per tutti i tuoi account",
     login: "Accedi",
     badge: "Una piattaforma per organizzare i tuoi account",
     title1: "Tutti i tuoi account social,",
     title2: "in un unico posto.",
-    description: "Organizza gli account, prepara i post e gestisci i contenuti da un unico spazio semplice.",
-    start: "Inizia ora"
+    description: "Organizza gli account, prepara i post e gestisci i contenuti in uno spazio semplice.",
+    start: "Inizia ora",
+    featureAccounts: "Gestione account",
+    featurePosts: "Organizzazione dei post",
+    featureLibrary: "Libreria dei contenuti",
+    workspaceTitle: "Il tuo spazio di lavoro",
+    cardAccountsTitle: "I tuoi account",
+    cardAccountsDescription: "Organizza i tuoi account social",
+    cardPostsTitle: "Post",
+    cardPostsDescription: "Prepara idee e testi",
+    cardScheduleTitle: "Programmazione",
+    cardScheduleDescription: "Pianifica gli orari di pubblicazione",
+    cardLibraryTitle: "Libreria dei contenuti",
+    cardLibraryDescription: "Conserva le tue idee pronte",
+    footer: "Gestisci la tua presenza digitale in un unico posto"
   },
+
   ru: {
     tagline: "Одно пространство для всех ваших аккаунтов",
     login: "Войти",
@@ -96,8 +194,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "Все ваши социальные аккаунты,",
     title2: "в одном месте.",
     description: "Организуйте аккаунты, готовьте публикации и управляйте контентом в одном удобном пространстве.",
-    start: "Начать"
+    start: "Начать",
+    featureAccounts: "Управление аккаунтами",
+    featurePosts: "Организация публикаций",
+    featureLibrary: "Библиотека контента",
+    workspaceTitle: "Ваше рабочее пространство",
+    cardAccountsTitle: "Ваши аккаунты",
+    cardAccountsDescription: "Организуйте социальные аккаунты",
+    cardPostsTitle: "Публикации",
+    cardPostsDescription: "Готовьте идеи и тексты",
+    cardScheduleTitle: "Планирование",
+    cardScheduleDescription: "Планируйте время публикаций",
+    cardLibraryTitle: "Библиотека контента",
+    cardLibraryDescription: "Храните готовые идеи",
+    footer: "Управляйте своим цифровым присутствием в одном месте"
   },
+
   "zh-CN": {
     tagline: "一个空间管理你的所有账号",
     login: "登录",
@@ -105,17 +217,45 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "你的所有社交账号，",
     title2: "尽在一处。",
     description: "在一个简单易用的平台中管理账号、准备帖子并规划内容。",
-    start: "立即开始"
+    start: "立即开始",
+    featureAccounts: "账号管理",
+    featurePosts: "帖子整理",
+    featureLibrary: "内容库",
+    workspaceTitle: "你的工作空间",
+    cardAccountsTitle: "你的账号",
+    cardAccountsDescription: "整理你的社交账号",
+    cardPostsTitle: "帖子",
+    cardPostsDescription: "准备创意和文案",
+    cardScheduleTitle: "发布计划",
+    cardScheduleDescription: "规划发布时间",
+    cardLibraryTitle: "内容库",
+    cardLibraryDescription: "保存可直接使用的创意",
+    footer: "在一个地方管理你的数字形象"
   },
+
   hi: {
     tagline: "आपके सभी खातों के लिए एक जगह",
     login: "लॉग इन करें",
     badge: "आपके खातों को व्यवस्थित करने का एक मंच",
     title1: "आपके सभी सोशल अकाउंट,",
     title2: "एक ही जगह।",
-    description: "अपने अकाउंट व्यवस्थित करें, पोस्ट तैयार करें और एक ही जगह पर अपनी सामग्री प्रबंधित करें।",
-    start: "शुरू करें"
+    description: "अपने अकाउंट व्यवस्थित करें, पोस्ट तैयार करें और एक ही जगह पर सामग्री प्रबंधित करें।",
+    start: "शुरू करें",
+    featureAccounts: "खाता प्रबंधन",
+    featurePosts: "पोस्ट व्यवस्थित करें",
+    featureLibrary: "कंटेंट लाइब्रेरी",
+    workspaceTitle: "आपका कार्यक्षेत्र",
+    cardAccountsTitle: "आपके खाते",
+    cardAccountsDescription: "अपने सोशल अकाउंट व्यवस्थित करें",
+    cardPostsTitle: "पोस्ट",
+    cardPostsDescription: "विचार और टेक्स्ट तैयार करें",
+    cardScheduleTitle: "शेड्यूलिंग",
+    cardScheduleDescription: "पोस्ट करने का समय तय करें",
+    cardLibraryTitle: "कंटेंट लाइब्रेरी",
+    cardLibraryDescription: "तैयार विचारों को सहेजें",
+    footer: "अपनी डिजिटल उपस्थिति एक ही जगह प्रबंधित करें"
   },
+
   ja: {
     tagline: "すべてのアカウントをひとつの場所に",
     login: "ログイン",
@@ -123,8 +263,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "すべてのSNSアカウントを、",
     title2: "ひとつの場所に。",
     description: "アカウントの整理、投稿の準備、コンテンツの管理を簡単に行えます。",
-    start: "今すぐ始める"
+    start: "今すぐ始める",
+    featureAccounts: "アカウント管理",
+    featurePosts: "投稿の整理",
+    featureLibrary: "コンテンツライブラリ",
+    workspaceTitle: "ワークスペース",
+    cardAccountsTitle: "アカウント",
+    cardAccountsDescription: "SNSアカウントを整理",
+    cardPostsTitle: "投稿",
+    cardPostsDescription: "アイデアや文章を準備",
+    cardScheduleTitle: "スケジュール",
+    cardScheduleDescription: "投稿時間を計画",
+    cardLibraryTitle: "コンテンツライブラリ",
+    cardLibraryDescription: "すぐ使えるアイデアを保存",
+    footer: "デジタルでの活動をひとつの場所で管理"
   },
+
   ko: {
     tagline: "모든 계정을 한곳에서",
     login: "로그인",
@@ -132,8 +286,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "모든 소셜 계정을,",
     title2: "한곳에서.",
     description: "계정을 정리하고 게시물을 준비하며 콘텐츠를 한곳에서 관리하세요.",
-    start: "시작하기"
+    start: "시작하기",
+    featureAccounts: "계정 관리",
+    featurePosts: "게시물 정리",
+    featureLibrary: "콘텐츠 라이브러리",
+    workspaceTitle: "작업 공간",
+    cardAccountsTitle: "내 계정",
+    cardAccountsDescription: "소셜 계정을 정리하세요",
+    cardPostsTitle: "게시물",
+    cardPostsDescription: "아이디어와 글을 준비하세요",
+    cardScheduleTitle: "예약 관리",
+    cardScheduleDescription: "게시 시간을 계획하세요",
+    cardLibraryTitle: "콘텐츠 라이브러리",
+    cardLibraryDescription: "바로 사용할 아이디어를 저장하세요",
+    footer: "디지털 활동을 한곳에서 관리하세요"
   },
+
   id: {
     tagline: "Satu ruang untuk semua akun Anda",
     login: "Masuk",
@@ -141,8 +309,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "Semua akun sosial Anda,",
     title2: "di satu tempat.",
     description: "Atur akun, siapkan postingan, dan kelola konten dengan mudah di satu tempat.",
-    start: "Mulai sekarang"
+    start: "Mulai sekarang",
+    featureAccounts: "Pengelolaan akun",
+    featurePosts: "Pengaturan postingan",
+    featureLibrary: "Perpustakaan konten",
+    workspaceTitle: "Ruang kerja Anda",
+    cardAccountsTitle: "Akun Anda",
+    cardAccountsDescription: "Atur akun media sosial Anda",
+    cardPostsTitle: "Postingan",
+    cardPostsDescription: "Siapkan ide dan teks",
+    cardScheduleTitle: "Penjadwalan",
+    cardScheduleDescription: "Rencanakan waktu publikasi",
+    cardLibraryTitle: "Perpustakaan konten",
+    cardLibraryDescription: "Simpan ide yang siap digunakan",
+    footer: "Kelola kehadiran digital Anda di satu tempat"
   },
+
   vi: {
     tagline: "Một nơi cho tất cả tài khoản của bạn",
     login: "Đăng nhập",
@@ -150,8 +332,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "Tất cả tài khoản mạng xã hội,",
     title2: "ở cùng một nơi.",
     description: "Sắp xếp tài khoản, chuẩn bị bài đăng và quản lý nội dung trong một không gian dễ sử dụng.",
-    start: "Bắt đầu"
+    start: "Bắt đầu",
+    featureAccounts: "Quản lý tài khoản",
+    featurePosts: "Sắp xếp bài đăng",
+    featureLibrary: "Thư viện nội dung",
+    workspaceTitle: "Không gian làm việc",
+    cardAccountsTitle: "Tài khoản của bạn",
+    cardAccountsDescription: "Sắp xếp tài khoản mạng xã hội",
+    cardPostsTitle: "Bài đăng",
+    cardPostsDescription: "Chuẩn bị ý tưởng và văn bản",
+    cardScheduleTitle: "Lên lịch",
+    cardScheduleDescription: "Lên kế hoạch đăng bài",
+    cardLibraryTitle: "Thư viện nội dung",
+    cardLibraryDescription: "Lưu ý tưởng sẵn sàng sử dụng",
+    footer: "Quản lý sự hiện diện số tại một nơi"
   },
+
   th: {
     tagline: "พื้นที่เดียวสำหรับทุกบัญชีของคุณ",
     login: "เข้าสู่ระบบ",
@@ -159,8 +355,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "บัญชีโซเชียลทั้งหมดของคุณ",
     title2: "ในที่เดียว",
     description: "จัดระเบียบบัญชี เตรียมโพสต์ และจัดการเนื้อหาของคุณได้จากที่เดียว",
-    start: "เริ่มต้นใช้งาน"
+    start: "เริ่มต้นใช้งาน",
+    featureAccounts: "จัดการบัญชี",
+    featurePosts: "จัดระเบียบโพสต์",
+    featureLibrary: "คลังเนื้อหา",
+    workspaceTitle: "พื้นที่ทำงานของคุณ",
+    cardAccountsTitle: "บัญชีของคุณ",
+    cardAccountsDescription: "จัดระเบียบบัญชีโซเชียล",
+    cardPostsTitle: "โพสต์",
+    cardPostsDescription: "เตรียมไอเดียและข้อความ",
+    cardScheduleTitle: "การจัดตาราง",
+    cardScheduleDescription: "วางแผนเวลาเผยแพร่",
+    cardLibraryTitle: "คลังเนื้อหา",
+    cardLibraryDescription: "เก็บไอเดียที่พร้อมใช้งาน",
+    footer: "จัดการตัวตนดิจิทัลของคุณในที่เดียว"
   },
+
   tr: {
     tagline: "Tüm hesaplarınız için tek alan",
     login: "Giriş yap",
@@ -168,8 +378,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "Tüm sosyal medya hesaplarınız,",
     title2: "tek bir yerde.",
     description: "Hesaplarınızı düzenleyin, gönderilerinizi hazırlayın ve içeriklerinizi tek bir yerden yönetin.",
-    start: "Hemen başlayın"
+    start: "Hemen başlayın",
+    featureAccounts: "Hesap yönetimi",
+    featurePosts: "Gönderi düzenleme",
+    featureLibrary: "İçerik kütüphanesi",
+    workspaceTitle: "Çalışma alanınız",
+    cardAccountsTitle: "Hesaplarınız",
+    cardAccountsDescription: "Sosyal hesaplarınızı düzenleyin",
+    cardPostsTitle: "Gönderiler",
+    cardPostsDescription: "Fikirlerinizi ve metinlerinizi hazırlayın",
+    cardScheduleTitle: "Zamanlama",
+    cardScheduleDescription: "Yayın zamanlarını planlayın",
+    cardLibraryTitle: "İçerik kütüphanesi",
+    cardLibraryDescription: "Kullanıma hazır fikirlerinizi saklayın",
+    footer: "Dijital varlığınızı tek bir yerden yönetin"
   },
+
   fa: {
     tagline: "یک فضای واحد برای همه حساب‌های شما",
     login: "ورود",
@@ -177,8 +401,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "همه حساب‌های اجتماعی شما،",
     title2: "در یک مکان.",
     description: "حساب‌ها را سازمان‌دهی کنید، پست‌ها را آماده کنید و محتوای خود را در یک فضای ساده مدیریت کنید.",
-    start: "شروع کنید"
+    start: "شروع کنید",
+    featureAccounts: "مدیریت حساب‌ها",
+    featurePosts: "سازمان‌دهی پست‌ها",
+    featureLibrary: "کتابخانه محتوا",
+    workspaceTitle: "فضای کاری شما",
+    cardAccountsTitle: "حساب‌های شما",
+    cardAccountsDescription: "حساب‌های اجتماعی خود را سازمان‌دهی کنید",
+    cardPostsTitle: "پست‌ها",
+    cardPostsDescription: "ایده‌ها و متن‌ها را آماده کنید",
+    cardScheduleTitle: "زمان‌بندی",
+    cardScheduleDescription: "زمان انتشار را برنامه‌ریزی کنید",
+    cardLibraryTitle: "کتابخانه محتوا",
+    cardLibraryDescription: "ایده‌های آماده را نگه دارید",
+    footer: "حضور دیجیتال خود را در یک مکان مدیریت کنید"
   },
+
   ur: {
     tagline: "آپ کے تمام اکاؤنٹس کے لیے ایک جگہ",
     login: "لاگ اِن",
@@ -186,8 +424,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "آپ کے تمام سوشل اکاؤنٹس،",
     title2: "ایک ہی جگہ۔",
     description: "اپنے اکاؤنٹس منظم کریں، پوسٹس تیار کریں اور مواد کو ایک ہی جگہ سے سنبھالیں۔",
-    start: "شروع کریں"
+    start: "شروع کریں",
+    featureAccounts: "اکاؤنٹس کا انتظام",
+    featurePosts: "پوسٹس کی تنظیم",
+    featureLibrary: "مواد کی لائبریری",
+    workspaceTitle: "آپ کی ورک اسپیس",
+    cardAccountsTitle: "آپ کے اکاؤنٹس",
+    cardAccountsDescription: "اپنے سوشل اکاؤنٹس منظم کریں",
+    cardPostsTitle: "پوسٹس",
+    cardPostsDescription: "خیالات اور متن تیار کریں",
+    cardScheduleTitle: "شیڈولنگ",
+    cardScheduleDescription: "پوسٹ کرنے کے اوقات طے کریں",
+    cardLibraryTitle: "مواد کی لائبریری",
+    cardLibraryDescription: "تیار خیالات محفوظ رکھیں",
+    footer: "اپنی ڈیجیٹل موجودگی ایک جگہ سے منظم کریں"
   },
+
   bn: {
     tagline: "আপনার সব অ্যাকাউন্টের জন্য এক জায়গা",
     login: "লগ ইন",
@@ -195,8 +447,22 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "আপনার সব সামাজিক অ্যাকাউন্ট,",
     title2: "এক জায়গায়।",
     description: "একটি সহজ প্ল্যাটফর্মে অ্যাকাউন্ট সাজান, পোস্ট তৈরি করুন এবং কনটেন্ট পরিচালনা করুন।",
-    start: "শুরু করুন"
+    start: "শুরু করুন",
+    featureAccounts: "অ্যাকাউন্ট ব্যবস্থাপনা",
+    featurePosts: "পোস্ট সংগঠিত করা",
+    featureLibrary: "কনটেন্ট লাইব্রেরি",
+    workspaceTitle: "আপনার কর্মক্ষেত্র",
+    cardAccountsTitle: "আপনার অ্যাকাউন্ট",
+    cardAccountsDescription: "আপনার সামাজিক অ্যাকাউন্ট সাজান",
+    cardPostsTitle: "পোস্ট",
+    cardPostsDescription: "ভাবনা ও লেখা প্রস্তুত করুন",
+    cardScheduleTitle: "সময় নির্ধারণ",
+    cardScheduleDescription: "পোস্ট প্রকাশের সময় পরিকল্পনা করুন",
+    cardLibraryTitle: "কনটেন্ট লাইব্রেরি",
+    cardLibraryDescription: "ব্যবহারের জন্য প্রস্তুত ভাবনা সংরক্ষণ করুন",
+    footer: "এক জায়গায় আপনার ডিজিটাল উপস্থিতি পরিচালনা করুন"
   },
+
   sw: {
     tagline: "Sehemu moja ya akaunti zako zote",
     login: "Ingia",
@@ -204,6 +470,19 @@ export const SOCIALHUB_TRANSLATIONS = {
     title1: "Akaunti zako zote za kijamii,",
     title2: "mahali pamoja.",
     description: "Panga akaunti, andaa machapisho na dhibiti maudhui yako katika sehemu moja rahisi.",
-    start: "Anza sasa"
+    start: "Anza sasa",
+    featureAccounts: "Usimamizi wa akaunti",
+    featurePosts: "Kupanga machapisho",
+    featureLibrary: "Maktaba ya maudhui",
+    workspaceTitle: "Eneo lako la kazi",
+    cardAccountsTitle: "Akaunti zako",
+    cardAccountsDescription: "Panga akaunti zako za kijamii",
+    cardPostsTitle: "Machapisho",
+    cardPostsDescription: "Andaa mawazo na maandishi",
+    cardScheduleTitle: "Ratiba",
+    cardScheduleDescription: "Panga muda wa kuchapisha",
+    cardLibraryTitle: "Maktaba ya maudhui",
+    cardLibraryDescription: "Hifadhi mawazo yaliyo tayari",
+    footer: "Dhibiti uwepo wako wa kidijitali mahali pamoja"
   }
 };
