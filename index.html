@@ -1481,10 +1481,7 @@ function syncDashboardLanguage() {
    
 dashboardSelector.onchange = () => {
   setSocialHubLanguage(dashboardSelector.value);
-  translateSocialHubDOM(dashboardSelector.value);
-  syncDashboardLanguage();
 };
-
   }
 
   if (dashboardCode && languageSelector) {
