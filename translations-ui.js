@@ -1,4 +1,4 @@
-
+import { SOCIALHUB_LANGUAGES } from "./translations.js";
 /* SocialHub dashboard translation engine.
  * Keeps original Arabic text and translates dashboard content.
  */
