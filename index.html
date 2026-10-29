@@ -1334,11 +1334,12 @@ function showSocialHubDashboard() {
 
 
 const landingStartButton = document.getElementById("landingStart");
+
 const landingLoginButton = document.getElementById("landingLoginTop");
 
-if (landingStartButton) {
-  landingStartButton.addEventListener("click", () => {
-    if (window.openSocialHubAuth) {
+if (landingLoginButton) {
+  landingLoginButton.addEventListener("click", () => {
+    if (typeof window.openSocialHubAuth === "function") {
       window.openSocialHubAuth();
     } else {
       alert("انتظر تحميل صفحة تسجيل الدخول ثم حاول مرة أخرى.");
