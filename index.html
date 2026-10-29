@@ -161,7 +161,18 @@ html[dir="rtl"] .main {
   <div class="sidebar-bottom"><div class="plan-mini"><strong>الباقة الحالية: <span id="sidebarPlan">مجانية</span></strong><p id="sidebarLimit">يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.</p><button class="secondary-btn" style="width:100%" data-goto="plans">عرض الباقات</button></div><p class="muted small" style="text-align:center;margin-top:17px">SocialHub © 2026</p></div>
 </aside>
 <main class="main">
-<header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="icon-btn mobile-menu" id="menuToggle" aria-label="فتح القائمة">☰</button><div><div class="topbar-title" id="topTitle">لوحة التحكم</div><div class="topbar-sub">تابع حضورك على منصات التواصل</div></div></div><div class="top-actions"><button class="icon-btn" id="themeToggle" title="تغيير المظهر" aria-label="تغيير المظهر">☀</button><button class="secondary-btn export-top" id="exportBtn">⇩ تصدير البيانات</button><button class="primary-btn" id="addTop">＋ إضافة حساب</button></div></header>
+<header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="icon-btn mobile-menu" id="menuToggle" aria-label="فتح القائمة">☰</button><div><div class="topbar-title" id="topTitle">لوحة التحكم</div><div class="topbar-sub">تابع حضورك على منصات التواصل</div></div></div>
+<div class="top-actions">
+  <label for="dashboardLanguage" style="display:flex;align-items:center;gap:5px;padding:7px 9px;border:1px solid #393f55;border-radius:10px;background:#101522;color:white;cursor:pointer;">
+    <span aria-hidden="true">🌐</span>
+    <span id="dashboardLanguageCode" style="font-size:12px;font-weight:bold;">AR</span>
+    <select id="dashboardLanguage" aria-label="Choose language" style="max-width:95px;border:0;outline:0;background:#101522;color:white;font:inherit;cursor:pointer;"></select>
+  </label>
+  <button class="icon-btn" id="themeToggle" title="تغيير المظهر" aria-label="تغيير المظهر">☀</button>
+  <button class="secondary-btn export-top" id="exportBtn">⇩ تصدير البيانات</button>
+  <button class="primary-btn" id="addTop">＋ إضافة حساب</button>
+</div>
+
 <div class="content">
 <section class="page active" id="page-home">
   <div class="welcome"><div><h1>أهلًا بك في SocialHub 👋</h1><div class="muted">نظّم حساباتك الاجتماعية من مكان واحد.</div></div><button class="primary-btn" data-goto="accounts">إدارة حساباتي ←</button></div>
