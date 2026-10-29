@@ -1416,6 +1416,7 @@ document.querySelectorAll("[data-i18n]").forEach(element => {
 languageSelector.value = language.code;
   const languageBadge = document.querySelector("#shLanguageBadge span:last-child");
 if (languageBadge) languageBadge.textContent = language.code.slice(0, 2).toUpperCase();
+  syncDashboardLanguage();
 
   try {
     localStorage.setItem(
@@ -1437,9 +1438,39 @@ if (languageSelector) {
     languageSelector.appendChild(option);
   });
 
-  languageSelector.addEventListener("change", () => {
-    setSocialHubLanguage(languageSelector.value);
-  });
+
+function syncDashboardLanguage() {
+  const dashboardSelector = document.getElementById("dashboardLanguage");
+  const dashboardCode = document.getElementById("dashboardLanguageCode");
+
+  if (dashboardSelector) {
+    dashboardSelector.replaceChildren();
+
+    SOCIALHUB_LANGUAGES.forEach(language => {
+      const option = document.createElement("option");
+      option.value = language.code;
+      option.textContent = language.name;
+      dashboardSelector.appendChild(option);
+    });
+
+    dashboardSelector.value = languageSelector.value;
+
+    dashboardSelector.onchange = () => {
+      setSocialHubLanguage(dashboardSelector.value);
+    };
+  }
+
+  if (dashboardCode) {
+    dashboardCode.textContent = languageSelector.value.slice(0, 2).toUpperCase();
+  }
+}
+
+languageSelector.addEventListener("change", () => {
+  setSocialHubLanguage(languageSelector.value);
+  syncDashboardLanguage();
+});
+
+syncDashboardLanguage();
 
   let savedLanguage = null;
 
