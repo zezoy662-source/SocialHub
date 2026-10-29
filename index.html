@@ -1414,7 +1414,7 @@ document.querySelectorAll("[data-i18n]").forEach(element => {
 languageSelector.value = language.code;
   const languageBadge = document.querySelector("#shLanguageBadge span:last-child");
 if (languageBadge) languageBadge.textContent = language.code.slice(0, 2).toUpperCase();
-  syncDashboardLanguage();
+
 
   try {
     localStorage.setItem(
