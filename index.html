@@ -1440,19 +1440,20 @@ if (languageSelector) {
   });
 
 
+
 function syncDashboardLanguage() {
   const dashboardSelector = document.getElementById("dashboardLanguage");
   const dashboardCode = document.getElementById("dashboardLanguageCode");
 
   if (dashboardSelector) {
-    dashboardSelector.replaceChildren();
-
-    SOCIALHUB_LANGUAGES.forEach(language => {
-      const option = document.createElement("option");
-      option.value = language.code;
-      option.textContent = language.name;
-      dashboardSelector.appendChild(option);
-    });
+    if (!dashboardSelector.options.length) {
+      SOCIALHUB_LANGUAGES.forEach(language => {
+        const option = document.createElement("option");
+        option.value = language.code;
+        option.textContent = language.name;
+        dashboardSelector.appendChild(option);
+      });
+    }
 
     dashboardSelector.value = languageSelector.value;
 
@@ -1460,6 +1461,12 @@ function syncDashboardLanguage() {
       setSocialHubLanguage(dashboardSelector.value);
     };
   }
+
+  if (dashboardCode && languageSelector) {
+    dashboardCode.textContent =
+      languageSelector.value.slice(0, 2).toUpperCase();
+  }
+}
 
   if (dashboardCode) {
     dashboardCode.textContent = languageSelector.value.slice(0, 2).toUpperCase();
