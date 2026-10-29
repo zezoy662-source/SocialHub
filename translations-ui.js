@@ -1,6 +1,6 @@
 
-/* SocialHub dashboard translations UI.
- * Translates dashboard text nodes while preserving original Arabic text.
+/* SocialHub dashboard translation engine.
+ * Keeps original Arabic text and translates dashboard content.
  */
 
 const DASHBOARD = {
@@ -18,8 +18,6 @@ const DASHBOARD = {
     "عرض الباقات": "View plans",
     "الباقة الحالية": "Current plan",
     "مجانية": "Free",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "You can add 2 accounts per platform in the demo.",
-    "حد الحسابات حسب المنصة": "Account limit per platform",
     "لوحة التحكم": "Dashboard",
     "تابع حضورك على منصات التواصل": "Manage your social media presence",
     "تصدير البيانات": "Export data",
@@ -65,7 +63,6 @@ const DASHBOARD = {
     "ترتيب الحسابات": "Sort accounts",
     "مثال: عرض جديد للمتابعين": "Example: A new offer for followers",
     "اكتب نص المنشور هنا...": "Write your post here...",
-    "عدد الأحرف: 0": "Characters: 0",
     "ابحث بعنوان المنشور أو محتواه...": "Search post title or content...",
     "تصفية المسودات حسب المنصة": "Filter drafts by platform",
     "البحث في المسودات": "Search drafts",
@@ -80,21 +77,18 @@ const DASHBOARD = {
     "فتح القائمة": "Open menu",
     "هذه نسخة تجريبية. البيانات محفوظة في هذا المتصفح فقط، ولا يوجد اتصال فعلي بالمنصات أو نشر تلقائي أو دفع إلكتروني.": "This is a demo. Data is stored only in this browser. There are no live platform connections, automatic publishing, or electronic payments.",
     "تُحفظ المسودات على هذا المتصفح والجهاز فقط. لا يتم نشر المحتوى تلقائيًا على منصات التواصل الاجتماعي.": "Drafts are stored only in this browser and on this device. Content is not automatically published to social media.",
-   "لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.": "Do not enter passwords or secret login codes in this demo.",
-    
-    "حساب": "account",
-    "حسابات": "accounts",
-    "تسجيل الخروج": "Log out"
+    "لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.": "Do not enter passwords or secret login codes in this demo.",
+    "تسجيل الخروج": "Log out",
+    "حساب": "Account",
+    "حسابات": "Accounts"
   },
 
   fr: {
-    "القائمة الرئيسية": "Menu principal",
     "الرئيسية": "Accueil",
     "حساباتي": "Mes comptes",
     "المنشورات": "Publications",
     "الجدولة": "Planification",
     "التحليلات": "Analyses",
-    "إدارة المنصة": "Gestion de la plateforme",
     "الإعدادات": "Paramètres",
     "إضافة حساب": "Ajouter un compte",
     "تصدير البيانات": "Exporter les données",
@@ -103,18 +97,16 @@ const DASHBOARD = {
     "مكتبة المحتوى": "Bibliothèque de contenu",
     "الباقة الحالية": "Forfait actuel",
     "مجانية": "Gratuit",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "Vous pouvez ajouter 2 comptes par plateforme dans la version démo.",
-    "عرض الباقات": "Voir les forfaits"
+    "عرض الباقات": "Voir les forfaits",
+    "تسجيل الخروج": "Déconnexion"
   },
 
   es: {
-    "القائمة الرئيسية": "Menú principal",
     "الرئيسية": "Inicio",
     "حساباتي": "Mis cuentas",
     "المنشورات": "Publicaciones",
     "الجدولة": "Programación",
     "التحليلات": "Analítica",
-    "إدارة المنصة": "Gestión de la plataforma",
     "الإعدادات": "Configuración",
     "إضافة حساب": "Añadir cuenta",
     "تصدير البيانات": "Exportar datos",
@@ -123,18 +115,16 @@ const DASHBOARD = {
     "مكتبة المحتوى": "Biblioteca de contenido",
     "الباقة الحالية": "Plan actual",
     "مجانية": "Gratis",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "Puedes añadir 2 cuentas por plataforma en la versión de prueba.",
-    "عرض الباقات": "Ver planes"
+    "عرض الباقات": "Ver planes",
+    "تسجيل الخروج": "Cerrar sesión"
   },
 
   de: {
-    "القائمة الرئيسية": "Hauptmenü",
     "الرئيسية": "Startseite",
     "حساباتي": "Meine Konten",
     "المنشورات": "Beiträge",
     "الجدولة": "Zeitplan",
     "التحليلات": "Analysen",
-    "إدارة المنصة": "Plattformverwaltung",
     "الإعدادات": "Einstellungen",
     "إضافة حساب": "Konto hinzufügen",
     "تصدير البيانات": "Daten exportieren",
@@ -143,8 +133,8 @@ const DASHBOARD = {
     "مكتبة المحتوى": "Inhaltsbibliothek",
     "الباقة الحالية": "Aktueller Tarif",
     "مجانية": "Kostenlos",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "In der Demoversion können Sie 2 Konten pro Plattform hinzufügen.",
-    "عرض الباقات": "Tarife anzeigen"
+    "عرض الباقات": "Tarife anzeigen",
+    "تسجيل الخروج": "Abmelden"
   },
 
   it: {
@@ -159,8 +149,8 @@ const DASHBOARD = {
     "كل الحسابات": "Tutti gli account",
     "الباقة الحالية": "Piano attuale",
     "مجانية": "Gratuito",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "Nella versione demo puoi aggiungere 2 account per piattaforma.",
-    "عرض الباقات": "Visualizza piani"
+    "عرض الباقات": "Visualizza piani",
+    "تسجيل الخروج": "Esci"
   },
 
   pt: {
@@ -174,8 +164,8 @@ const DASHBOARD = {
     "تصدير البيانات": "Exportar dados",
     "الباقة الحالية": "Plano atual",
     "مجانية": "Gratuito",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "Na versão de demonstração, você pode adicionar 2 contas por plataforma.",
-    "عرض الباقات": "Ver planos"
+    "عرض الباقات": "Ver planos",
+    "تسجيل الخروج": "Sair"
   },
 
   ru: {
@@ -189,8 +179,8 @@ const DASHBOARD = {
     "تصدير البيانات": "Экспорт данных",
     "الباقة الحالية": "Текущий тариф",
     "مجانية": "Бесплатный",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "В демоверсии можно добавить 2 аккаунта на каждую платформу.",
-    "عرض الباقات": "Посмотреть тарифы"
+    "عرض الباقات": "Посмотреть тарифы",
+    "تسجيل الخروج": "Выйти"
   },
 
   tr: {
@@ -204,8 +194,8 @@ const DASHBOARD = {
     "تصدير البيانات": "Verileri dışa aktar",
     "الباقة الحالية": "Mevcut plan",
     "مجانية": "Ücretsiz",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "Demo sürümünde platform başına 2 hesap ekleyebilirsiniz.",
-    "عرض الباقات": "Planları görüntüle"
+    "عرض الباقات": "Planları görüntüle",
+    "تسجيل الخروج": "Çıkış yap"
   },
 
   fa: {
@@ -217,7 +207,8 @@ const DASHBOARD = {
     "الإعدادات": "تنظیمات",
     "الباقة الحالية": "طرح فعلی",
     "مجانية": "رایگان",
-    "عرض الباقات": "مشاهده طرح‌ها"
+    "عرض الباقات": "مشاهده طرح‌ها",
+    "تسجيل الخروج": "خروج"
   },
 
   ur: {
@@ -229,13 +220,16 @@ const DASHBOARD = {
     "الإعدادات": "ترتیبات",
     "الباقة الحالية": "موجودہ پلان",
     "مجانية": "مفت",
-    "عرض الباقات": "پلان دیکھیں"
+    "عرض الباقات": "پلان دیکھیں",
+    "تسجيل الخروج": "لاگ آؤٹ"
   }
 };
 
+const rtlLanguages = new Set(["ar", "fa", "ur"]);
+
 export function translateSocialHubDOM(languageCode = "ar") {
   try {
-    const map = DASHBOARD[languageCode];
+    const map = DASHBOARD[languageCode] || DASHBOARD.en;
 
     if (!document.body) return;
 
@@ -245,12 +239,10 @@ export function translateSocialHubDOM(languageCode = "ar") {
     );
 
     const nodes = [];
-    while (walker.nextNode()) {
-      nodes.push(walker.currentNode);
-    }
+    while (walker.nextNode()) nodes.push(walker.currentNode);
 
     for (const node of nodes) {
-      if (typeof node.__socialHubOriginalText !== "string") {
+      if (!Object.prototype.hasOwnProperty.call(node, "__socialHubOriginalText")) {
         node.__socialHubOriginalText = node.nodeValue;
       }
 
@@ -259,19 +251,16 @@ export function translateSocialHubDOM(languageCode = "ar") {
 
       if (!trimmed) continue;
 
-      if (languageCode === "ar" || !map) {
-        node.nodeValue = original;
-        continue;
+      let translated = original;
+
+      if (languageCode !== "ar" && map[trimmed]) {
+        translated = original.replace(trimmed, map[trimmed]);
       }
 
-      if (Object.prototype.hasOwnProperty.call(map, trimmed)) {
-        node.nodeValue = original.replace(trimmed, map[trimmed]);
-      } else {
-        node.nodeValue = original;
-      }
+      node.nodeValue = translated;
     }
 
-    const isRTL = ["ar", "fa", "ur"].includes(languageCode);
+    const isRTL = rtlLanguages.has(languageCode);
     document.documentElement.dir = isRTL ? "rtl" : "ltr";
     document.documentElement.lang = languageCode;
     document.body.dir = isRTL ? "rtl" : "ltr";
