@@ -1417,8 +1417,21 @@ document.querySelectorAll("[data-i18n]").forEach(element => {
 });
 
 languageSelector.value = language.code;
-  const languageBadge = document.querySelector("#shLanguageBadge span:last-child");
-if (languageBadge) languageBadge.textContent = language.code.slice(0, 2).toUpperCase();
+const languageBadge = document.querySelector("#shLanguageBadge span:last-child");
+if (languageBadge) {
+  languageBadge.textContent = language.code.toUpperCase();
+}
+
+const dashboardSelector = document.getElementById("dashboardLanguage");
+const dashboardCode = document.getElementById("dashboardLanguageCode");
+
+if (dashboardSelector) {
+  dashboardSelector.value = language.code;
+}
+
+if (dashboardCode) {
+  dashboardCode.textContent = language.code.toUpperCase();
+}
 
 
   try {
