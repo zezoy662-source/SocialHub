@@ -1333,29 +1333,26 @@ function showSocialHubDashboard() {
 }
 
 
-const landingStartButton = document.getElementById("landingStart");
 
+const landingStartButton = document.getElementById("landingStart");
 const landingLoginButton = document.getElementById("landingLoginTop");
 
-if (landingLoginButton) {
-  landingLoginButton.addEventListener("click", () => {
-    if (typeof window.openSocialHubAuth === "function") {
-      window.openSocialHubAuth();
-    } else {
-      alert("انتظر تحميل صفحة تسجيل الدخول ثم حاول مرة أخرى.");
-    }
-  });
+function openLoginPage() {
+  if (typeof window.openSocialHubAuth === "function") {
+    window.openSocialHubAuth();
+  } else {
+    alert("انتظر تحميل صفحة تسجيل الدخول ثم حاول مرة أخرى.");
+  }
+}
+
+if (landingStartButton) {
+  landingStartButton.addEventListener("click", openLoginPage);
 }
 
 if (landingLoginButton) {
-  landingLoginButton.addEventListener("click", () => {
-    if (window.openSocialHubAuth) {
-      window.openSocialHubAuth();
-    } else {
-      alert("انتظر تحميل صفحة تسجيل الدخول ثم حاول مرة أخرى.");
-    }
-  });
+  landingLoginButton.addEventListener("click", openLoginPage);
 }
+
 
 </script>
 
