@@ -558,6 +558,15 @@ function translateRoot(root, language) {
   isTranslating = true;
 
   try {
+    UI.en["مساحة واحدة لكل حساباتك"] = "One place for all your accounts";
+UI.en["الباقة الحالية: Free"] = "Current plan: Free";
+UI.en["حد الحسابات: 2 لكل منصة (تجريبي)."] = "Account limit: 2 per platform (demo).";
+UI.en["إدارة حساباتي ←"] = "Manage my accounts ←";
+UI.en["2 حساب"] = "2 accounts";
+UI.en["1 حساب"] = "1 account";
+UI.en["0 حساب"] = "0 accounts";
+
+const map = UI[language] || UI.en;
     const map = UI[language] || UI.en;
 
     if (root.nodeType === Node.TEXT_NODE) {
