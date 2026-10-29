@@ -225,10 +225,110 @@ const DASHBOARD = {
   }
 };
 
+
 const rtlLanguages = new Set(["ar", "fa", "ur"]);
+
+let socialHubTranslationObserver = null;
 
 export function translateSocialHubDOM(languageCode = "ar") {
   try {
+    const lang = SOCIALHUB_LANGUAGES?.some(
+      item => item.code === languageCode
+    ) ? languageCode : "ar";
+
+    const map = DASHBOARD[lang] || {};
+
+    if (!document.body) return;
+
+    const translateTextNodes = (root) => {
+      const walker = document.createTreeWalker(
+        root,
+        NodeFilter.SHOW_TEXT
+      );
+
+      const nodes = [];
+      while (walker.nextNode()) {
+        nodes.push(walker.currentNode);
+      }
+
+      for (const node of nodes) {
+        const parent = node.parentElement;
+
+        if (
+          !parent ||
+          parent.closest("script, style, textarea, input, select, option, code, pre")
+        ) continue;
+
+        if (!Object.prototype.hasOwnProperty.call(
+          node, "__socialHubOriginalText"
+        )) {
+          node.__socialHubOriginalText = node.nodeValue;
+        }
+
+        const original = node.__socialHubOriginalText;
+        const trimmed = original.trim();
+
+        if (!trimmed) continue;
+
+        const translated = lang === "ar"
+          ? original
+          : map[trimmed]
+            ? original.replace(trimmed, map[trimmed])
+            : original;
+
+        if (node.nodeValue !== translated) {
+          node.nodeValue = translated;
+        }
+      }
+    };
+
+    translateTextNodes(document.body);
+
+    document.documentElement.dir = rtlLanguages.has(lang) ? "rtl" : "ltr";
+    document.documentElement.lang = lang;
+    document.body.dir = rtlLanguages.has(lang) ? "rtl" : "ltr";
+
+    if (socialHubTranslationObserver) {
+      socialHubTranslationObserver.disconnect();
+    }
+
+    socialHubTranslationObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === "childList") {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+              const parent = node.parentElement;
+              if (!parent) return;
+
+              if (!Object.prototype.hasOwnProperty.call(
+                node, "__socialHubOriginalText"
+              )) {
+                node.__socialHubOriginalText = node.nodeValue;
+              }
+
+              const original = node.__socialHubOriginalText;
+              const trimmed = original.trim();
+
+              if (lang !== "ar" && map[trimmed]) {
+                node.nodeValue = original.replace(trimmed, map[trimmed]);
+              }
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+              translateTextNodes(node);
+            }
+          });
+        }
+      }
+    });
+
+    socialHubTranslationObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  } catch (error) {
+    console.warn("SocialHub dashboard translation skipped:", error);
+  }
+}
+
     const map = DASHBOARD[languageCode] || DASHBOARD.en;
 
     if (!document.body) return;
