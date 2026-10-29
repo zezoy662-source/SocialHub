@@ -329,42 +329,4 @@ export function translateSocialHubDOM(languageCode = "ar") {
   }
 }
 
-    const map = DASHBOARD[languageCode] || DASHBOARD.en;
-
-    if (!document.body) return;
-
-    const walker = document.createTreeWalker(
-      document.body,
-      NodeFilter.SHOW_TEXT
-    );
-
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-
-    for (const node of nodes) {
-      if (!Object.prototype.hasOwnProperty.call(node, "__socialHubOriginalText")) {
-        node.__socialHubOriginalText = node.nodeValue;
-      }
-
-      const original = node.__socialHubOriginalText;
-      const trimmed = original.trim();
-
-      if (!trimmed) continue;
-
-      let translated = original;
-
-      if (languageCode !== "ar" && map[trimmed]) {
-        translated = original.replace(trimmed, map[trimmed]);
-      }
-
-      node.nodeValue = translated;
-    }
-
-    const isRTL = rtlLanguages.has(languageCode);
-    document.documentElement.dir = isRTL ? "rtl" : "ltr";
-    document.documentElement.lang = languageCode;
-    document.body.dir = isRTL ? "rtl" : "ltr";
-  } catch (error) {
-    console.warn("SocialHub dashboard translation skipped:", error);
-  }
-}
+  
