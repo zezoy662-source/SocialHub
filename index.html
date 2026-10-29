@@ -1478,9 +1478,13 @@ function syncDashboardLanguage() {
 
     dashboardSelector.value = languageSelector.value;
 
-    dashboardSelector.onchange = () => {
-      setSocialHubLanguage(dashboardSelector.value);
-    };
+   
+dashboardSelector.onchange = () => {
+  setSocialHubLanguage(dashboardSelector.value);
+  translateSocialHubDOM(dashboardSelector.value);
+  syncDashboardLanguage();
+};
+
   }
 
   if (dashboardCode && languageSelector) {
