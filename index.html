@@ -31,36 +31,35 @@ body.landing-active .sidebar,
 body.landing-active .main,
 body.landing-active .overlay { display: none; }
 
-/* SocialHub language layout */
-html[dir="ltr"] .sidebar {
-  right: auto;
-  left: 0;
-  border-left: 0;
-  border-right: 1px solid var(--border);
+
+/* SocialHub language layout - corrected selectors */
+html[dir="ltr"] #sidebar {
+  position: fixed;
+  left: 0 !important;
+  right: auto !important;
+}
+
+html[dir="rtl"] #sidebar {
+  position: fixed;
+  right: 0 !important;
+  left: auto !important;
 }
 
 html[dir="ltr"] .main {
-  margin-right: 0;
-  margin-left: 245px;
-}
-
-html[dir="rtl"] .sidebar {
-  left: auto;
-  right: 0;
-  border-right: 0;
-  border-left: 1px solid var(--border);
+  margin-left: 245px !important;
+  margin-right: 0 !important;
 }
 
 html[dir="rtl"] .main {
-  margin-left: 0;
-  margin-right: 245px;
+  margin-right: 245px !important;
+  margin-left: 0 !important;
 }
 
 @media (max-width: 800px) {
   html[dir="ltr"] .main,
   html[dir="rtl"] .main {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }
 
