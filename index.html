@@ -1341,10 +1341,12 @@ const landingStartButton = document.getElementById("landingStart");
 const landingLoginButton = document.getElementById("landingLoginTop");
 
 function openLoginPage() {
-  if (typeof window.openSocialHubAuth === "function") {
-    window.openSocialHubAuth();
+  const authBox = document.getElementById("socialHubAuthBox");
+
+  if (authBox) {
+    authBox.style.display = "flex";
   } else {
-    alert("انتظر تحميل صفحة تسجيل الدخول ثم حاول مرة أخرى.");
+    alert("تعذر تحميل نافذة الدخول. أعد تحديث الصفحة وحاول مرة أخرى.");
   }
 }
 
