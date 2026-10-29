@@ -76,13 +76,22 @@ html[dir="rtl"] .main {
       <div data-i18n="tagline" style="font-size:12px;color:#a3acc1;">مساحة واحدة لكل حساباتك</div>
       </div>
     </div>
-    <label for="shLanguage" style="color:#c6cbe0;font-size:13px;">
-  <select id="shLanguage"
-    aria-label="Choose language"
-    style="padding:10px;border:1px solid #393f55;border-radius:10px;background:#101522;color:white;font:inherit;cursor:pointer;">
-  </select>
-</label>
-   <button type="button" id="landingLoginTop" data-i18n="login" style="padding:12px 22px;border:1px solid #7965f5;border-radius:10px;background:transparent;color:white;cursor:pointer;font:inherit;">تسجيل الدخول</button>
+   
+<div style="display:flex;align-items:center;gap:8px;">
+  <label for="shLanguage" style="color:#c6cbe0;font-size:13px;margin:0;">
+    <select id="shLanguage"
+      aria-label="Choose language"
+      style="padding:10px;border:1px solid #393f55;border-radius:10px;background:#101522;color:white;font:inherit;cursor:pointer;">
+    </select>
+  </label>
+  <span id="shLanguageBadge"
+    style="display:inline-flex;align-items:center;gap:5px;padding:9px 10px;border:1px solid #393f55;border-radius:10px;background:#101522;color:#c6cbe0;font-size:12px;font-weight:bold;">
+    <span aria-hidden="true">🌐</span>
+    <span>AR</span>
+  </span>
+</div>
+<button type="button" id="landingLoginTop" data-i18n="login" style="padding:12px 22px;border:1px solid #7965f5;border-radius:10px;background:transparent;color:white;cursor:pointer;font:inherit;">تسجيل الدخول</button>
+
   </header>
 
   <section style="max-width:1180px;margin:auto;padding:65px 24px 75px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:45px;align-items:center;">
