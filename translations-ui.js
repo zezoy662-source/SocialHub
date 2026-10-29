@@ -210,7 +210,13 @@ const UI = {
 "حسب المنصة": "By platform",
 "إضافة حساب هنا لا تربطه فعليًا بالمنصة.": "Adding an account here does not connect it to the platform.",
 "لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.": "Do not enter passwords or secret login codes in this demo.",
-"⇩ تصدير البيانات": "⇩ Export data"
+"⇩ تصدير البيانات": "⇩ Export data",
+    "الاشتراكات والباقات": "Plans & billing",
+"الباقات والاشتراكات": "Plans & subscriptions",
+"عرض الباقات": "View plans",
+"القائمة الرئيسية": "Main menu",
+"إدارة المنصة": "Platform management",
+"الإعدادات": "Settings",
   },
 
   fr: {
