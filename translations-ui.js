@@ -80,14 +80,8 @@ const DASHBOARD = {
     "فتح القائمة": "Open menu",
     "هذه نسخة تجريبية. البيانات محفوظة في هذا المتصفح فقط، ولا يوجد اتصال فعلي بالمنصات أو نشر تلقائي أو دفع إلكتروني.": "This is a demo. Data is stored only in this browser. There are no live platform connections, automatic publishing, or electronic payments.",
     "تُحفظ المسودات على هذا المتصفح والجهاز فقط. لا يتم نشر المحتوى تلقائيًا على منصات التواصل الاجتماعي.": "Drafts are stored only in this browser and on this device. Content is not automatically published to social media.",
-    "لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.": "Do not enter passwords or secret login codes in this demo."
-        "الباقة الحالية:": "Current plan:",
-    "مجانية": "Free",
-    "يمكنك إضافة حسابين لكل منصة في النموذج التجريبي.": "You can add 2 accounts per platform in the demo.",
-    "حد الحسابات حسب المنصة": "Account limit per platform",
-    "حتى 2 حسابًا لكل منصة": "Up to 2 accounts per platform",
-    "تصدير البيانات": "Export data",
-    "إدارة حساباتي": "Manage my accounts",
+   "لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.": "Do not enter passwords or secret login codes in this demo.",
+    
     "حساب": "account",
     "حسابات": "accounts",
     "تسجيل الخروج": "Log out"
