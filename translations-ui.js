@@ -10,6 +10,8 @@ const RTL_LANGUAGES = new Set(["ar", "fa", "ur"]);
 
 const UI = {
 
+
+
 en: {
   "القائمة الرئيسية": "Main Menu",
   "الرئيسية": "Home",
@@ -199,6 +201,7 @@ en: {
   "تُحفظ المسودات على هذا المتصفح والجهاز فقط. لا يتم نشر المحتوى تلقائيًا على منصات التواصل الاجتماعي.": "Drafts are stored only in this browser and on this device. Content is not automatically published to social media.",
   "هذه نسخة تجريبية. البيانات محفوظة في هذا المتصفح فقط، ولا يوجد اتصال فعلي بالمنصات أو نشر تلقائي أو دفع إلكتروني.": "This is a demo. Data is stored only in this browser. There are no live platform connections, automatic publishing, or electronic payments."
 },
+
 
   fr: {
     "الرئيسية": "Accueil", "لوحة التحكم": "Tableau de bord",
