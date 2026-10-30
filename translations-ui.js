@@ -562,74 +562,59 @@ function getOriginalText(node) {
 }
 
 function translateValue(value, map, language) {
-  if (language === "ar") return value;
-
+  if (language === "ar" || typeof value !== "string") return value;
   const trimmed = value.trim();
   if (!trimmed) return value;
 
-  const translated = map[trimmed];
-  if (!translated) return value;
+  // Prefer an exact phrase match, preserving whitespace around the phrase.
+  if (Object.prototype.hasOwnProperty.call(map, trimmed)) {
+    return value.replace(trimmed, map[trimmed]);
+  }
 
-  return value.replace(trimmed, translated);
+  // Translate known phrases embedded in longer text nodes (icons, counts,
+  // punctuation, and labels often share one text node in the dashboard).
+  let result = value;
+  const keys = Object.keys(map).filter(key => key && key.length > 1)
+    .sort((a, b) => b.length - a.length);
+  for (const key of keys) {
+    if (!result.includes(key)) continue;
+    result = result.split(key).join(map[key]);
+  }
+  return result;
+}
+
+function shouldSkipText(parent) {
+  return !parent || !!parent.closest(
+    "script,style,textarea,input,select,option,code,pre,[data-no-translate]"
+  );
 }
 
 function translateTextNodes(root, map, language) {
   if (!root) return;
-
-  const walker = document.createTreeWalker(
-    root,
-    NodeFilter.SHOW_TEXT
-  );
-
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   const nodes = [];
-  while (walker.nextNode()) {
-    nodes.push(walker.currentNode);
-  }
+  while (walker.nextNode()) nodes.push(walker.currentNode);
 
   for (const node of nodes) {
-    const parent = node.parentElement;
-
-    if (
-      !parent ||
-      parent.closest(
-        "script,style,textarea,input,select,option,code,pre,[data-no-translate]"
-      )
-    ) {
-      continue;
-    }
-
+    if (shouldSkipText(node.parentElement)) continue;
     const original = getOriginalText(node);
     const translated = translateValue(original, map, language);
-
-    if (node.nodeValue !== translated) {
-      node.nodeValue = translated;
-    }
+    if (node.nodeValue !== translated) node.nodeValue = translated;
   }
 }
 
 function translateAttributes(root, map, language) {
   if (!root || root.nodeType !== Node.ELEMENT_NODE) return;
-
   const elements = [root, ...root.querySelectorAll("*")];
-
   for (const element of elements) {
-    if (element.matches("script,style,textarea,input,select,option,[data-no-translate]")) {
-      // Inputs can still have translatable placeholders and labels.
-      if (!element.matches("input,textarea")) continue;
-    }
-
+    if (element.matches("script,style,select,option,code,pre,[data-no-translate]")) continue;
     for (const attribute of ATTRIBUTES) {
       if (!element.hasAttribute(attribute)) continue;
-
       const originalKey = `__shOriginal_${attribute}`;
-
       if (!Object.prototype.hasOwnProperty.call(element, originalKey)) {
         element[originalKey] = element.getAttribute(attribute);
       }
-
-      const original = element[originalKey];
-      const translated = translateValue(original, map, language);
-
+      const translated = translateValue(element[originalKey], map, language);
       if (element.getAttribute(attribute) !== translated) {
         element.setAttribute(attribute, translated);
       }
@@ -639,35 +624,19 @@ function translateAttributes(root, map, language) {
 
 function translateRoot(root, language) {
   if (!root || isTranslating) return;
-
   isTranslating = true;
-
   try {
-
-
-
     const map = UI[language] || UI.en;
-
     if (root.nodeType === Node.TEXT_NODE) {
-      const parent = root.parentElement;
-      if (!parent) return;
-
-      if (
-        parent.closest(
-          "script,style,textarea,input,select,option,code,pre,[data-no-translate]"
-        )
-      ) {
-        return;
-      }
-
+      if (shouldSkipText(root.parentElement)) return;
       const original = getOriginalText(root);
-      root.nodeValue = translateValue(original, map, language);
+      const translated = translateValue(original, map, language);
+      if (root.nodeValue !== translated) root.nodeValue = translated;
       return;
     }
-
-    if (root.nodeType === Node.ELEMENT_NODE) {
+    if (root.nodeType === Node.ELEMENT_NODE || root.nodeType === Node.DOCUMENT_NODE) {
       translateTextNodes(root, map, language);
-      translateAttributes(root, map, language);
+      if (root.nodeType === Node.ELEMENT_NODE) translateAttributes(root, map, language);
     }
   } finally {
     isTranslating = false;
@@ -676,38 +645,47 @@ function translateRoot(root, language) {
 
 export function translateSocialHubDOM(languageCode = "ar") {
   activeLanguage = normalizeLanguage(languageCode);
-
   if (!document.body) return;
 
   const rtl = RTL_LANGUAGES.has(activeLanguage);
-
   document.documentElement.lang = activeLanguage;
   document.documentElement.dir = rtl ? "rtl" : "ltr";
   document.body.dir = rtl ? "rtl" : "ltr";
 
   translateRoot(document.body, activeLanguage);
-
   if (observer) observer.disconnect();
 
   observer = new MutationObserver(mutations => {
     if (isTranslating) return;
-
     for (const mutation of mutations) {
-      if (mutation.type !== "childList") continue;
-
-      for (const node of mutation.addedNodes) {
-        if (
-          node.nodeType === Node.ELEMENT_NODE ||
-          node.nodeType === Node.TEXT_NODE
-        ) {
-          translateRoot(node, activeLanguage);
+      if (mutation.type === "childList") {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) {
+            translateRoot(node, activeLanguage);
+          }
         }
+      } else if (mutation.type === "characterData") {
+        const node = mutation.target;
+        if (shouldSkipText(node.parentElement)) continue;
+        // If app code changed an existing text node, treat the new value as
+        // the new source phrase rather than reusing stale cached text.
+        const cached = node.__shOriginalText;
+        const map = UI[activeLanguage] || UI.en;
+        if (cached !== undefined && node.nodeValue !== translateValue(cached, map, activeLanguage)) {
+          node.__shOriginalText = node.nodeValue;
+        }
+        translateRoot(node, activeLanguage);
+      } else if (mutation.type === "attributes") {
+        translateRoot(mutation.target, activeLanguage);
       }
     }
   });
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
+    characterData: true,
+    attributes: true,
+    attributeFilter: ATTRIBUTES
   });
 }
