@@ -1375,13 +1375,1229 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-  import {
-  SOCIALHUB_LANGUAGES,
-  SOCIALHUB_TRANSLATIONS,
-  SOCIALHUB_DEFAULT_LANGUAGE,
-  SOCIALHUB_LANGUAGE_STORAGE_KEY
-} from "./translations.js";
-  import { translateSocialHubDOM } from "./translations-ui.js";
+  /* SocialHub translations: embedded to keep the app self-contained. */
+const SOCIALHUB_LANGUAGES = [
+  { code: "ar", name: "العربية", dir: "rtl" },
+  { code: "en", name: "English", dir: "ltr" },
+  { code: "fr", name: "Français", dir: "ltr" },
+  { code: "es", name: "Español", dir: "ltr" },
+  { code: "de", name: "Deutsch", dir: "ltr" },
+  { code: "pt", name: "Português", dir: "ltr" },
+  { code: "it", name: "Italiano", dir: "ltr" },
+  { code: "ru", name: "Русский", dir: "ltr" },
+  { code: "zh-CN", name: "简体中文", dir: "ltr" },
+  { code: "hi", name: "हिन्दी", dir: "ltr" },
+  { code: "ja", name: "日本語", dir: "ltr" },
+  { code: "ko", name: "한국어", dir: "ltr" },
+  { code: "id", name: "Bahasa Indonesia", dir: "ltr" },
+  { code: "vi", name: "Tiếng Việt", dir: "ltr" },
+  { code: "th", name: "ภาษาไทย", dir: "ltr" },
+  { code: "tr", name: "Türkçe", dir: "ltr" },
+  { code: "fa", name: "فارسی", dir: "rtl" },
+  { code: "ur", name: "اردو", dir: "rtl" },
+  { code: "bn", name: "বাংলা", dir: "ltr" },
+  { code: "sw", name: "Kiswahili", dir: "ltr" }
+];
+
+const SOCIALHUB_DEFAULT_LANGUAGE = "ar";
+
+const SOCIALHUB_LANGUAGE_STORAGE_KEY = "socialhub_language_v1";
+
+const SOCIALHUB_TRANSLATIONS = {
+  ar: {
+    tagline: "مساحة واحدة لكل حساباتك",
+    login: "تسجيل الدخول",
+    badge: "منصة واحدة لتنظيم حساباتك",
+    title1: "كل حساباتك الاجتماعية،",
+    title2: "في مكان واحد.",
+    description: "نظّم حساباتك، وجهّز منشوراتك، ورتّب أفكارك، وتابع خطط المحتوى من مساحة واحدة سهلة الاستخدام.",
+    start: "ابدأ الآن",
+    featureAccounts: "إدارة الحسابات",
+    featurePosts: "تنظيم المنشورات",
+    featureLibrary: "مكتبة المحتوى",
+    workspaceTitle: "مساحة عملك",
+    cardAccountsTitle: "حساباتك",
+    cardAccountsDescription: "نظّم حسابات منصاتك",
+    cardPostsTitle: "المنشورات",
+    cardPostsDescription: "جهّز أفكارك ونصوصك",
+    cardScheduleTitle: "الجدولة",
+    cardScheduleDescription: "خطّط لمواعيد النشر",
+    cardLibraryTitle: "مكتبة المحتوى",
+    cardLibraryDescription: "احتفظ بأفكارك الجاهزة",
+    footer: "نظّم حضورك الرقمي من مكان واحد"
+  },
+
+  en: {
+    tagline: "One space for all your accounts",
+    login: "Log in",
+    badge: "One platform to organize your accounts",
+    title1: "All your social accounts,",
+    title2: "in one place.",
+    description: "Organize accounts, prepare posts, arrange ideas, and manage content plans in one easy-to-use space.",
+    start: "Get started",
+    featureAccounts: "Account management",
+    featurePosts: "Post organization",
+    featureLibrary: "Content library",
+    workspaceTitle: "Your workspace",
+    cardAccountsTitle: "Your accounts",
+    cardAccountsDescription: "Organize your social accounts",
+    cardPostsTitle: "Posts",
+    cardPostsDescription: "Prepare ideas and text",
+    cardScheduleTitle: "Scheduling",
+    cardScheduleDescription: "Plan your publishing times",
+    cardLibraryTitle: "Content library",
+    cardLibraryDescription: "Keep your ready-to-use ideas",
+    footer: "Manage your digital presence in one place"
+  },
+
+  fr: {
+    tagline: "Un espace pour tous vos comptes",
+    login: "Connexion",
+    badge: "Une plateforme pour organiser vos comptes",
+    title1: "Tous vos comptes sociaux,",
+    title2: "au même endroit.",
+    description: "Organisez vos comptes, préparez vos publications et gérez votre contenu dans un espace simple.",
+    start: "Commencer",
+    featureAccounts: "Gestion des comptes",
+    featurePosts: "Organisation des publications",
+    featureLibrary: "Bibliothèque de contenu",
+    workspaceTitle: "Votre espace de travail",
+    cardAccountsTitle: "Vos comptes",
+    cardAccountsDescription: "Organisez vos comptes sociaux",
+    cardPostsTitle: "Publications",
+    cardPostsDescription: "Préparez vos idées et vos textes",
+    cardScheduleTitle: "Planification",
+    cardScheduleDescription: "Planifiez vos publications",
+    cardLibraryTitle: "Bibliothèque de contenu",
+    cardLibraryDescription: "Conservez vos idées prêtes à l'emploi",
+    footer: "Gérez votre présence numérique au même endroit"
+  },
+
+  es: {
+    tagline: "Un espacio para todas tus cuentas",
+    login: "Iniciar sesión",
+    badge: "Una plataforma para organizar tus cuentas",
+    title1: "Todas tus cuentas sociales,",
+    title2: "en un solo lugar.",
+    description: "Organiza tus cuentas, prepara publicaciones y gestiona tus contenidos desde un espacio sencillo.",
+    start: "Comenzar",
+    featureAccounts: "Gestión de cuentas",
+    featurePosts: "Organización de publicaciones",
+    featureLibrary: "Biblioteca de contenido",
+    workspaceTitle: "Tu espacio de trabajo",
+    cardAccountsTitle: "Tus cuentas",
+    cardAccountsDescription: "Organiza tus cuentas sociales",
+    cardPostsTitle: "Publicaciones",
+    cardPostsDescription: "Prepara ideas y textos",
+    cardScheduleTitle: "Programación",
+    cardScheduleDescription: "Planifica cuándo publicar",
+    cardLibraryTitle: "Biblioteca de contenido",
+    cardLibraryDescription: "Guarda tus ideas listas para usar",
+    footer: "Gestiona tu presencia digital desde un solo lugar"
+  },
+
+  de: {
+    tagline: "Ein Ort für alle deine Konten",
+    login: "Anmelden",
+    badge: "Eine Plattform zur Verwaltung deiner Konten",
+    title1: "Alle deine Social-Media-Konten,",
+    title2: "an einem Ort.",
+    description: "Organisiere Konten, bereite Beiträge vor und verwalte deine Inhalte an einem zentralen Ort.",
+    start: "Jetzt starten",
+    featureAccounts: "Kontoverwaltung",
+    featurePosts: "Beiträge organisieren",
+    featureLibrary: "Inhaltsbibliothek",
+    workspaceTitle: "Dein Arbeitsbereich",
+    cardAccountsTitle: "Deine Konten",
+    cardAccountsDescription: "Organisiere deine Social-Media-Konten",
+    cardPostsTitle: "Beiträge",
+    cardPostsDescription: "Bereite Ideen und Texte vor",
+    cardScheduleTitle: "Planung",
+    cardScheduleDescription: "Plane deine Veröffentlichungen",
+    cardLibraryTitle: "Inhaltsbibliothek",
+    cardLibraryDescription: "Bewahre fertige Ideen auf",
+    footer: "Verwalte deine digitale Präsenz an einem Ort"
+  },
+
+  pt: {
+    tagline: "Um espaço para todas as suas contas",
+    login: "Entrar",
+    badge: "Uma plataforma para organizar suas contas",
+    title1: "Todas as suas contas sociais,",
+    title2: "em um só lugar.",
+    description: "Organize suas contas, prepare publicações e gerencie seu conteúdo em um espaço simples.",
+    start: "Começar",
+    featureAccounts: "Gestão de contas",
+    featurePosts: "Organização de publicações",
+    featureLibrary: "Biblioteca de conteúdo",
+    workspaceTitle: "Seu espaço de trabalho",
+    cardAccountsTitle: "Suas contas",
+    cardAccountsDescription: "Organize suas contas sociais",
+    cardPostsTitle: "Publicações",
+    cardPostsDescription: "Prepare ideias e textos",
+    cardScheduleTitle: "Agendamento",
+    cardScheduleDescription: "Planeje os horários das publicações",
+    cardLibraryTitle: "Biblioteca de conteúdo",
+    cardLibraryDescription: "Guarde suas ideias prontas",
+    footer: "Gerencie sua presença digital em um só lugar"
+  },
+
+  it: {
+    tagline: "Uno spazio per tutti i tuoi account",
+    login: "Accedi",
+    badge: "Una piattaforma per organizzare i tuoi account",
+    title1: "Tutti i tuoi account social,",
+    title2: "in un unico posto.",
+    description: "Organizza gli account, prepara i post e gestisci i contenuti in uno spazio semplice.",
+    start: "Inizia ora",
+    featureAccounts: "Gestione account",
+    featurePosts: "Organizzazione dei post",
+    featureLibrary: "Libreria dei contenuti",
+    workspaceTitle: "Il tuo spazio di lavoro",
+    cardAccountsTitle: "I tuoi account",
+    cardAccountsDescription: "Organizza i tuoi account social",
+    cardPostsTitle: "Post",
+    cardPostsDescription: "Prepara idee e testi",
+    cardScheduleTitle: "Programmazione",
+    cardScheduleDescription: "Pianifica gli orari di pubblicazione",
+    cardLibraryTitle: "Libreria dei contenuti",
+    cardLibraryDescription: "Conserva le tue idee pronte",
+    footer: "Gestisci la tua presenza digitale in un unico posto"
+  },
+
+  ru: {
+    tagline: "Одно пространство для всех ваших аккаунтов",
+    login: "Войти",
+    badge: "Одна платформа для управления аккаунтами",
+    title1: "Все ваши социальные аккаунты,",
+    title2: "в одном месте.",
+    description: "Организуйте аккаунты, готовьте публикации и управляйте контентом в одном удобном пространстве.",
+    start: "Начать",
+    featureAccounts: "Управление аккаунтами",
+    featurePosts: "Организация публикаций",
+    featureLibrary: "Библиотека контента",
+    workspaceTitle: "Ваше рабочее пространство",
+    cardAccountsTitle: "Ваши аккаунты",
+    cardAccountsDescription: "Организуйте социальные аккаунты",
+    cardPostsTitle: "Публикации",
+    cardPostsDescription: "Готовьте идеи и тексты",
+    cardScheduleTitle: "Планирование",
+    cardScheduleDescription: "Планируйте время публикаций",
+    cardLibraryTitle: "Библиотека контента",
+    cardLibraryDescription: "Храните готовые идеи",
+    footer: "Управляйте своим цифровым присутствием в одном месте"
+  },
+
+  "zh-CN": {
+    tagline: "一个空间管理你的所有账号",
+    login: "登录",
+    badge: "一个平台，轻松管理所有账号",
+    title1: "你的所有社交账号，",
+    title2: "尽在一处。",
+    description: "在一个简单易用的平台中管理账号、准备帖子并规划内容。",
+    start: "立即开始",
+    featureAccounts: "账号管理",
+    featurePosts: "帖子整理",
+    featureLibrary: "内容库",
+    workspaceTitle: "你的工作空间",
+    cardAccountsTitle: "你的账号",
+    cardAccountsDescription: "整理你的社交账号",
+    cardPostsTitle: "帖子",
+    cardPostsDescription: "准备创意和文案",
+    cardScheduleTitle: "发布计划",
+    cardScheduleDescription: "规划发布时间",
+    cardLibraryTitle: "内容库",
+    cardLibraryDescription: "保存可直接使用的创意",
+    footer: "在一个地方管理你的数字形象"
+  },
+
+  hi: {
+    tagline: "आपके सभी खातों के लिए एक जगह",
+    login: "लॉग इन करें",
+    badge: "आपके खातों को व्यवस्थित करने का एक मंच",
+    title1: "आपके सभी सोशल अकाउंट,",
+    title2: "एक ही जगह।",
+    description: "अपने अकाउंट व्यवस्थित करें, पोस्ट तैयार करें और एक ही जगह पर सामग्री प्रबंधित करें।",
+    start: "शुरू करें",
+    featureAccounts: "खाता प्रबंधन",
+    featurePosts: "पोस्ट व्यवस्थित करें",
+    featureLibrary: "कंटेंट लाइब्रेरी",
+    workspaceTitle: "आपका कार्यक्षेत्र",
+    cardAccountsTitle: "आपके खाते",
+    cardAccountsDescription: "अपने सोशल अकाउंट व्यवस्थित करें",
+    cardPostsTitle: "पोस्ट",
+    cardPostsDescription: "विचार और टेक्स्ट तैयार करें",
+    cardScheduleTitle: "शेड्यूलिंग",
+    cardScheduleDescription: "पोस्ट करने का समय तय करें",
+    cardLibraryTitle: "कंटेंट लाइब्रेरी",
+    cardLibraryDescription: "तैयार विचारों को सहेजें",
+    footer: "अपनी डिजिटल उपस्थिति एक ही जगह प्रबंधित करें"
+  },
+
+  ja: {
+    tagline: "すべてのアカウントをひとつの場所に",
+    login: "ログイン",
+    badge: "アカウントを整理するためのプラットフォーム",
+    title1: "すべてのSNSアカウントを、",
+    title2: "ひとつの場所に。",
+    description: "アカウントの整理、投稿の準備、コンテンツの管理を簡単に行えます。",
+    start: "今すぐ始める",
+    featureAccounts: "アカウント管理",
+    featurePosts: "投稿の整理",
+    featureLibrary: "コンテンツライブラリ",
+    workspaceTitle: "ワークスペース",
+    cardAccountsTitle: "アカウント",
+    cardAccountsDescription: "SNSアカウントを整理",
+    cardPostsTitle: "投稿",
+    cardPostsDescription: "アイデアや文章を準備",
+    cardScheduleTitle: "スケジュール",
+    cardScheduleDescription: "投稿時間を計画",
+    cardLibraryTitle: "コンテンツライブラリ",
+    cardLibraryDescription: "すぐ使えるアイデアを保存",
+    footer: "デジタルでの活動をひとつの場所で管理"
+  },
+
+  ko: {
+    tagline: "모든 계정을 한곳에서",
+    login: "로그인",
+    badge: "계정을 관리하는 하나의 플랫폼",
+    title1: "모든 소셜 계정을,",
+    title2: "한곳에서.",
+    description: "계정을 정리하고 게시물을 준비하며 콘텐츠를 한곳에서 관리하세요.",
+    start: "시작하기",
+    featureAccounts: "계정 관리",
+    featurePosts: "게시물 정리",
+    featureLibrary: "콘텐츠 라이브러리",
+    workspaceTitle: "작업 공간",
+    cardAccountsTitle: "내 계정",
+    cardAccountsDescription: "소셜 계정을 정리하세요",
+    cardPostsTitle: "게시물",
+    cardPostsDescription: "아이디어와 글을 준비하세요",
+    cardScheduleTitle: "예약 관리",
+    cardScheduleDescription: "게시 시간을 계획하세요",
+    cardLibraryTitle: "콘텐츠 라이브러리",
+    cardLibraryDescription: "바로 사용할 아이디어를 저장하세요",
+    footer: "디지털 활동을 한곳에서 관리하세요"
+  },
+
+  id: {
+    tagline: "Satu ruang untuk semua akun Anda",
+    login: "Masuk",
+    badge: "Satu platform untuk mengatur akun Anda",
+    title1: "Semua akun sosial Anda,",
+    title2: "di satu tempat.",
+    description: "Atur akun, siapkan postingan, dan kelola konten dengan mudah di satu tempat.",
+    start: "Mulai sekarang",
+    featureAccounts: "Pengelolaan akun",
+    featurePosts: "Pengaturan postingan",
+    featureLibrary: "Perpustakaan konten",
+    workspaceTitle: "Ruang kerja Anda",
+    cardAccountsTitle: "Akun Anda",
+    cardAccountsDescription: "Atur akun media sosial Anda",
+    cardPostsTitle: "Postingan",
+    cardPostsDescription: "Siapkan ide dan teks",
+    cardScheduleTitle: "Penjadwalan",
+    cardScheduleDescription: "Rencanakan waktu publikasi",
+    cardLibraryTitle: "Perpustakaan konten",
+    cardLibraryDescription: "Simpan ide yang siap digunakan",
+    footer: "Kelola kehadiran digital Anda di satu tempat"
+  },
+
+  vi: {
+    tagline: "Một nơi cho tất cả tài khoản của bạn",
+    login: "Đăng nhập",
+    badge: "Một nền tảng để quản lý tài khoản",
+    title1: "Tất cả tài khoản mạng xã hội,",
+    title2: "ở cùng một nơi.",
+    description: "Sắp xếp tài khoản, chuẩn bị bài đăng và quản lý nội dung trong một không gian dễ sử dụng.",
+    start: "Bắt đầu",
+    featureAccounts: "Quản lý tài khoản",
+    featurePosts: "Sắp xếp bài đăng",
+    featureLibrary: "Thư viện nội dung",
+    workspaceTitle: "Không gian làm việc",
+    cardAccountsTitle: "Tài khoản của bạn",
+    cardAccountsDescription: "Sắp xếp tài khoản mạng xã hội",
+    cardPostsTitle: "Bài đăng",
+    cardPostsDescription: "Chuẩn bị ý tưởng và văn bản",
+    cardScheduleTitle: "Lên lịch",
+    cardScheduleDescription: "Lên kế hoạch đăng bài",
+    cardLibraryTitle: "Thư viện nội dung",
+    cardLibraryDescription: "Lưu ý tưởng sẵn sàng sử dụng",
+    footer: "Quản lý sự hiện diện số tại một nơi"
+  },
+
+  th: {
+    tagline: "พื้นที่เดียวสำหรับทุกบัญชีของคุณ",
+    login: "เข้าสู่ระบบ",
+    badge: "แพลตฟอร์มเดียวสำหรับจัดการบัญชี",
+    title1: "บัญชีโซเชียลทั้งหมดของคุณ",
+    title2: "ในที่เดียว",
+    description: "จัดระเบียบบัญชี เตรียมโพสต์ และจัดการเนื้อหาของคุณได้จากที่เดียว",
+    start: "เริ่มต้นใช้งาน",
+    featureAccounts: "จัดการบัญชี",
+    featurePosts: "จัดระเบียบโพสต์",
+    featureLibrary: "คลังเนื้อหา",
+    workspaceTitle: "พื้นที่ทำงานของคุณ",
+    cardAccountsTitle: "บัญชีของคุณ",
+    cardAccountsDescription: "จัดระเบียบบัญชีโซเชียล",
+    cardPostsTitle: "โพสต์",
+    cardPostsDescription: "เตรียมไอเดียและข้อความ",
+    cardScheduleTitle: "การจัดตาราง",
+    cardScheduleDescription: "วางแผนเวลาเผยแพร่",
+    cardLibraryTitle: "คลังเนื้อหา",
+    cardLibraryDescription: "เก็บไอเดียที่พร้อมใช้งาน",
+    footer: "จัดการตัวตนดิจิทัลของคุณในที่เดียว"
+  },
+
+  tr: {
+    tagline: "Tüm hesaplarınız için tek alan",
+    login: "Giriş yap",
+    badge: "Hesaplarınızı yönetmek için tek platform",
+    title1: "Tüm sosyal medya hesaplarınız,",
+    title2: "tek bir yerde.",
+    description: "Hesaplarınızı düzenleyin, gönderilerinizi hazırlayın ve içeriklerinizi tek bir yerden yönetin.",
+    start: "Hemen başlayın",
+    featureAccounts: "Hesap yönetimi",
+    featurePosts: "Gönderi düzenleme",
+    featureLibrary: "İçerik kütüphanesi",
+    workspaceTitle: "Çalışma alanınız",
+    cardAccountsTitle: "Hesaplarınız",
+    cardAccountsDescription: "Sosyal hesaplarınızı düzenleyin",
+    cardPostsTitle: "Gönderiler",
+    cardPostsDescription: "Fikirlerinizi ve metinlerinizi hazırlayın",
+    cardScheduleTitle: "Zamanlama",
+    cardScheduleDescription: "Yayın zamanlarını planlayın",
+    cardLibraryTitle: "İçerik kütüphanesi",
+    cardLibraryDescription: "Kullanıma hazır fikirlerinizi saklayın",
+    footer: "Dijital varlığınızı tek bir yerden yönetin"
+  },
+
+  fa: {
+    tagline: "یک فضای واحد برای همه حساب‌های شما",
+    login: "ورود",
+    badge: "یک پلتفرم برای مدیریت حساب‌های شما",
+    title1: "همه حساب‌های اجتماعی شما،",
+    title2: "در یک مکان.",
+    description: "حساب‌ها را سازمان‌دهی کنید، پست‌ها را آماده کنید و محتوای خود را در یک فضای ساده مدیریت کنید.",
+    start: "شروع کنید",
+    featureAccounts: "مدیریت حساب‌ها",
+    featurePosts: "سازمان‌دهی پست‌ها",
+    featureLibrary: "کتابخانه محتوا",
+    workspaceTitle: "فضای کاری شما",
+    cardAccountsTitle: "حساب‌های شما",
+    cardAccountsDescription: "حساب‌های اجتماعی خود را سازمان‌دهی کنید",
+    cardPostsTitle: "پست‌ها",
+    cardPostsDescription: "ایده‌ها و متن‌ها را آماده کنید",
+    cardScheduleTitle: "زمان‌بندی",
+    cardScheduleDescription: "زمان انتشار را برنامه‌ریزی کنید",
+    cardLibraryTitle: "کتابخانه محتوا",
+    cardLibraryDescription: "ایده‌های آماده را نگه دارید",
+    footer: "حضور دیجیتال خود را در یک مکان مدیریت کنید"
+  },
+
+  ur: {
+    tagline: "آپ کے تمام اکاؤنٹس کے لیے ایک جگہ",
+    login: "لاگ اِن",
+    badge: "آپ کے اکاؤنٹس کو منظم کرنے کا ایک پلیٹ فارم",
+    title1: "آپ کے تمام سوشل اکاؤنٹس،",
+    title2: "ایک ہی جگہ۔",
+    description: "اپنے اکاؤنٹس منظم کریں، پوسٹس تیار کریں اور مواد کو ایک ہی جگہ سے سنبھالیں۔",
+    start: "شروع کریں",
+    featureAccounts: "اکاؤنٹس کا انتظام",
+    featurePosts: "پوسٹس کی تنظیم",
+    featureLibrary: "مواد کی لائبریری",
+    workspaceTitle: "آپ کی ورک اسپیس",
+    cardAccountsTitle: "آپ کے اکاؤنٹس",
+    cardAccountsDescription: "اپنے سوشل اکاؤنٹس منظم کریں",
+    cardPostsTitle: "پوسٹس",
+    cardPostsDescription: "خیالات اور متن تیار کریں",
+    cardScheduleTitle: "شیڈولنگ",
+    cardScheduleDescription: "پوسٹ کرنے کے اوقات طے کریں",
+    cardLibraryTitle: "مواد کی لائبریری",
+    cardLibraryDescription: "تیار خیالات محفوظ رکھیں",
+    footer: "اپنی ڈیجیٹل موجودگی ایک جگہ سے منظم کریں"
+  },
+
+  bn: {
+    tagline: "আপনার সব অ্যাকাউন্টের জন্য এক জায়গা",
+    login: "লগ ইন",
+    badge: "অ্যাকাউন্ট পরিচালনার জন্য একটি প্ল্যাটফর্ম",
+    title1: "আপনার সব সামাজিক অ্যাকাউন্ট,",
+    title2: "এক জায়গায়।",
+    description: "একটি সহজ প্ল্যাটফর্মে অ্যাকাউন্ট সাজান, পোস্ট তৈরি করুন এবং কনটেন্ট পরিচালনা করুন।",
+    start: "শুরু করুন",
+    featureAccounts: "অ্যাকাউন্ট ব্যবস্থাপনা",
+    featurePosts: "পোস্ট সংগঠিত করা",
+    featureLibrary: "কনটেন্ট লাইব্রেরি",
+    workspaceTitle: "আপনার কর্মক্ষেত্র",
+    cardAccountsTitle: "আপনার অ্যাকাউন্ট",
+    cardAccountsDescription: "আপনার সামাজিক অ্যাকাউন্ট সাজান",
+    cardPostsTitle: "পোস্ট",
+    cardPostsDescription: "ভাবনা ও লেখা প্রস্তুত করুন",
+    cardScheduleTitle: "সময় নির্ধারণ",
+    cardScheduleDescription: "পোস্ট প্রকাশের সময় পরিকল্পনা করুন",
+    cardLibraryTitle: "কনটেন্ট লাইব্রেরি",
+    cardLibraryDescription: "ব্যবহারের জন্য প্রস্তুত ভাবনা সংরক্ষণ করুন",
+    footer: "এক জায়গায় আপনার ডিজিটাল উপস্থিতি পরিচালনা করুন"
+  },
+
+  sw: {
+    tagline: "Sehemu moja ya akaunti zako zote",
+    login: "Ingia",
+    badge: "Jukwaa moja la kupanga akaunti zako",
+    title1: "Akaunti zako zote za kijamii,",
+    title2: "mahali pamoja.",
+    description: "Panga akaunti, andaa machapisho na dhibiti maudhui yako katika sehemu moja rahisi.",
+    start: "Anza sasa",
+    featureAccounts: "Usimamizi wa akaunti",
+    featurePosts: "Kupanga machapisho",
+    featureLibrary: "Maktaba ya maudhui",
+    workspaceTitle: "Eneo lako la kazi",
+    cardAccountsTitle: "Akaunti zako",
+    cardAccountsDescription: "Panga akaunti zako za kijamii",
+    cardPostsTitle: "Machapisho",
+    cardPostsDescription: "Andaa mawazo na maandishi",
+    cardScheduleTitle: "Ratiba",
+    cardScheduleDescription: "Panga muda wa kuchapisha",
+    cardLibraryTitle: "Maktaba ya maudhui",
+    cardLibraryDescription: "Hifadhi mawazo yaliyo tayari",
+    footer: "Dhibiti uwepo wako wa kidijitali mahali pamoja"
+  }
+};
+
+/* Dashboard translation engine. */
+
+
+/*
+ * SocialHub dashboard translation engine
+ * Translates visible text, dynamic elements and common attributes.
+ */
+
+const RTL_LANGUAGES = new Set(["ar", "fa", "ur"]);
+
+const UI = {
+
+
+
+en: {
+  "القائمة الرئيسية": "Main Menu",
+  "الرئيسية": "Home",
+  "لوحة التحكم": "Dashboard",
+  "حساباتي": "My Accounts",
+  "المنشورات": "Posts",
+  "الجدولة": "Schedule",
+  "التحليلات": "Analytics",
+  "إدارة المنصة": "Platform Management",
+  "الاشتراكات والباقات": "Plans & Billing",
+  "الباقات والاشتراكات": "Plans & Subscriptions",
+  "مكتبة المحتوى": "Content Library",
+  "الإعدادات": "Settings",
+  "عرض الباقات": "View Plans",
+  "الباقة الحالية": "Current Plan",
+  "الباقة الحالية:": "Current Plan:",
+  "الباقة الحالية: Free": "Current Plan: Free",
+  "مجانية": "Free",
+  "مجانًا": "Free",
+  "مساحة واحدة لكل حساباتك": "One place for all your accounts",
+  "حد الحسابات: 2 لكل منصة (تجريبي).": "Account limit: 2 per platform (demo).",
+  "إدارة حساباتي ←": "Manage My Accounts ←",
+  "إدارة حساباتي": "Manage My Accounts",
+  "2 حساب": "2 accounts",
+  "1 حساب": "1 account",
+  "0 حساب": "0 accounts",
+  "تصدير البيانات": "Export Data",
+  "⇩ تصدير البيانات": "⇩ Export Data",
+  "تصدير نسخة البيانات": "Export Data Backup",
+  "إضافة حساب": "Add Account",
+  "＋ إضافة حساب": "＋ Add Account",
+  "أهلًا بك في SocialHub 👋": "Welcome to SocialHub 👋",
+  "نظّم حساباتك الاجتماعية من مكان واحد.": "Organize your social accounts in one place.",
+  "تابع حضورك على منصات التواصل": "Manage Your Social Media Presence",
+  "إجمالي الحسابات": "Total Accounts",
+  "الحسابات المضافة": "Added Accounts",
+  "المنصات المستخدمة": "Platforms Used",
+  "منصات لديها حسابات": "Platforms with Accounts",
+  "منشورات تجريبية": "Demo Posts",
+  "مسودات محفوظة محليًا": "Drafts Saved Locally",
+  "منصات التواصل الاجتماعي": "Social Media Platforms",
+  "اختر منصة لعرض حساباتها أو إضافة حساب جديد.": "Choose a platform to view its accounts or add a new account.",
+  "كل الحسابات": "All Accounts",
+  "أحدث الحسابات": "Recent Accounts",
+  "عرض الكل": "View All",
+  "ابحث باسم الحساب أو المستخدم...": "Search account name or username...",
+  "كل المنصات": "All Platforms",
+  "الأحدث أولًا": "Newest First",
+  "الاسم أبجديًا": "Name A–Z",
+  "حسب المنصة": "By Platform",
+  "أضف حساباتك ورتّبها وابحث بينها.": "Add, organize, and search your accounts.",
+  "إضافة حساب هنا لا تربطه فعليًا بالمنصة.": "Adding an account here does not connect it to the platform.",
+  "إنشاء مسودة جديدة": "Create a New Draft",
+  "اكتب محتواك واحفظه كمسودة للرجوع إليه لاحقًا.": "Write your content and save it as a draft for later.",
+  "عنوان المنشور": "Post Title",
+  "المنصات المستهدفة": "Target Platforms",
+  "المنصات المستهدفة:": "Target Platforms:",
+  "محتوى المنشور": "Post Content",
+  "نص المنشور": "Post Text",
+  "حفظ المسودة": "Save Draft",
+  "إلغاء التعديل": "Cancel Edit",
+  "المسودات المحفوظة": "Saved Drafts",
+  "حفظ في المكتبة": "Save to Library",
+  "المحتوى المحفوظ": "Saved Content",
+  "إضافة منشور": "Add Post",
+  "منشور جديد": "New Post",
+  "عدد الأحرف: ": "Character Count: ",
+  "نسخ المنشور": "Copy Post",
+  "تعديل": "Edit",
+  "حذف": "Delete",
+  "إلغاء": "Cancel",
+  "حفظ": "Save",
+  "＋ إضافة موعد نشر": "＋ Add Publishing Time",
+  "اختر المسودة": "Choose a Draft",
+  "اختر منشورًا محفوظًا": "Choose a Saved Post",
+  "منصة النشر": "Publishing Platform",
+  "اختر المنصة": "Choose a Platform",
+  "اختر الحساب": "Select Account",
+  "تاريخ ووقت النشر": "Publishing Date and Time",
+  "تاريخ النشر": "Publishing Date",
+  "موعد النشر": "Publishing Time",
+  "حفظ موعد النشر": "Save Publishing Time",
+  "حفظ الجدولة": "Save Schedule",
+  "إضافة موعد": "Add Schedule",
+  "المواعيد القادمة": "Upcoming Schedules",
+  "البحث في الحسابات": "Search Accounts",
+  "تصفية حسب المنصة": "Filter by Platform",
+  "ترتيب الحسابات": "Sort Accounts",
+  "مثال: عرض جديد للمتابعين": "Example: A New Offer for Followers",
+  "اكتب نص المنشور هنا...": "Write your post here...",
+  "ابحث بعنوان المنشور أو محتواه...": "Search post title or content...",
+  "تصفية المسودات حسب المنصة": "Filter Drafts by Platform",
+  "البحث في المسودات": "Search Drafts",
+  "لا توجد منشورات حتى الآن": "No Posts Yet",
+  "لا توجد مواعيد مجدولة": "No Scheduled Posts",
+  "حالة النشر": "Publishing Status",
+  "مسودة": "Draft",
+  "منشور": "Published",
+  "مجدول": "Scheduled",
+  "لا توجد حسابات حتى الآن": "No Accounts Yet",
+  "لا توجد مسودات محفوظة": "No Saved Drafts",
+  "الأمان والخصوصية": "Security and Privacy",
+  "تغيير المظهر": "Change Theme",
+  "فتح القائمة": "Open Menu",
+  "تسجيل الخروج": "Log Out",
+  "حساب": "Account",
+  "حسابات": "Accounts",
+  "محلي": "Local",
+  "حد الحسابات": "Account Limit",
+  "لكل منصة": "Per Platform",
+  "حتى 2 حسابًا لكل منصة": "Up to 2 Accounts per Platform",
+  "حان موعد النشر: ": "Publishing Time: ",
+  "احفظ مسودة المنشور أولًا ثم اخترها.": "Save the post as a draft first, then select it.",
+  "اختر المنصة وتاريخ ووقت النشر.": "Choose a platform and a publishing date and time.",
+  "اختر موعدًا في المستقبل.": "Choose a future date and time.",
+  "تم تعديل موعد النشر بنجاح.": "Schedule Updated Successfully.",
+  "تم حفظ موعد النشر.": "Schedule Saved.",
+  "تم تسجيل النشر اليدوي.": "Manual Publishing Recorded.",
+  "تم حذف الموعد.": "Schedule Deleted.",
+  "لم تتم إضافة حسابات حتى الآن.": "No Accounts Have Been Added Yet.",
+  "هذا الأسبوع": "This Week",
+  "اليوم": "Today",
+  "الأسبوع الماضي": "Last Week",
+  "المنصة": "Platform",
+  "اسم الحساب": "Account Name",
+  "اسم المستخدم": "Username",
+  "الرابط": "Link",
+  "إضافة": "Add",
+  "رجوع": "Back",
+  "التالي": "Next",
+  "السابق": "Previous",
+  "بحث": "Search",
+  "حالة الحساب": "Account Status",
+  "نشط": "Active",
+  "غير متصل": "Not Connected",
+  "لا توجد نتائج": "No Results",
+  "استعرض حدود الباقات التجريبية.": "Review the Demo Plan Limits.",
+  "حسابان لكل منصة": "2 Accounts per Platform",
+  "إدارة الحسابات": "Account Management",
+  "بحث وتصفية": "Search and Filters",
+  "اختيار تجريبي": "Select Demo Plan",
+  "سعر تجريبي": "Demo Price",
+  "شهر": "Month",
+  "حتى 10 حسابًا لكل منصة": "Up to 10 Accounts per Platform",
+  "حتى 30 حسابًا لكل منصة": "Up to 30 Accounts per Platform",
+  "حتى 100 حسابًا لكل منصة": "Up to 100 Accounts per Platform",
+  "جميع وظائف المجانية": "All Free Features",
+  "جميع وظائف الأساسية": "All Basic Features",
+  "جميع وظائف الاحترافية": "All Professional Features",
+  "واجهة منظمة": "Organized Interface",
+  "ميزات إضافية مستقبلية": "Future Additional Features",
+  "مزايا احترافية مستقبلية": "Future Professional Features",
+  "تطويرات مستقبلية": "Future Improvements",
+  "حدود أعلى للحسابات": "Higher Account Limits",
+  "مزايا أعمال مستقبلية": "Future Business Features",
+  "الأسعار والحدود المعروضة تجريبية.": "Displayed prices and limits are for demo purposes.",
+  "اختيار باقة يغيّر الحد المحلي في هذا المتصفح فقط، ولا ينشئ اشتراكًا مدفوعًا ولا يعالج أي دفعات.": "Selecting a plan changes the local limit in this browser only. It does not create a paid subscription or process payments.",
+  "نظّم أفكارك ونصوصك والهاشتاجات في مكان واحد.": "Organize your ideas, text, and hashtags in one place.",
+  "إضافة محتوى جديد": "Add New Content",
+  "العنوان": "Title",
+  "نوع المحتوى": "Content Type",
+  "فكرة": "Idea",
+  "نص جاهز": "Ready-to-Use Text",
+  "هاشتاجات": "Hashtags",
+  "المحتوى": "Content",
+  "المكتبة فارغة. أضف أول فكرة أو نص أو مجموعة هاشتاجات.": "The library is empty. Add your first idea, text, or hashtag set.",
+  "تُحفظ المكتبة على هذا المتصفح والجهاز فقط.": "The library is stored only in this browser and on this device.",
+  "إحصائيات SocialHub المحلية": "SocialHub Local Statistics",
+  "مواعيد النشر القادمة": "Upcoming Publishing Times",
+  "النشر المؤكد يدويًا": "Manually Confirmed Posts",
+  "المواعيد المتأخرة": "Overdue Schedules",
+  "لا توجد مواعيد متأخرة.": "No Overdue Schedules.",
+  "توزيع الحسابات حسب المنصة": "Accounts by Platform",
+  "ملخص النشاط — آخر 7 أيام": "Activity Summary — Last 7 Days",
+  "المسودات المنشأة": "Drafts Created",
+  "مواعيد النشر المؤكدة يدويًا": "Manually Confirmed Publishing Times",
+  "يعتمد الملخص على تواريخ الإنشاء وتأكيد النشر المسجلة داخل التطبيق.": "The summary uses creation dates and publishing confirmations recorded in the app.",
+  "هذه إحصائيات محلية وليست بيانات مشاهدات أو تفاعل حقيقية.": "These are local statistics, not real views or engagement data.",
+  "جدولة المنشورات": "Schedule Posts",
+  "نظّم مواعيد النشر وتابع المنشورات القادمة.": "Organize publishing times and track upcoming posts.",
+  "ملاحظات (اختياري)": "Notes (Optional)",
+  "يتم حفظ المواعيد محليًا على هذا الجهاز.": "Schedules are stored locally on this device.",
+  "الجدولة الحالية لتنظيم المواعيد والتذكير، ولا تنشر المنشورات تلقائيًا على المنصات.": "Scheduling currently organizes times and reminders; it does not publish automatically.",
+  "لا توجد مواعيد محفوظة حتى الآن.": "No Saved Schedules Yet.",
+  "تجريبي": "Demo",
+  "لا تدخل كلمات المرور أو رموز الدخول السرية في هذه النسخة التجريبية.": "Do not enter passwords or secret login codes in this demo.",
+  "تُحفظ المسودات على هذا المتصفح والجهاز فقط. لا يتم نشر المحتوى تلقائيًا على منصات التواصل الاجتماعي.": "Drafts are stored only in this browser and on this device. Content is not automatically published to social media.",
+  "هذه نسخة تجريبية. البيانات محفوظة في هذا المتصفح فقط، ولا يوجد اتصال فعلي بالمنصات أو نشر تلقائي أو دفع إلكتروني.": "This is a demo. Data is stored only in this browser. There are no live platform connections, automatic publishing, or electronic payments."
+},
+
+
+  fr: {
+    "الرئيسية": "Accueil", "لوحة التحكم": "Tableau de bord",
+    "حساباتي": "Mes comptes", "المنشورات": "Publications",
+    "الجدولة": "Planification", "التحليلات": "Analyses",
+    "إدارة المنصة": "Gestion des plateformes",
+    "الاشتراكات والباقات": "Abonnements et forfaits",
+    "مكتبة المحتوى": "Bibliothèque de contenu",
+    "الإعدادات": "Paramètres", "عرض الباقات": "Voir les forfaits",
+    "الباقة الحالية": "Forfait actuel", "مجانية": "Gratuit",
+    "تصدير البيانات": "Exporter les données",
+    "إضافة حساب": "Ajouter un compte",
+    "إدارة حساباتي": "Gérer mes comptes",
+    "إجمالي الحسابات": "Nombre total de comptes",
+    "كل الحسابات": "Tous les comptes", "عرض الكل": "Tout afficher",
+    "حفظ": "Enregistrer", "تعديل": "Modifier",
+    "حذف": "Supprimer", "إلغاء": "Annuler",
+    "تسجيل الخروج": "Déconnexion", "محلي": "Local",
+    "لا توجد حسابات حتى الآن": "Aucun compte pour le moment"
+  },
+
+  es: {
+    "الرئيسية": "Inicio", "لوحة التحكم": "Panel",
+    "حساباتي": "Mis cuentas", "المنشورات": "Publicaciones",
+    "الجدولة": "Programación", "التحليلات": "Analítica",
+    "إدارة المنصة": "Gestión de plataformas",
+    "الاشتراكات والباقات": "Planes y suscripciones",
+    "مكتبة المحتوى": "Biblioteca de contenido",
+    "الإعدادات": "Configuración", "عرض الباقات": "Ver planes",
+    "الباقة الحالية": "Plan actual", "مجانية": "Gratis",
+    "تصدير البيانات": "Exportar datos",
+    "إضافة حساب": "Añadir cuenta",
+    "إدارة حساباتي": "Gestionar mis cuentas",
+    "إجمالي الحسابات": "Total de cuentas",
+    "كل الحسابات": "Todas las cuentas", "عرض الكل": "Ver todo",
+    "حفظ": "Guardar", "تعديل": "Editar",
+    "حذف": "Eliminar", "إلغاء": "Cancelar",
+    "تسجيل الخروج": "Cerrar sesión", "محلي": "Local",
+    "لا توجد حسابات حتى الآن": "Todavía no hay cuentas"
+  },
+
+  de: {
+    "الرئيسية": "Dashboard", "لوحة التحكم": "Dashboard",
+    "حساباتي": "Meine Konten", "المنشورات": "Beiträge",
+    "الجدولة": "Zeitplanung", "التحليلات": "Analysen",
+    "إدارة المنصة": "Plattformverwaltung",
+    "الاشتراكات والباقات": "Tarife und Abos",
+    "مكتبة المحتوى": "Inhaltsbibliothek",
+    "الإعدادات": "Einstellungen", "عرض الباقات": "Tarife anzeigen",
+    "الباقة الحالية": "Aktueller Tarif", "مجانية": "Kostenlos",
+    "تصدير البيانات": "Daten exportieren",
+    "إضافة حساب": "Konto hinzufügen",
+    "إدارة حساباتي": "Meine Konten verwalten",
+    "إجمالي الحسابات": "Konten insgesamt",
+    "كل الحسابات": "Alle Konten", "عرض الكل": "Alle anzeigen",
+    "حفظ": "Speichern", "تعديل": "Bearbeiten",
+    "حذف": "Löschen", "إلغاء": "Abbrechen",
+    "تسجيل الخروج": "Abmelden", "محلي": "Lokal",
+    "لا توجد حسابات حتى الآن": "Noch keine Konten vorhanden"
+  },
+
+  it: {
+    "الرئيسية": "Dashboard", "لوحة التحكم": "Dashboard",
+    "حساباتي": "I miei account", "المنشورات": "Post",
+    "الجدولة": "Programmazione", "التحليلات": "Analisi",
+    "إدارة المنصة": "Gestione piattaforme",
+    "الاشتراكات والباقات": "Piani e abbonamenti",
+    "مكتبة المحتوى": "Libreria contenuti",
+    "الإعدادات": "Impostazioni", "عرض الباقات": "Visualizza piani",
+    "الباقة الحالية": "Piano attuale", "مجانية": "Gratuito",
+    "تصدير البيانات": "Esporta dati",
+    "إضافة حساب": "Aggiungi account",
+    "إدارة حساباتي": "Gestisci i miei account",
+    "إجمالي الحسابات": "Account totali",
+    "كل الحسابات": "Tutti gli account", "عرض الكل": "Visualizza tutto",
+    "حفظ": "Salva", "تعديل": "Modifica",
+    "حذف": "Elimina", "إلغاء": "Annulla",
+    "تسجيل الخروج": "Esci", "محلي": "Locale",
+    "لا توجد حسابات حتى الآن": "Nessun account presente"
+  },
+
+  pt: {
+    "الرئيسية": "Painel", "لوحة التحكم": "Painel",
+    "حساباتي": "Minhas contas", "المنشورات": "Publicações",
+    "الجدولة": "Agendamento", "التحليلات": "Análises",
+    "إدارة المنصة": "Gestão de plataformas",
+    "الاشتراكات والباقات": "Planos e assinaturas",
+    "مكتبة المحتوى": "Biblioteca de conteúdo",
+    "الإعدادات": "Configurações", "عرض الباقات": "Ver planos",
+    "الباقة الحالية": "Plano atual", "مجانية": "Grátis",
+    "تصدير البيانات": "Exportar dados",
+    "إضافة حساب": "Adicionar conta",
+    "إدارة حساباتي": "Gerenciar minhas contas",
+    "إجمالي الحسابات": "Total de contas",
+    "كل الحسابات": "Todas as contas", "عرض الكل": "Ver tudo",
+    "حفظ": "Salvar", "تعديل": "Editar",
+    "حذف": "Excluir", "إلغاء": "Cancelar",
+    "تسجيل الخروج": "Sair", "محلي": "Local",
+    "لا توجد حسابات حتى الآن": "Ainda não há contas"
+  },
+
+  ru: {
+    "الرئيسية": "Главная", "لوحة التحكم": "Панель управления",
+    "حساباتي": "Мои аккаунты", "المنشورات": "Публикации",
+    "الجدولة": "Расписание", "التحليلات": "Аналитика",
+    "إدارة المنصة": "Управление платформами",
+    "الاشتراكات والباقات": "Тарифы и подписки",
+    "مكتبة المحتوى": "Библиотека контента",
+    "الإعدادات": "Настройки", "عرض الباقات": "Посмотреть тарифы",
+    "الباقة الحالية": "Текущий тариф", "مجانية": "Бесплатно",
+    "تصدير البيانات": "Экспорт данных",
+    "إضافة حساب": "Добавить аккаунт",
+    "إدارة حساباتي": "Управление моими аккаунтами",
+    "إجمالي الحسابات": "Всего аккаунтов",
+    "كل الحسابات": "Все аккаунты", "عرض الكل": "Показать все",
+    "حفظ": "Сохранить", "تعديل": "Изменить",
+    "حذف": "Удалить", "إلغاء": "Отмена",
+    "تسجيل الخروج": "Выйти", "محلي": "Локально",
+    "لا توجد حسابات حتى الآن": "Пока нет аккаунтов"
+  },
+
+  tr: {
+    "الرئيسية": "Ana sayfa", "لوحة التحكم": "Kontrol paneli",
+    "حساباتي": "Hesaplarım", "المنشورات": "Gönderiler",
+    "الجدولة": "Planlama", "التحليلات": "Analizler",
+    "إدارة المنصة": "Platform yönetimi",
+    "الاشتراكات والباقات": "Planlar ve abonelikler",
+    "مكتبة المحتوى": "İçerik kütüphanesi",
+    "الإعدادات": "Ayarlar", "عرض الباقات": "Planları görüntüle",
+    "الباقة الحالية": "Mevcut plan", "مجانية": "Ücretsiz",
+    "تصدير البيانات": "Verileri dışa aktar",
+    "إضافة حساب": "Hesap ekle",
+    "إدارة حساباتي": "Hesaplarımı yönet",
+    "إجمالي الحسابات": "Toplam hesap",
+    "كل الحسابات": "Tüm hesaplar", "عرض الكل": "Tümünü gör",
+    "حفظ": "Kaydet", "تعديل": "Düzenle",
+    "حذف": "Sil", "إلغاء": "İptal",
+    "تسجيل الخروج": "Çıkış yap", "محلي": "Yerel",
+    "لا توجد حسابات حتى الآن": "Henüz hesap yok"
+  },
+
+  fa: {
+    "الرئيسية": "داشبورد", "لوحة التحكم": "داشبورد",
+    "حساباتي": "حساب‌های من", "المنشورات": "پست‌ها",
+    "الجدولة": "زمان‌بندی", "التحليلات": "تحلیل‌ها",
+    "إدارة المنصة": "مدیریت پلتفرم‌ها",
+    "الاشتراكات والباقات": "طرح‌ها و اشتراک‌ها",
+    "مكتبة المحتوى": "کتابخانه محتوا",
+    "الإعدادات": "تنظیمات", "عرض الباقات": "مشاهده طرح‌ها",
+    "الباقة الحالية": "طرح فعلی", "مجانية": "رایگان",
+    "تصدير البيانات": "خروجی گرفتن از داده‌ها",
+    "إضافة حساب": "افزودن حساب",
+    "إدارة حساباتي": "مدیریت حساب‌های من",
+    "إجمالي الحسابات": "تعداد کل حساب‌ها",
+    "كل الحسابات": "همه حساب‌ها", "عرض الكل": "مشاهده همه",
+    "حفظ": "ذخیره", "تعديل": "ویرایش",
+    "حذف": "حذف", "إلغاء": "لغو",
+    "تسجيل الخروج": "خروج", "محلي": "محلی",
+    "لا توجد حسابات حتى الآن": "هنوز حسابی اضافه نشده است"
+  },
+
+  ur: {
+    "الرئيسية": "ڈیش بورڈ", "لوحة التحكم": "ڈیش بورڈ",
+    "حساباتي": "میرے اکاؤنٹس", "المنشورات": "پوسٹس",
+    "الجدولة": "شیڈول", "التحليلات": "تجزیات",
+    "إدارة المنصة": "پلیٹ فارم مینجمنٹ",
+    "الاشتراكات والباقات": "پلانز اور سبسکرپشنز",
+    "مكتبة المحتوى": "مواد کی لائبریری",
+    "الإعدادات": "ترتیبات", "عرض الباقات": "پلان دیکھیں",
+    "الباقة الحالية": "موجودہ پلان", "مجانية": "مفت",
+    "تصدير البيانات": "ڈیٹا برآمد کریں",
+    "إضافة حساب": "اکاؤنٹ شامل کریں",
+    "إدارة حساباتي": "میرے اکاؤنٹس کا انتظام",
+    "إجمالي الحسابات": "کل اکاؤنٹس",
+    "كل الحسابات": "تمام اکاؤنٹس", "عرض الكل": "سب دیکھیں",
+    "حفظ": "محفوظ کریں", "تعديل": "ترمیم",
+    "حذف": "حذف کریں", "إلغاء": "منسوخ کریں",
+    "تسجيل الخروج": "لاگ آؤٹ", "محلي": "مقامی",
+    "لا توجد حسابات حتى الآن": "ابھی کوئی اکاؤنٹ نہیں"
+  },
+
+  "zh-CN": {
+    "الرئيسية": "仪表板", "لوحة التحكم": "仪表板",
+    "حساباتي": "我的账户", "المنشورات": "帖子",
+    "الجدولة": "计划发布", "التحليلات": "数据分析",
+    "إدارة المنصة": "平台管理",
+    "الاشتراكات والباقات": "套餐与订阅",
+    "مكتبة المحتوى": "内容库", "الإعدادات": "设置",
+    "عرض الباقات": "查看套餐", "الباقة الحالية": "当前套餐",
+    "مجانية": "免费", "تصدير البيانات": "导出数据",
+    "إضافة حساب": "添加账户", "إدارة حساباتي": "管理我的账户",
+    "إجمالي الحسابات": "账户总数", "كل الحسابات": "所有账户",
+    "عرض الكل": "查看全部", "حفظ": "保存",
+    "تعديل": "编辑", "حذف": "删除", "إلغاء": "取消",
+    "تسجيل الخروج": "退出登录", "محلي": "本地",
+    "لا توجد حسابات حتى الآن": "暂无账户"
+  },
+
+  hi: {
+    "الرئيسية": "डैशबोर्ड", "لوحة التحكم": "डैशबोर्ड",
+    "حساباتي": "मेरे खाते", "المنشورات": "पोस्ट",
+    "الجدولة": "शेड्यूल", "التحليلات": "विश्लेषण",
+    "إدارة المنصة": "प्लेटफ़ॉर्म प्रबंधन",
+    "الاشتراكات والباقات": "प्लान और सदस्यता",
+    "مكتبة المحتوى": "कंटेंट लाइब्रेरी", "الإعدادات": "सेटिंग्स",
+    "عرض الباقات": "प्लान देखें", "الباقة الحالية": "वर्तमान प्लान",
+    "مجانية": "मुफ़्त", "تصدير البيانات": "डेटा निर्यात करें",
+    "إضافة حساب": "खाता जोड़ें", "إدارة حساباتي": "मेरे खाते प्रबंधित करें",
+    "إجمالي الحسابات": "कुल खाते", "كل الحسابات": "सभी खाते",
+    "عرض الكل": "सभी देखें", "حفظ": "सहेजें",
+    "تعديل": "संपादित करें", "حذف": "हटाएँ", "إلغاء": "रद्द करें",
+    "تسجيل الخروج": "लॉग आउट", "محلي": "स्थानीय",
+    "لا توجد حسابات حتى الآن": "अभी कोई खाता नहीं है"
+  },
+
+  ja: {
+    "الرئيسية": "ダッシュボード", "لوحة التحكم": "ダッシュボード",
+    "حساباتي": "マイアカウント", "المنشورات": "投稿",
+    "الجدولة": "予約投稿", "التحليلات": "分析",
+    "إدارة المنصة": "プラットフォーム管理",
+    "الاشتراكات والباقات": "プランと請求",
+    "مكتبة المحتوى": "コンテンツライブラリ", "الإعدادات": "設定",
+    "عرض الباقات": "プランを見る", "الباقة الحالية": "現在のプラン",
+    "مجانية": "無料", "تصدير البيانات": "データをエクスポート",
+    "إضافة حساب": "アカウントを追加", "إدارة حساباتي": "アカウントを管理",
+    "إجمالي الحسابات": "アカウント総数", "كل الحسابات": "すべてのアカウント",
+    "عرض الكل": "すべて表示", "حفظ": "保存",
+    "تعديل": "編集", "حذف": "削除", "إلغاء": "キャンセル",
+    "تسجيل الخروج": "ログアウト", "محلي": "ローカル",
+    "لا توجد حسابات حتى الآن": "アカウントはまだありません"
+  },
+
+  ko: {
+    "الرئيسية": "대시보드", "لوحة التحكم": "대시보드",
+    "حساباتي": "내 계정", "المنشورات": "게시물",
+    "الجدولة": "예약", "التحليلات": "분석",
+    "إدارة المنصة": "플랫폼 관리",
+    "الاشتراكات والباقات": "요금제 및 구독",
+    "مكتبة المحتوى": "콘텐츠 라이브러리", "الإعدادات": "설정",
+    "عرض الباقات": "요금제 보기", "الباقة الحالية": "현재 요금제",
+    "مجانية": "무료", "تصدير البيانات": "데이터 내보내기",
+    "إضافة حساب": "계정 추가", "إدارة حساباتي": "내 계정 관리",
+    "إجمالي الحسابات": "전체 계정 수", "كل الحسابات": "모든 계정",
+    "عرض الكل": "모두 보기", "حفظ": "저장",
+    "تعديل": "수정", "حذف": "삭제", "إلغاء": "취소",
+    "تسجيل الخروج": "로그아웃", "محلي": "로컬",
+    "لا توجد حسابات حتى الآن": "아직 계정이 없습니다"
+  },
+
+  id: {
+    "الرئيسية": "Dasbor", "لوحة التحكم": "Dasbor",
+    "حساباتي": "Akun saya", "المنشورات": "Postingan",
+    "الجدولة": "Jadwal", "التحليلات": "Analitik",
+    "إدارة المنصة": "Manajemen platform",
+    "الاشتراكات والباقات": "Paket dan langganan",
+    "مكتبة المحتوى": "Pustaka konten", "الإعدادات": "Pengaturan",
+    "عرض الباقات": "Lihat paket", "الباقة الحالية": "Paket saat ini",
+    "مجانية": "Gratis", "تصدير البيانات": "Ekspor data",
+    "إضافة حساب": "Tambah akun", "إدارة حساباتي": "Kelola akun saya",
+    "إجمالي الحسابات": "Total akun", "كل الحسابات": "Semua akun",
+    "عرض الكل": "Lihat semua", "حفظ": "Simpan",
+    "تعديل": "Edit", "حذف": "Hapus", "إلغاء": "Batal",
+    "تسجيل الخروج": "Keluar", "محلي": "Lokal",
+    "لا توجد حسابات حتى الآن": "Belum ada akun"
+  },
+
+  vi: {
+    "الرئيسية": "Bảng điều khiển", "لوحة التحكم": "Bảng điều khiển",
+    "حساباتي": "Tài khoản của tôi", "المنشورات": "Bài đăng",
+    "الجدولة": "Lịch đăng", "التحليلات": "Phân tích",
+    "إدارة المنصة": "Quản lý nền tảng",
+    "الاشتراكات والباقات": "Gói và đăng ký",
+    "مكتبة المحتوى": "Thư viện nội dung", "الإعدادات": "Cài đặt",
+    "عرض الباقات": "Xem gói", "الباقة الحالية": "Gói hiện tại",
+    "مجانية": "Miễn phí", "تصدير البيانات": "Xuất dữ liệu",
+    "إضافة حساب": "Thêm tài khoản", "إدارة حساباتي": "Quản lý tài khoản",
+    "إجمالي الحسابات": "Tổng số tài khoản", "كل الحسابات": "Tất cả tài khoản",
+    "عرض الكل": "Xem tất cả", "حفظ": "Lưu",
+    "تعديل": "Chỉnh sửa", "حذف": "Xóa", "إلغاء": "Hủy",
+    "تسجيل الخروج": "Đăng xuất", "محلي": "Cục bộ",
+    "لا توجد حسابات حتى الآن": "Chưa có tài khoản"
+  },
+
+  th: {
+    "الرئيسية": "แดชบอร์ด", "لوحة التحكم": "แดชบอร์ด",
+    "حساباتي": "บัญชีของฉัน", "المنشورات": "โพสต์",
+    "الجدولة": "กำหนดเวลา", "التحليلات": "การวิเคราะห์",
+    "إدارة المنصة": "จัดการแพลตฟอร์ม",
+    "الاشتراكات والباقات": "แพ็กเกจและการสมัครสมาชิก",
+    "مكتبة المحتوى": "คลังเนื้อหา", "الإعدادات": "การตั้งค่า",
+    "عرض الباقات": "ดูแพ็กเกจ", "الباقة الحالية": "แพ็กเกจปัจจุบัน",
+    "مجانية": "ฟรี", "تصدير البيانات": "ส่งออกข้อมูล",
+    "إضافة حساب": "เพิ่มบัญชี", "إدارة حساباتي": "จัดการบัญชีของฉัน",
+    "إجمالي الحسابات": "บัญชีทั้งหมด", "كل الحسابات": "บัญชีทั้งหมด",
+    "عرض الكل": "ดูทั้งหมด", "حفظ": "บันทึก",
+    "تعديل": "แก้ไข", "حذف": "ลบ", "إلغاء": "ยกเลิก",
+    "تسجيل الخروج": "ออกจากระบบ", "محلي": "ในเครื่อง",
+    "لا توجد حسابات حتى الآن": "ยังไม่มีบัญชี"
+  },
+
+  bn: {
+    "الرئيسية": "ড্যাশবোর্ড", "لوحة التحكم": "ড্যাশবোর্ড",
+    "حساباتي": "আমার অ্যাকাউন্ট", "المنشورات": "পোস্ট",
+    "الجدولة": "সময়সূচি", "التحليلات": "বিশ্লেষণ",
+    "إدارة المنصة": "প্ল্যাটফর্ম ব্যবস্থাপনা",
+    "الاشتراكات والباقات": "প্ল্যান ও সাবস্ক্রিপশন",
+    "مكتبة المحتوى": "কনটেন্ট লাইব্রেরি", "الإعدادات": "সেটিংস",
+    "عرض الباقات": "প্ল্যান দেখুন", "الباقة الحالية": "বর্তমান প্ল্যান",
+    "مجانية": "বিনামূল্যে", "تصدير البيانات": "ডেটা রপ্তানি",
+    "إضافة حساب": "অ্যাকাউন্ট যোগ করুন", "إدارة حساباتي": "আমার অ্যাকাউন্ট পরিচালনা",
+    "إجمالي الحسابات": "মোট অ্যাকাউন্ট", "كل الحسابات": "সব অ্যাকাউন্ট",
+    "عرض الكل": "সব দেখুন", "حفظ": "সংরক্ষণ",
+    "تعديل": "সম্পাদনা", "حذف": "মুছুন", "إلغاء": "বাতিল",
+    "تسجيل الخروج": "লগ আউট", "محلي": "স্থানীয়",
+    "لا توجد حسابات حتى الآن": "এখনও কোনো অ্যাকাউন্ট নেই"
+  },
+
+  sw: {
+    "الرئيسية": "Dashibodi", "لوحة التحكم": "Dashibodi",
+    "حساباتي": "Akaunti zangu", "المنشورات": "Machapisho",
+    "الجدولة": "Ratiba", "التحليلات": "Uchambuzi",
+    "إدارة المنصة": "Usimamizi wa majukwaa",
+    "الاشتراكات والباقات": "Mipango na usajili",
+    "مكتبة المحتوى": "Maktaba ya maudhui", "الإعدادات": "Mipangilio",
+    "عرض الباقات": "Tazama mipango", "الباقة الحالية": "Mpango wa sasa",
+    "مجانية": "Bure", "تصدير البيانات": "Hamisha data",
+    "إضافة حساب": "Ongeza akaunti", "إدارة حساباتي": "Simamia akaunti zangu",
+    "إجمالي الحسابات": "Jumla ya akaunti", "كل الحسابات": "Akaunti zote",
+    "عرض الكل": "Tazama zote", "حفظ": "Hifadhi",
+    "تعديل": "Hariri", "حذف": "Futa", "إلغاء": "Ghairi",
+    "تسجيل الخروج": "Ondoka", "محلي": "Ya ndani",
+    "لا توجد حسابات حتى الآن": "Hakuna akaunti bado"
+  }
+};
+
+const ATTRIBUTES = [
+  "placeholder",
+  "title",
+  "aria-label",
+  "data-tooltip"
+];
+
+let activeLanguage = "ar";
+let observer = null;
+let isTranslating = false;
+
+function normalizeLanguage(code) {
+  return SOCIALHUB_LANGUAGES.some(language => language.code === code)
+    ? code
+    : "ar";
+}
+
+function getOriginalText(node) {
+  if (!Object.prototype.hasOwnProperty.call(node, "__shOriginalText")) {
+    node.__shOriginalText = node.nodeValue;
+  }
+  return node.__shOriginalText;
+}
+
+function translateValue(value, map, language) {
+  if (language === "ar") return value;
+
+  const trimmed = value.trim();
+  if (!trimmed) return value;
+
+  const translated = map[trimmed];
+  if (!translated) return value;
+
+  return value.replace(trimmed, translated);
+}
+
+function translateTextNodes(root, map, language) {
+  if (!root) return;
+
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT
+  );
+
+  const nodes = [];
+  while (walker.nextNode()) {
+    nodes.push(walker.currentNode);
+  }
+
+  for (const node of nodes) {
+    const parent = node.parentElement;
+
+    if (
+      !parent ||
+      parent.closest(
+        "script,style,textarea,input,code,pre,[data-no-translate]"
+      )
+    ) {
+      continue;
+    }
+
+    const original = getOriginalText(node);
+    const translated = translateValue(original, map, language);
+
+    if (node.nodeValue !== translated) {
+      node.nodeValue = translated;
+    }
+  }
+}
+
+function translateSelectOptions(root, map, language) {
+  if (!root) return;
+  const selects = [];
+  if (root.nodeType === Node.ELEMENT_NODE && root.matches("select")) selects.push(root);
+  if (root.querySelectorAll) selects.push(...root.querySelectorAll("select"));
+  for (const select of selects) {
+    for (const option of select.options) {
+      if (!Object.prototype.hasOwnProperty.call(option, "__shOriginalOptionText")) {
+        option.__shOriginalOptionText = option.textContent;
+      }
+      const original = option.__shOriginalOptionText;
+      const translated = translateValue(original, map, language);
+      if (option.textContent !== translated) option.textContent = translated;
+    }
+  }
+}
+
+function translateAttributes(root, map, language) {
+  if (!root || root.nodeType !== Node.ELEMENT_NODE) return;
+
+  const elements = [root, ...root.querySelectorAll("*")];
+
+  for (const element of elements) {
+    if (element.matches("script,style,textarea,input,select,option,[data-no-translate]")) {
+      // Inputs can still have translatable placeholders and labels.
+      if (!element.matches("input,textarea")) continue;
+    }
+
+    for (const attribute of ATTRIBUTES) {
+      if (!element.hasAttribute(attribute)) continue;
+
+      const originalKey = `__shOriginal_${attribute}`;
+
+      if (!Object.prototype.hasOwnProperty.call(element, originalKey)) {
+        element[originalKey] = element.getAttribute(attribute);
+      }
+
+      const original = element[originalKey];
+      const translated = translateValue(original, map, language);
+
+      if (element.getAttribute(attribute) !== translated) {
+        element.setAttribute(attribute, translated);
+      }
+    }
+  }
+}
+
+function translateRoot(root, language) {
+  if (!root || isTranslating) return;
+
+  isTranslating = true;
+
+  try {
+
+
+
+    const map = UI[language] || UI.en;
+
+    if (root.nodeType === Node.TEXT_NODE) {
+      const parent = root.parentElement;
+      if (!parent) return;
+
+      if (
+        parent.closest(
+          "script,style,textarea,input,code,pre,[data-no-translate]"
+        )
+      ) {
+        return;
+      }
+
+      const original = getOriginalText(root);
+      root.nodeValue = translateValue(original, map, language);
+      return;
+    }
+
+    if (root.nodeType === Node.ELEMENT_NODE) {
+      translateTextNodes(root, map, language);
+      translateSelectOptions(root, map, language);
+      translateAttributes(root, map, language);
+    }
+  } finally {
+    isTranslating = false;
+  }
+}
+
+function translateSocialHubDOM(languageCode = "ar") {
+  activeLanguage = normalizeLanguage(languageCode);
+
+  if (!document.body) return;
+
+  const rtl = RTL_LANGUAGES.has(activeLanguage);
+
+  document.documentElement.lang = activeLanguage;
+  document.documentElement.dir = rtl ? "rtl" : "ltr";
+  document.body.dir = rtl ? "rtl" : "ltr";
+
+  translateRoot(document.body, activeLanguage);
+
+  if (observer) observer.disconnect();
+
+  observer = new MutationObserver(mutations => {
+    if (isTranslating) return;
+
+    for (const mutation of mutations) {
+      if (mutation.type !== "childList") continue;
+
+      for (const node of mutation.addedNodes) {
+        if (
+          node.nodeType === Node.ELEMENT_NODE ||
+          node.nodeType === Node.TEXT_NODE
+        ) {
+          translateRoot(node, activeLanguage);
+        }
+      }
+    }
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+}
+
+
  
   // SocialHub language selector and translation system
 const languageSelector = document.getElementById("shLanguage");
